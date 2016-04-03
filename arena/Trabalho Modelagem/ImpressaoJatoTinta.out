@@ -1,0 +1,129 @@
+SIMAN Run Controller.
+
+17.105316 Hours>
+                                      ARENA Simulation Results
+                                               Everton
+
+                                  Summary for Replication 1 of 1
+
+Project: Unnamed Project                                             Run execution date :11/11/2009
+Analyst: Everton                                                     Model revision date:11/11/2009
+
+Replication ended at time      : 17.105316 Hours 
+Base Time Units: Hours
+
+                                           TALLY VARIABLES
+
+Identifier                                  Average   Half Width  Minimum    Maximum   Observations
+___________________________________________________________________________________________________
+
+FolhaA4.VATime                              1.4218     (Insuf)    .73061     2.7636          8    
+FolhaA4.NVATime                             .00000     (Insuf)    .00000     .00000          8    
+FolhaA4.WaitTime                            1.0000     (Insuf)    1.0000     1.0000          8    
+FolhaA4.TranTime                            .00000     (Insuf)    .00000     .00000          8    
+FolhaA4.OtherTime                           .00000     (Insuf)    .00000     .00000          8    
+FolhaA4.TotalTime                           2.4218     (Insuf)    1.7306     3.7636          8    
+FolhaA5.VATime                              1.2963     (Insuf)    .88458     2.1174          3    
+FolhaA5.NVATime                             .00000     (Insuf)    .00000     .00000          3    
+FolhaA5.WaitTime                            6.0000     (Insuf)    6.0000     6.0000          3    
+FolhaA5.TranTime                            .00000     (Insuf)    .00000     .00000          3    
+FolhaA5.OtherTime                           .00000     (Insuf)    .00000     .00000          3    
+FolhaA5.TotalTime                           5.2963     (Insuf)    4.8845     6.1174          3    
+FolhaCarta.VATime                           1.4287     (Insuf)    .74229     2.8857          6    
+FolhaCarta.NVATime                          .00000     (Insuf)    .00000     .00000          6    
+FolhaCarta.WaitTime                         .00000     (Insuf)    .00000     .00000          6    
+FolhaCarta.TranTime                         .00000     (Insuf)    .00000     .00000          6    
+FolhaCarta.OtherTime                        .00000     (Insuf)    .00000     .00000          6    
+FolhaCarta.TotalTime                        1.4287     (Insuf)    .74229     2.8857          6    
+QualidadeNormal.VATime                      1.5837     (Insuf)    .68131     2.5534          7    
+QualidadeNormal.NVATime                     .00000     (Insuf)    .00000     .00000          7    
+QualidadeNormal.WaitTime                    .63058     (Insuf)    .25944     1.1052          7    
+QualidadeNormal.TranTime                    .00000     (Insuf)    .00000     .00000          7    
+QualidadeNormal.OtherTime                   .00000     (Insuf)    .00000     .00000          7    
+QualidadeNormal.TotalTime                   2.2143     (Insuf)    1.4393     3.6587          7    
+NumeroFolhas.VATime                             --         --         --         --          0
+NumeroFolhas.NVATime                            --         --         --         --          0
+NumeroFolhas.WaitTime                           --         --         --         --          0
+NumeroFolhas.TranTime                           --         --         --         --          0
+NumeroFolhas.OtherTime                          --         --         --         --          0
+NumeroFolhas.TotalTime                          --         --         --         --          0
+QualidadeEconomica.VATime                   3.4773     (Insuf)    1.4283     5.5262          2    
+QualidadeEconomica.NVATime                  .00000     (Insuf)    .00000     .00000          2    
+QualidadeEconomica.WaitTime                 .97171     (Insuf)    .12034     1.8230          2    
+QualidadeEconomica.TranTime                 .00000     (Insuf)    .00000     .00000          2    
+QualidadeEconomica.OtherTime                .00000     (Insuf)    .00000     .00000          2    
+QualidadeEconomica.TotalTime                4.4490     (Insuf)    3.2514     5.6466          2    
+QualidadeOtima.VATime                       2.8206     (Insuf)    2.8206     2.8206          1    
+QualidadeOtima.NVATime                      .00000     (Insuf)    .00000     .00000          1    
+QualidadeOtima.WaitTime                     19.038     (Insuf)    19.038     19.038          1    
+QualidadeOtima.TranTime                     .00000     (Insuf)    .00000     .00000          1    
+QualidadeOtima.OtherTime                    .00000     (Insuf)    .00000     .00000          1    
+QualidadeOtima.TotalTime                    12.550     (Insuf)    12.550     12.550          1    
+impreso.VATime                              1.7488     (Insuf)    .87708     3.3067         12    
+impreso.NVATime                             .00000     (Insuf)    .00000     .00000         12    
+impreso.WaitTime                            .00000     (Insuf)    .00000     .00000         12    
+impreso.TranTime                            .00000     (Insuf)    .00000     .00000         12    
+impreso.OtherTime                           .00000     (Insuf)    .00000     .00000         12    
+impreso.TotalTime                           1.7488     (Insuf)    .87708     3.3067         12    
+Qtd Folha A5.Queue.WaitingTime              2.0000     (Insuf)    .00000     4.0000          9    
+Numero de paginas para imprimir ?.Queue.Wa  .00000     (Insuf)    .00000     .00000         13    
+Nivel Tinta Economico.Queue.WaitingTime     .26787     (Insuf)    .00000     1.1052         18    
+Qtd Folha Carta.Queue.WaitingTime           .00000     (Insuf)    .00000     .00000          6    
+Nivel Tinta Normal.Queue.WaitingTime        .75087     (Insuf)    .00000     2.5617          6    
+Tinta Necessaria para Impressao.Queue.Wait  .00000     (Insuf)    .00000     .00000         13    
+Qtd Folha A4.Queue.WaitingTime              .50000     (Insuf)    .00000     1.0000         18    
+Nivel Tinta Otimo.Queue.WaitingTime         6.3461     (Insuf)    .00000     9.7301          3    
+
+                                     DISCRETE-CHANGE VARIABLES
+
+Identifier                                  Average   Half Width  Minimum    Maximum   Final Value
+___________________________________________________________________________________________________
+
+FolhaA4.WIP                                 2.5395     (Insuf)    .00000     6.0000     3.0000    
+FolhaA5.WIP                                 1.9617     (Insuf)    .00000     5.0000     .00000    
+FolhaCarta.WIP                              1.0023     (Insuf)    .00000     2.0000     .00000    
+QualidadeNormal.WIP                         3.4808     (Insuf)    .00000     9.0000     8.0000    
+NumeroFolhas.WIP                            1.2940     (Insuf)    .00000     4.0000     1.0000    
+QualidadeEconomica.WIP                      2.0446     (Insuf)    .00000     4.0000     4.0000    
+QualidadeOtima.WIP                          2.3700     (Insuf)    .00000     6.0000     2.0000    
+impreso.WIP                                 1.2940     (Insuf)    .00000     4.0000     1.0000    
+Resource 2.NumberBusy                       .00000     (Insuf)    .00000     .00000     .00000    
+Resource 2.NumberScheduled                  1.0000     (Insuf)    1.0000     1.0000     1.0000    
+Resource 2.Utilization                      .00000     (Insuf)    .00000     .00000     .00000    
+Qtd Folha A5.Queue.NumberInQueue            1.0523     (Insuf)    .00000     3.0000     .00000    
+Numero de paginas para imprimir ?.Queue.Nu  .00000     (Insuf)    .00000     1.0000     .00000    
+Nivel Tinta Economico.Queue.NumberInQueue   .28188     (Insuf)    .00000     2.0000     .00000    
+Qtd Folha Carta.Queue.NumberInQueue         .00000     (Insuf)    .00000     1.0000     .00000    
+Nivel Tinta Normal.Queue.NumberInQueue      .26338     (Insuf)    .00000     2.0000     .00000    
+Tinta Necessaria para Impressao.Queue.Numb  .00000     (Insuf)    .00000     1.0000     .00000    
+Qtd Folha A4.Queue.NumberInQueue            .52615     (Insuf)    .00000     2.0000     .00000    
+Nivel Tinta Otimo.Queue.NumberInQueue       1.5455     (Insuf)    .00000     3.0000     2.0000    
+
+                                             OUTPUTS
+
+Identifier                                   Value
+_____________________________________________________________
+
+FolhaA4.NumberIn                            27.000    
+FolhaA4.NumberOut                           24.000    
+FolhaA5.NumberIn                            12.000    
+FolhaA5.NumberOut                           12.000    
+FolhaCarta.NumberIn                         12.000    
+FolhaCarta.NumberOut                        12.000    
+QualidadeNormal.NumberIn                    36.000    
+QualidadeNormal.NumberOut                   28.000    
+NumeroFolhas.NumberIn                       13.000    
+NumeroFolhas.NumberOut                      12.000    
+QualidadeEconomica.NumberIn                 12.000    
+QualidadeEconomica.NumberOut                8.0000    
+QualidadeOtima.NumberIn                     7.0000    
+QualidadeOtima.NumberOut                    5.0000    
+impreso.NumberIn                            13.000    
+impreso.NumberOut                           12.000    
+Resource 2.NumberSeized                     .00000    
+Resource 2.ScheduledUtilization             .00000    
+System.NumberOut                            39.000    
+
+
+Simulation run time: 2.73 minutes.
+Simulation run complete.

@@ -1,0 +1,8 @@
+; C:\Dev-Cpp\Bin\dlltool --base-file C:\Users\agilar\AppData\Local\Temp/cca04760.base --output-exp libxio.exp --dllname libxio.dll --output-def liblibxio.def --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 --def C:\Users\agilar\AppData\Local\Temp/cca04760.def --output-lib liblibxio.a
+EXPORTS
+	Zeos_GetLogFileName@0 @ 1
+	Zeos_SetLogFileName = Zeos_SetLogFileName@4 @ 2
+	Zeos_SetLogFileName@4 @ 3
+	Zeos_WriteAlert = Zeos_WriteAlert@4 @ 4
+	Zeos_WriteAlert@4 @ 5
+	Zeos_GetLogFileName = Zeos_GetLogFileName@0 @ 6

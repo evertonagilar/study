@@ -1,0 +1,479 @@
+program fbcopy;
+
+{$MODE Delphi}
+
+uses
+  SysUtils,
+  Classes,
+  Registry,
+  IniFiles,
+  Windows,
+  Messages;
+
+const
+  EXIT_SUCESS = 0;
+  EXIT_ERROR_BACKUP = 1;
+  EXIT_NO_PARAM = 2;
+  EXIT_ARQ_BACKUP_IGUAL_ARQ_BANCO = 3;
+  EXIT_ERROR_ZIP = 4;
+  EXIT_ERRO_COPIAR = 5;
+
+type
+  TCopia = class
+  private
+    procedure LeLinha(Sender: TObject; const S: String);
+  public
+    procedure Run;
+  end;
+
+function TrocaString(const S: string;
+                     AOldSubStr: string;
+                     const ANovoSubStr: string;
+                     ACaseSensitive: Boolean = True): string; external 'libxutl.dll' name 'Zeos_TrocaString';
+function GetTempNomeArq: string; external 'libxutl.dll' name 'Zeos_GetTempNomeArq';
+function GetTamArqEmBytes(const FileName: string): LongInt; external 'libxutl.dll' name 'Zeos_GetTamArqEmBytes';
+function CreateZip(const ANomeZip: string; const AArqZipar: string): Boolean; overload; external 'libxutl.dll' name 'Zeos_CreateZip';
+function EnviaEmailComAnexo(
+  const Host, UserName, Password: string;
+  Port: Integer;
+  const De, Para, Assunto, Texto: string;
+  const AFileName1: string;
+  const AFileName2: string;
+  ASSL: Boolean): Boolean; external 'libxutl.dll' name 'Zeos_EnviaEMailComAnexo';
+function RemoveAspasAoRedor(const S: string; const AAspa: Char = '"'): string; external 'libxutl.dll' name 'Zeos_RemoveAspasAoRedor';
+function RemoveContraBarraNomeArq(var ANomeArq: string): string; external 'libxutl.dll' name 'Zeos_RemoveContraBarraNomeArq';
+
+function DuploQuoted(const S: string): string;
+begin
+  Result:= '"' + S + '"';
+end;
+
+function CheckParam(const AParam: string): Boolean;
+var
+  tmp: string;
+  i: Integer;
+begin
+  Result:= False;
+  for i:= 1 to ParamCount do
+  begin
+    tmp:= ParamStr(i);
+    if LowerCase(Copy(tmp, 1, Length(AParam))) = LowerCase(AParam) then
+    begin
+      Result:= True;
+      Break;
+    end;
+  end;
+end;
+
+function GetValorParam(const AParam: string): string;
+var
+  tmp: string;
+  i: Integer;
+begin
+  Result:= '';
+  for i:= 1 to ParamCount do
+  begin
+    tmp:= ParamStr(i);
+    if LowerCase(Copy(tmp, 1, Length(AParam))) = LowerCase(AParam) then
+    begin
+      Result:= Copy(tmp, Length(AParam)+2, MaxInt);
+      Result:= Trim(RemoveAspasAoRedor(Result));
+      Break;
+    end;
+  end;
+end;
+
+procedure FbExitProcess(ExitCode: Integer);
+var
+  Arq: TextFile;
+begin
+  AssignFile(Arq, ExtractFilePath(ParamStr(0)) + 'fbexit.dat');
+  Rewrite(Arq);
+  try
+    Write(Arq, IntToStr(ExitCode));
+
+    case ExitCode of
+      EXIT_SUCESS: Write(Arq, ' Concluido com sucesso');
+      EXIT_ERROR_BACKUP: Write(Arq, ' Erro no gbak');
+      EXIT_NO_PARAM: Write(Arq, 'Parametros omitidos');
+      EXIT_ARQ_BACKUP_IGUAL_ARQ_BANCO: Write(Arq, ' Nome do arquivo de backup igual ao nome do arquivo do banco');
+      EXIT_ERROR_ZIP: Write(Arq, ' Erro no zip');
+      EXIT_ERRO_COPIAR: Write(Arq, ' Erro ao copiar arquivo de backup para seu destino. Verifique espaço em disco');
+    end;
+
+  finally
+    CloseFile(Arq);
+  end;
+  ExitProcess(ExitCode);
+end;
+
+function GetAppParam(ANomeParam: string): string;
+var
+  LenNomeParam, i: Integer;
+begin
+  ANomeParam:= UpperCase(ANomeParam);
+  LenNomeParam:= Length(ANomeParam);
+  for i:= 1 to ParamCount do
+  begin
+    if (Length(ANomeParam) = LenNomeParam) and
+      (Copy(UpperCase(ParamStr(i)), 1, LenNomeParam) = ANomeParam) then
+    begin
+      Result:= Copy(ParamStr(i), LenNomeParam+2, MaxInt);
+      Exit;
+    end;
+  end;
+  Result:= '';
+end;
+
+function CriaDir(const APath: string): Boolean;
+begin
+  try
+    Result:= ForceDirectories(APath);
+  except
+    Result:= False;
+  end;
+end;
+
+
+{ TCopia }
+
+procedure TCopia.LeLinha(Sender: TObject; const S: String);
+begin
+  WriteLn(S);
+end;
+
+procedure TCopia.Run;
+var
+  reg: TRegistry;
+  exeGbk, cmdLine: string;
+  ArqBanco, ArqBackup, ArqBackupTmp, ArqZip, ArqZipTmp: string;
+  NomeArqLog: string;
+  Ext, ArqBat: string;
+  Log: TStringList;
+  UltTamLog: Integer;
+  i, j: Integer;
+  Compactar: Boolean;
+  CaminhoIniGestor: string;
+  IniGestor: TIniFile;
+  FPastaBackup1: string;
+  FPastaBackup2: string;
+  FPastaBackup3: string;
+  FPastaBackup4: string;
+  FPastaBackup5: string;
+  NomeArqDestMultiplexa: string;
+begin
+  // Busca na pasta do PoliGestor
+  if DirectoryExists('C:\PoliGestor\Firebird') then
+    exeGbk:= 'C:\PoliGestor\Firebird'
+  else if DirectoryExists(ExtractFileDir(ParamStr(0)) + 'Firebird') then
+    exeGbk:= ExtractFileDir(ParamStr(0)) + 'Firebird'
+  else
+  begin
+    reg := TRegistry.Create;
+    try
+      reg.RootKey := HKEY_LOCAL_MACHINE;
+      reg.OpenKey('SOFTWARE\Firebird Project\Firebird Server\Instances', False);
+      exeGbk := reg.ReadString('DefaultInstance');
+    finally
+      reg.Free;
+    end;
+  end;
+
+  exeGbk := exeGbk + '\bin\gbak.exe';
+  ArqBanco:= Trim(RemoveAspasAoRedor(ParamStr(1), '"'));
+  ArqBackup:= Trim(RemoveAspasAoRedor(ParamStr(2), '"'));
+
+  // Verifica variáveis
+  if Pos('{timestamp}', LowerCase(ArqBackup)) > 0 then
+    ArqBackup:= TrocaString(ArqBackup, '{timestamp}', FormatDateTime('yyyymmdd_hhnn', Now), False);
+
+  if (ExtractFileName(ArqBackup) = '') or DirectoryExists(ArqBackup) then
+  begin
+    RemoveContraBarraNomeArq(ArqBackup);
+    ArqBackup:= ArqBackup + '\' + ExtractFileName(ArqBanco);
+    Arqbackup:= ChangeFileExt(ArqBackup, '.fbk');
+  end;
+
+  // Verifica extenções permitidas do arquivo de backup
+  Ext:= LowerCase(ExtractFileExt(ArqBackup));
+  if (Ext <> '.fbk') and (Ext <> '.gbk') and (Ext <> '.zip') then
+  begin
+    WriteLn('Nome do arquivo de backup deve ter extencao ".fbk" ou ".gbk" ou ".zip"!');
+    WriteLn('Incluindo extencao .fbk!');
+    ArqBackup:= ChangeFileExt(ArqBackup, '.fbk');
+  end;
+
+  // Verifica opção de compactação. Não pode ser caminho Linux
+  Compactar:= (Ext = '.zip') and (Pos('/', ArqBackup) = 0);
+  if Compactar then
+    ArqBackup:= ChangeFileExt(ArqBackup, '.fbk');
+
+  if CompareText(ArqBanco, ArqBackup) = 0 then
+  begin
+    WriteLn('Arquivo de backup igual ao arquivo do banco!');
+    FbExitProcess(EXIT_ARQ_BACKUP_IGUAL_ARQ_BANCO);
+  end;
+
+  ArqBackupTmp:= GetTempNomeArq;
+
+  NomeArqLog:= ExtractFilePath(ParamStr(0)) + 'fbcopy.log';
+  DeleteFile(PChar(NomeArqLog));
+  cmdLine:= '"' + exeGbk +'" -v -b -user SYSDBA -pass masterkey "' +
+    ArqBanco + '" "' + ArqBackupTmp + '" -y "'+ NomeArqLog + '"';
+
+  WriteLn('Database: '+ ArqBanco);
+  WriteLn('Backup: '+ ArqBackup);
+  Write('Servidor PoliDados Firebird realizando backup, aguarde');
+
+    // Gera o backup e aguarda terminar
+    WinExec(PChar(cmdline), SW_HIDE);
+    i:= 0; j:= 0;
+    Write('.');
+    Sleep(2000);
+    Write('.');
+    repeat
+      try
+        UltTamLog:= GetTamArqEmBytes(NomeArqLog);
+      except
+        Sleep(1000);
+        Continue;
+      end;
+      Sleep(2000);
+      Write('.');
+      Sleep(2000);
+      Write('.');
+      Sleep(2000);
+      Write('.');
+      Inc(i);
+
+      if (FileExists(NomeArqLog) and (GetTamArqEmBytes(NomeArqLog) >= UltTamLog)) then
+        Inc(j);
+      if j = 3 then Break;
+    until (i > 80);
+    Sleep(10000);
+
+
+    // Carrega o log e verifica se houve erros
+    Log:= TStringList.Create;
+    try
+      try
+        Log.LoadFromFile(NomeArqLog);
+      except
+        Sleep(15000);
+        try
+          Log.LoadFromFile(NomeArqLog);
+        except
+          Log.Add('errors');
+        end;
+      end;
+      if Pos('errors', Log.Text) > 0 then
+      begin
+        WriteLn(' FALHOU ');
+        WriteLn;
+        WriteLn('Ocorreu erros na geracao do backup ' + DuploQuoted(ArqBackup) + ':');
+        Writeln(Log.Text);
+        FbExitProcess(EXIT_ERROR_BACKUP);
+      end
+      else
+      begin
+        if Compactar then
+        begin
+          ArqZipTmp:= ChangeFileExt(GetTempNomeArq, '.zip');
+          ArqZip:= ChangeFileExt(ArqBackup, '.zip');
+          if CreateZip(ArqZipTmp, ArqBackupTmp) then
+          begin
+            DeleteFile(PChar(ArqZip));
+            if MoveFile(PChar(ArqZipTmp), PChar(ArqZip)) then
+              WriteLn(' OK ')
+            else
+            begin
+              WriteLn(' FALHOU ');
+              WriteLn;
+              WriteLn('Ocorreu erros na compactacao do arquivo de backup ' + DuploQuoted(ArqZip) + ':');
+              FbExitProcess(EXIT_ERRO_COPIAR);
+            end;
+          end
+          else
+          begin
+            WriteLn(' FALHOU ');
+            WriteLn;
+            WriteLn('Ocorreu erros na compactacao do arquivo de backup ' + DuploQuoted(ArqZip) + ':');
+            FbExitProcess(EXIT_ERROR_ZIP);
+          end;
+        end
+        else
+        begin
+          DeleteFile(PChar(ArqBackup));
+          if MoveFile(PChar(ArqBackupTmp), PChar(ArqBackup)) then
+            WriteLn(' OK ')
+          else
+          begin
+            WriteLn(' FALHOU ');
+            WriteLn;
+            WriteLn('Ocorreu erros na geracao do backup ' + DuploQuoted(ArqBackup) + ':');
+            FbExitProcess(EXIT_ERRO_COPIAR);
+          end;
+        end;
+        WriteLn;
+      end;
+    finally
+      Log.Free;
+    end;
+
+    WriteLn;
+    Writeln('Arquivo ' + ArqBackup + ' gerado com sucesso!');
+    Writeln('Log do gbak gerado em "' + NomeArqLog + '".');
+    Writeln('fbexit.dat gerado em "' + ExtractFilePath(ParamStr(0)) + 'fbexit.dat' + '".');
+
+    // Verifica parâmetro --execbat
+    if CheckParam('-e') then
+    begin
+      ArqBat:= GetValorParam('-e');
+      if FileExists(ArqBat) then
+      begin
+        WriteLn('Executando bat ' + DuploQuoted(ArqBat));
+        WinExec(PChar(ArqBat), SW_SHOW);
+      end;
+    end
+    else if CheckParam('--execbat') then
+    begin
+      ArqBat:= GetValorParam('--execbat');
+      if FileExists(ArqBat) then
+      begin
+        WriteLn('Executando bat ' + DuploQuoted(ArqBat));
+        WinExec(PChar(ArqBat), SW_SHOW);
+      end;
+    end;
+
+    // Verifica parâmetro para multiplexar cópias
+    if CheckParam('inigestor') then
+    begin
+      CaminhoIniGestor:= GetAppParam('inigestor');
+      IniGestor:= TIniFile.Create(CaminhoIniGestor);
+      try
+        // Caminhos de backup
+
+        FPastaBackup1:= '';
+        FPastaBackup2:= '';
+        FPastaBackup3:= '';
+        FPastaBackup4:= '';
+        FPastaBackup5:= '';
+
+        // Pasta de Backup 1 - sempre local                 \
+        FPastaBackup1:= LowerCase(IniGestor.ReadString('Backup', 'Pasta', ''));
+        if FPastaBackup1 = '' then
+          FPastaBackup1:= IniGestor.ReadString('Backup', 'Pasta1', '');
+        FPastaBackup1:= RemoveContraBarraNomeArq(FPastaBackup1);
+        if (FPastaBackup1 = '') or not CriaDir(FPastaBackup1) then
+        begin
+          FPastaBackup1:= 'C:\PoliGestor\Backup';
+          ForceDirectories(FPastaBackup1);
+        end;
+
+        // Pasta de Backup 2
+        FPastaBackup2:= LowerCase(IniGestor.ReadString('Backup', 'Pasta2', ''));
+        FPastaBackup2:= RemoveContraBarraNomeArq(FPastaBackup2);
+        if (FPastaBackup2 <> '') and not CriaDir(FPastaBackup2) then
+          FPastaBackup2:= '';
+
+        // Pasta de Backup 3
+        FPastaBackup3:= LowerCase(IniGestor.ReadString('Backup', 'Pasta3', ''));
+        FPastaBackup3:= RemoveContraBarraNomeArq(FPastaBackup3);
+        if (FPastaBackup3 <> '') and not CriaDir(FPastaBackup3) then
+          FPastaBackup3:= '';
+
+        // Pasta de Backup 4
+        FPastaBackup4:= LowerCase(IniGestor.ReadString('Backup', 'Pasta4', ''));
+        FPastaBackup4:= RemoveContraBarraNomeArq(FPastaBackup4);
+        if (FPastaBackup4 <> '') and not CriaDir(FPastaBackup4) then
+          FPastaBackup4:= '';
+
+        // Pasta de Backup 5
+        FPastaBackup5:= LowerCase(IniGestor.ReadString('Backup', 'Pasta5', ''));
+        FPastaBackup5:= RemoveContraBarraNomeArq(FPastaBackup5);
+        if (FPastaBackup5 <> '') and not CriaDir(FPastaBackup5) then
+          FPastaBackup5:= '';
+
+        // Formata o nome do arquivo para multiplexar nas pastas
+        NomeArqDestMultiplexa:= ExtractFileName(ArqBackup);
+        NomeArqDestMultiplexa:= Copy(NomeArqDestMultiplexa, 1, Length(NomeArqDestMultiplexa)-4);
+        NomeArqDestMultiplexa:= NomeArqDestMultiplexa + '_' + FormatDateTime('yyyymmdd_hhnn', Now) + '.fbk';
+
+        // Multiplexa as cópias de segurança
+        if FPastaBackup1 <> '' then
+          CopyFile(PChar(ArqBackup), PChar(FPastaBackup1 + '\' + NomeArqDestMultiplexa), False);
+        if FPastaBackup2 <> '' then
+          CopyFile(PChar(ArqBackup), PChar(FPastaBackup2 + '\' + NomeArqDestMultiplexa), False);
+        if FPastaBackup3 <> '' then
+          CopyFile(PChar(ArqBackup), PChar(FPastaBackup3 + '\' + NomeArqDestMultiplexa), False);
+        if FPastaBackup4 <> '' then
+          CopyFile(PChar(ArqBackup), PChar(FPastaBackup4 + '\' + NomeArqDestMultiplexa), False);
+        if FPastaBackup5 <> '' then
+          CopyFile(PChar(ArqBackup), PChar(FPastaBackup5 + '\' + NomeArqDestMultiplexa), False);
+
+      finally
+        IniGestor.Free;
+      end;
+    end;
+
+    // Verifica parâmetro --email
+    if CheckParam('-m') or CheckParam('--email') or CheckParam('/m') or CheckParam('/email') or CheckParam('-mail') or CheckParam('/mail')  then
+    begin
+      if Compactar then
+        ArqBackup:= ArqZip;
+      Write('Enviando email...');
+      if EnviaEMailComAnexo('smtp.gmail.com', 'polidados@gmail.com',
+        '*000222*', 465, 'polidados@gmail.com', 'poligestor@polidados.com',
+        'Envio de Email via FbCopy', '', ArqBackup, '', True) then
+          Write(' OK ')
+      else
+        Write(' FALHOU');
+      Sleep(5000);
+    end;
+
+    FbExitProcess(EXIT_SUCESS);
+end;
+
+var
+  copia: TCopia;
+begin
+  WriteLn('fbcopy V17 - Utilitario para copia de bancos de dados Firebird');
+  WriteLn('PoliDados Informatica Total');
+  WriteLn('Autor: Everton de Vargas Agilar');
+
+  if (ParamCount = 0) or CheckParam('--help') or (ParamCount < 2) then
+  begin
+    WriteLn('Uso: fbcopy [OPCOES] ArquivoOrigem.fdb  ArquivoDestino.fbk');
+    WriteLn('Uso: fbcopy [OPCOES] ArquivoOrigem.fdb  ArquivoDestino{timestamp}.fbk');
+    WriteLn('Uso: fbcopy [OPCOES] ArquivoOrigem.fdb  ArquivoDestino.zip');
+    WriteLn('     fbcopy [OPCOES] ArquivoOrigem.fdb  Pasta Destino');
+    WriteLn;
+    WriteLn('Opcoes: A lista de opcoes a seguir e opcional');
+
+    WriteLn(' -e=arq.bat   --execbat=bat    Executa um arquivo bat apos concluir o backup.');
+    WriteLn(' -m           --email          Envia um email para o adminstrador em ');
+    WriteLn('                               caso de falha do backup. o Parametro mail');
+    WriteLn('                               indica o email do administrador.');
+    WriteLn;
+    WriteLn('Obs.: A extencao do arquivo de backup obrigatoriamente deve ser .fbk');
+    WriteLn('por seguranca. Se não for imformada, fbcopy vai incluir automaticamente');
+    WriteLn('a extenção no nome do arquivo de backup.');
+    FbExitProcess(EXIT_NO_PARAM);
+  end;
+
+  try
+    DeleteFile(PChar(ExtractFilePath(ParamStr(0)) + 'fbexit.dat'));
+    copia:= TCopia.Create;
+    try
+      copia.Run;
+    finally
+      copia.Free;
+    end;
+  except
+    on E: Exception do
+    begin
+      WriteLn('ERRO: '+ E.Message);
+      FbExitProcess(EXIT_ERROR_BACKUP);
+    end;  
+  end;
+end.

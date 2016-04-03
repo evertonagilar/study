@@ -1,0 +1,9 @@
+<!ELEMENT artigo(titulo, autor)>
+<!ELEMENT titulo (#PCDATA)>
+<!ELEMENT autor (nome, sobrenome, email)>
+<!ELEMENT nome (#PCDATA)>
+<!ELEMENT sobrenome (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+
+
+

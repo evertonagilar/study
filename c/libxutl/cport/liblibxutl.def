@@ -1,0 +1,16 @@
+; C:\Dev-Cpp\Bin\dlltool --base-file C:\Users\agilar\AppData\Local\Temp/cca04524.base --output-exp libxutl.exp --dllname libxutl.dll --output-def liblibxutl.def --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 --def C:\Users\agilar\AppData\Local\Temp/cca04524.def --output-lib liblibxutl.a
+EXPORTS
+	CreateStringUtils = CreateStringUtils@0 @ 1
+	CreateStringUtils@0 @ 2
+	Zeos_GetLogFileName = Zeos_GetLogFileName@0 @ 3
+	Zeos_GetLogFileName@0 @ 4
+	Zeos_SetLogFileName = Zeos_SetLogFileName@4 @ 5
+	Zeos_SetLogFileName@4 @ 6
+	Zeos_StrDate = Zeos_StrDate@4 @ 7
+	Zeos_StrDate@4 @ 8
+	Zeos_StrDateTime = Zeos_StrDateTime@4 @ 9
+	Zeos_StrDateTime@4 @ 10
+	Zeos_WriteAlert = Zeos_WriteAlert@4 @ 11
+	Zeos_WriteAlert@4 @ 12
+	Zeos_ltrim = Zeos_ltrim@4 @ 13
+	Zeos_ltrim@4 @ 14

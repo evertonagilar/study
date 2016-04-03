@@ -1,0 +1,30 @@
+# Project: Ordena
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
+WINDRES = windres.exe
+RES  = 
+OBJ  = ordena.o $(RES)
+LINKOBJ  = ordena.o $(RES)
+LIBS =  -L"C:/Program Files (x86)/Dev-Cpp/Lib"  -g3 
+INCS =  -I"C:/Program Files (x86)/Dev-Cpp/Include" 
+CXXINCS =  -I"C:/Program Files (x86)/Dev-Cpp/lib/gcc/mingw32/3.4.5/include"  -I"C:/Program Files (x86)/Dev-Cpp/include/c++/3.4.5/backward"  -I"C:/Program Files (x86)/Dev-Cpp/include/c++/3.4.5/mingw32"  -I"C:/Program Files (x86)/Dev-Cpp/include/c++/3.4.5"  -I"C:/Program Files (x86)/Dev-Cpp/include"  -I"C:/Program Files (x86)/Dev-Cpp/"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/msw"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/generic"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/html"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/protocol"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/xml"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx/xrc"  -I"C:/Program Files (x86)/Dev-Cpp/include/common/wx"  -I"C:/Program Files (x86)/Dev-Cpp/include/common" 
+BIN  = Ordena2.exe
+CXXFLAGS = $(CXXINCS)   -fverbose-asm -g3
+CFLAGS = $(INCS)   -fverbose-asm -g3
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before Ordena2.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "Ordena2.exe" $(LIBS)
+
+ordena.o: ordena.c C:/Program Files (x86)/Dev-Cpp/Include/stdio.h   C:/Program Files (x86)/Dev-Cpp/Include/_mingw.h   C:/Program Files (x86)/Dev-Cpp/Include/sys/types.h   C:/Program Files (x86)/Dev-Cpp/Include/stdlib.h   C:/Program Files (x86)/Dev-Cpp/Include/string.h   C:/Program Files (x86)/Dev-Cpp/Include/time.h
+	$(CC) -c ordena.c -o ordena.o $(CFLAGS)

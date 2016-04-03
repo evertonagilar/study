@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faculdade xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="faculdade.xsd">
+	<reitor>
+		<nome>JOAO</nome>
+		<idade>70</idade>
+	</reitor>
+	<professor>
+		<nome>JULIO</nome>
+		<idade>36</idade>
+		<CT>12341234134234</CT>
+		<area>EXATA</area>
+	</professor>
+	<professor>
+		<nome>VAGNER</nome>
+		<idade>43</idade>
+		<CT>3234234234234234</CT>
+		<area>TECNOLOGIA</area>
+	</professor>
+	<professor>
+		<nome>PAULA</nome>
+		<idade>30</idade>
+		<CT>334334234234234</CT>
+		<area>TECNOLOGIA</area>
+	</professor>
+	<professor>
+		<nome>THAIS</nome>
+		<idade>30</idade>
+		<CT>2341234234234234</CT>
+		<area>EXATA</area>
+	</professor>
+	<aluno>
+		<nome>TIAGO</nome>
+		<idade>19</idade>
+		<pai>
+			<nome>JELCI</nome>
+			<idade>58</idade>
+		</pai>
+		<disciplina>
+			<nome>PROJETO DE SOFTWARE</nome>
+			<professor>JULIO DA SILVA</professor>
+			<media>88</media>
+		</disciplina>
+		<orientador>VAGNER</orientador>
+	</aluno>
+		<aluno>
+		<nome>RODRIGO</nome>
+		<idade>21</idade>
+		<responsavel>
+			<nome>PAULO</nome>
+			<idade>49</idade>
+		</responsavel>
+		<disciplina>
+			<nome>PROJETO DE SOFTWARE</nome>
+			<professor>JULIO DA SILVA</professor>
+			<media>90</media>
+		</disciplina>
+		<disciplina>
+			<nome>XML</nome>
+			<professor>PAULA</professor>
+			<media>100</media>
+		</disciplina>
+		<orientador>VAGNER</orientador>
+	</aluno>
+	<aluno>
+		<nome>CARLOS</nome>
+		<idade>25</idade>
+		<disciplina>
+			<nome>BANCO DE DADOS I</nome>
+			<professor>THAIS</professor>
+			<media>80</media>
+		</disciplina>
+		<disciplina>
+			<nome>LINGUAGEM DE PROGRAMAÇÃO II</nome>
+			<professor>PAULA</professor>
+			<media>100</media>
+		</disciplina>
+		<orientador>THAIS</orientador>
+	</aluno>
+</faculdade>

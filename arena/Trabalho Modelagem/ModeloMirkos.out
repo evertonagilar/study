@@ -1,0 +1,63 @@
+SIMAN Run Controller.
+
+16.453962 Hours>
+                                      ARENA Simulation Results
+                                               Everton
+
+                                  Summary for Replication 1 of 1
+
+Project: Unnamed Project                                             Run execution date :11/11/2009
+Analyst: Jader                                                       Model revision date:11/11/2009
+
+Replication ended at time      : 16.453962 Hours 
+Base Time Units: Hours
+
+                                           TALLY VARIABLES
+
+Identifier                                  Average   Half Width  Minimum    Maximum   Observations
+___________________________________________________________________________________________________
+
+Verde.VATime                                .00000     (Insuf)    .00000     .00000         13    
+Verde.NVATime                               .00000     (Insuf)    .00000     .00000         13    
+Verde.WaitTime                              .00000     (Insuf)    .00000     .00000         13    
+Verde.TranTime                              .00000     (Insuf)    .00000     .00000         13    
+Verde.OtherTime                             .00000     (Insuf)    .00000     .00000         13    
+Verde.TotalTime                             .00000     (Insuf)    .00000     .00000         13    
+Carro.VATime                                7.0131     (Insuf)    .82850     12.658          9    
+Carro.NVATime                               .00000     (Insuf)    .00000     .00000          9    
+Carro.WaitTime                              .00000     (Insuf)    .00000     .00000          9    
+Carro.TranTime                              .00000     (Insuf)    .00000     .00000          9    
+Carro.OtherTime                             .00000     (Insuf)    .00000     .00000          9    
+Carro.TotalTime                             7.0131     (Insuf)    .82850     12.658          9    
+Vermelho.VATime                             .00000     (Insuf)    .00000     .00000         20    
+Vermelho.NVATime                            .00000     (Insuf)    .00000     .00000         20    
+Vermelho.WaitTime                           .00000     (Insuf)    .00000     .00000         20    
+Vermelho.TranTime                           .00000     (Insuf)    .00000     .00000         20    
+Vermelho.OtherTime                          .00000     (Insuf)    .00000     .00000         20    
+Vermelho.TotalTime                          .00000     (Insuf)    .00000     .00000         20    
+
+                                     DISCRETE-CHANGE VARIABLES
+
+Identifier                                  Average   Half Width  Minimum    Maximum   Final Value
+___________________________________________________________________________________________________
+
+Verde.WIP                                   .00000     (Insuf)    .00000     1.0000     .00000    
+Carro.WIP                                   4.0394     (Insuf)    .00000     7.0000     4.0000    
+Vermelho.WIP                                .00000     (Insuf)    .00000     1.0000     .00000    
+
+                                             OUTPUTS
+
+Identifier                                   Value
+_____________________________________________________________
+
+Verde.NumberIn                              13.000    
+Verde.NumberOut                             13.000    
+Carro.NumberIn                              13.000    
+Carro.NumberOut                             9.0000    
+Vermelho.NumberIn                           20.000    
+Vermelho.NumberOut                          20.000    
+System.NumberOut                            42.000    
+
+
+Simulation run time: 1.48 minutes.
+Simulation run complete.

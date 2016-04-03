@@ -1,0 +1,43 @@
+-$A8
+-$B-
+-$C+
+-$D+
+-$E-
+-$F-
+-$G+
+-$H+
+-$I+
+-$J-
+-$K-
+-$L+
+-$M-
+-$N+
+-$O+
+-$P+
+-$Q+
+-$R+
+-$S-
+-$T-
+-$U-
+-$V+
+-$W-
+-$X+
+-$YD
+-$Z1
+-cg
+-AWinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+-H+
+-W+
+-M
+-$M16384,1048576
+-K$00900000
+-E"C:\PoliGestor"
+-LE"c:\program files (x86)\borland\delphi7\Projects\Bpl"
+-LN"c:\program files (x86)\borland\delphi7\Projects\Bpl"
+-U"D:\Projetos\PoliGestor\Componentes\Fortes Report\FortesSource324\bin\d7vcl;D:\Projetos\PoliVarejo;D:\Projetos\PoliGestor\Componentes\expsuitsrc\D7;D:\Projetos\PoliGestor\Componentes\expsuitsrc\SOURCE;D:\Projetos\PoliGestor\Componentes\Notebook;D:\Projetos\PoliGestor\Componentes\Outros;D:\Projetos\PoliGestor\Relatorios;D:\Projetos\PoliGestor\Relatorios\Balcao;D:\Projetos\PoliGestor\Relatorios\Movimentos;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\component;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\core;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\dbc;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\parsesql;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\plain;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\LabeledControls;D:\Projetos\PoliGestor\Componentes\Utils"
+-O"D:\Projetos\PoliGestor\Componentes\Fortes Report\FortesSource324\bin\d7vcl;D:\Projetos\PoliVarejo;D:\Projetos\PoliGestor\Componentes\expsuitsrc\D7;D:\Projetos\PoliGestor\Componentes\expsuitsrc\SOURCE;D:\Projetos\PoliGestor\Componentes\Notebook;D:\Projetos\PoliGestor\Componentes\Outros;D:\Projetos\PoliGestor\Relatorios;D:\Projetos\PoliGestor\Relatorios\Balcao;D:\Projetos\PoliGestor\Relatorios\Movimentos;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\component;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\core;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\dbc;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\parsesql;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\plain;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\LabeledControls;D:\Projetos\PoliGestor\Componentes\Utils"
+-I"D:\Projetos\PoliGestor\Componentes\Fortes Report\FortesSource324\bin\d7vcl;D:\Projetos\PoliVarejo;D:\Projetos\PoliGestor\Componentes\expsuitsrc\D7;D:\Projetos\PoliGestor\Componentes\expsuitsrc\SOURCE;D:\Projetos\PoliGestor\Componentes\Notebook;D:\Projetos\PoliGestor\Componentes\Outros;D:\Projetos\PoliGestor\Relatorios;D:\Projetos\PoliGestor\Relatorios\Balcao;D:\Projetos\PoliGestor\Relatorios\Movimentos;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\component;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\core;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\dbc;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\parsesql;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\plain;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\LabeledControls;D:\Projetos\PoliGestor\Componentes\Utils"
+-R"D:\Projetos\PoliGestor\Componentes\Fortes Report\FortesSource324\bin\d7vcl;D:\Projetos\PoliVarejo;D:\Projetos\PoliGestor\Componentes\expsuitsrc\D7;D:\Projetos\PoliGestor\Componentes\expsuitsrc\SOURCE;D:\Projetos\PoliGestor\Componentes\Notebook;D:\Projetos\PoliGestor\Componentes\Outros;D:\Projetos\PoliGestor\Relatorios;D:\Projetos\PoliGestor\Relatorios\Balcao;D:\Projetos\PoliGestor\Relatorios\Movimentos;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\component;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\core;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\dbc;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\parsesql;D:\Projetos\PoliGestor\Componentes\ZeosDBO\src\plain;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\LabeledControls;D:\Projetos\PoliGestor\Componentes\Utils"
+-w-UNSAFE_TYPE
+-w-UNSAFE_CODE
+-w-UNSAFE_CAST

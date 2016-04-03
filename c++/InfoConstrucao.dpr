@@ -1,0 +1,54 @@
+program InfoConstrucao;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils;
+
+var
+  Largura, Altura, Comprimento: Real;
+  LarguraPorta, AlturaPorta: Real;
+  AreaTotal, AreaPorta, AreaParede: Real;
+  QtdTijolos: Real;
+  PrecoTijolo, GastoTotalTijolo: Real;
+
+begin
+  WriteLn('Programa que calcula informações de construção');
+  WriteLn;
+
+  // Obtém informações de construção
+  Write('Informe a largura do pavilhão: ');
+  ReadLn(Largura);
+  Write('Informe a altura do pavilhão: ');
+  ReadLn(Altura);
+  Write('Informe o comprimento do pavilhão: ');
+  ReadLn(Comprimento);
+  Write('Informe o valor do tijolo: ');
+  ReadLn(PrecoTijolo);
+  Write('Informe a largura da porta de entrada: ');
+  ReadLn(LarguraPorta);
+  Write('Informe a altura da porta de entrada: ');
+  ReadLn(AlturaPorta);
+
+  // Calculos
+  AreaPorta:= LarguraPorta * AlturaPorta;
+  AreaTotal:= (Largura * Altura * 2) + (Comprimento * Altura * 2);
+  AreaParede:= AreaTotal - AreaPorta;
+  QtdTijolos:= AreaParede * 30;
+  GastoTotalTijolo:= PrecoTijolo * QtdTijolos;
+
+  // Resultados
+  WriteLn('Area total das paredes: ', AreaParede: 4:2);
+  WriteLn('Numero de tijolos necessarios: ', QtdTijolos:4:2);
+  WriteLn('Valor gasto com a compra dos tijolos: ', GastoTotalTijolo:4:2);
+
+  Write('Pressione qualquer tecla pra continuar...'); ReadLn;
+
+
+
+
+
+
+
+
+end.

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/libxutl/!svn/ver/12/cport/TestCase
+END
+TestDelphi.dproj
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/libxutl/!svn/ver/14/cport/TestCase/TestDelphi.dproj
+END
+TestStringUtils.layout
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/libxutl/!svn/ver/12/cport/TestCase/TestStringUtils.layout
+END
+TestStringUtils.dev
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/libxutl/!svn/ver/12/cport/TestCase/TestStringUtils.dev
+END
+TestStringUtils.depend
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/libxutl/!svn/ver/12/cport/TestCase/TestStringUtils.depend
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/libxutl/!svn/ver/12/cport/TestCase/main.cpp
+END
+TestDelphi.exe
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/libxutl/!svn/ver/14/cport/TestCase/TestDelphi.exe
+END
+TestStringUtils.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/libxutl/!svn/ver/12/cport/TestCase/TestStringUtils.cpp
+END
+Makefile.win
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/libxutl/!svn/ver/12/cport/TestCase/Makefile.win
+END
+TestDelphi.dpr
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/libxutl/!svn/ver/14/cport/TestCase/TestDelphi.dpr
+END
+TestStringUtils.cbp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/libxutl/!svn/ver/12/cport/TestCase/TestStringUtils.cbp
+END
+TestDelphi.dproj.local
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/libxutl/!svn/ver/14/cport/TestCase/TestDelphi.dproj.local
+END
+TestDelphi.identcache
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/libxutl/!svn/ver/14/cport/TestCase/TestDelphi.identcache
+END

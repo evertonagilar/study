@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1266779154 source:/media/A478793878790A76_/Projetos/libxutl/cport/TestCase/TestStringUtils.cpp
+	<cstdlib>
+	<cstring>
+	<cstdio>
+	<ctime>
+	<iostream>
+	<windows.h>
+	"..\StringUtils.h"
+	"..\libxinit.h"
+	"..\libxutl.h"
+	"../stringutils.h"
+	"../libxinit.h"
+	"../libxutl.h"
+
+1266767930 /media/A478793878790A76_/Projetos/libxutl/cport/stringutils.h
+	"libxinit.h"
+
+1266777163 /media/A478793878790A76_/Projetos/libxutl/cport/libxinit.h
+
+1266768311 /media/A478793878790A76_/Projetos/libxutl/cport/libxutl.h
+	"libxinit.h"
+	"stringutils.h"
+

@@ -1,0 +1,23 @@
+Interpretador Dexter
+--------------------------------------------------------------------------------------
+Projeto desenvolvido com auxílio da ferramenta Delphi 7. Pode ser utilizado 
+qualquer versão do Delphi para compilar o projeto. FreePascal também será compilável, 
+mas por enquanto deve compilar somente em Delphi por causa das diretivas e 
+configurações de compilação.
+
+
+Arquivos do projeto:
+dc.dpr          - Projeto do interpretador
+UnDexter.pas    - Núcleo do interpretador Dexter
+
+
+Pastas:
+Teste           - Contém exemplos de programas para teste do interpretador
+TFG		- Contém documentos do TFG e proposta de projeto.
+
+
+Como executar um programa Dexter:
+dc <arquivo.pas>
+
+onde <arquivo.pas> é o arquivo do programa a ser interpretado.
+

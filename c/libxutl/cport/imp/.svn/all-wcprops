@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/libxutl/!svn/ver/12/cport/imp
+END
+stringutils_imp.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/libxutl/!svn/ver/12/cport/imp/stringutils_imp.h
+END
+stringutils_imp.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/libxutl/!svn/ver/12/cport/imp/stringutils_imp.cpp
+END

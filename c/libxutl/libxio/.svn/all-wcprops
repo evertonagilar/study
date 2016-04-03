@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/libxutl/!svn/ver/16/libxio
+END
+libxio.layout
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/libxutl/!svn/ver/16/libxio/libxio.layout
+END
+libxio.dev
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/libxutl/!svn/ver/16/libxio/libxio.dev
+END
+libxio.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/libxutl/!svn/ver/16/libxio/libxio.c
+END
+Makefile.win
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/libxutl/!svn/ver/16/libxio/Makefile.win
+END
+liblibxio.def
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/libxutl/!svn/ver/16/libxio/liblibxio.def
+END
+libxio.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/libxutl/!svn/ver/16/libxio/libxio.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/libxutl/!svn/ver/16/libxio/Makefile
+END
+.dep.inc
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/libxutl/!svn/ver/16/libxio/.dep.inc
+END
+a.txt
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/libxutl/!svn/ver/16/libxio/a.txt
+END

@@ -1,0 +1,23 @@
+program sql1;
+
+
+begin
+  WriteLn('Programa Teste SQL1');
+
+  // Cria a conexão
+  create connection conn1
+  database 'c:\poligestor\db\poligestor.fdb'
+  protocol firebird
+  user 'sysdba'
+  password 'masterkey';
+
+  select descricao from conn1.estoque
+  into vDescricao;
+
+
+
+
+
+
+
+end.

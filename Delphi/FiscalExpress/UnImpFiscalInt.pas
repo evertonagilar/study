@@ -1,0 +1,96 @@
+{***************************    ****************************************}
+{ IImpFiscal                                                        }
+{                                                                   }
+{ Interface do driver de comunicação FiscalExpress para acesso      }
+{ as impressoras fiscais.                                           }
+{                                                                   }
+{ Impressoras suportadas:                                           }
+{     Bematech                                                      }
+{     Daruma                                                        }
+{     Elgin                                                         }
+{                                                                   }
+{ Autor: Everton de Vargas Agilar                                   }
+{ Ano: 2009                                                         }
+{*******************************************************************}
+
+unit UnImpFiscalInt;
+
+interface
+
+type
+  TTipoImpressora = (tiBematech, tiDaruma, tiElgin);
+
+  //Tipo enumerado de dado para determinar o status da I.F.
+  pdvStatus = (ifsErro, ifsAguardaZ, ifsIntervencao, ifsVenda, ifsItem, ifsPgto,
+           ifsComercial, ifsFecharXZ, ifsNaoFiscal, ifsJaHouveZ, ifsLivre,
+           ifsCupomAberto, ifsRelatorio, ifsInicia, ifsFimPapel, ifsPoucoPapel,
+           ifsAliqNaoProg, ifsCancNaoPerm);
+  //Tipo de dado derivado do anterior com 17 posições para retornar diversos
+  //estados em uma única leitura.
+  ifStatus = array[0..17] of pdvStatus;
+
+  IImpFiscal = interface
+    function getNumeroSerie: string;
+    function getNumeroCupom: Integer;
+    function getProximoNumeroCupom: Integer;
+    function getCaixa: Integer;
+    function getLoja: Integer;
+    procedure AbreCupom;
+    function VendeItem(
+      const ACodigo, ADescricao: string;
+      const AAliquota: string;
+      AValorUnitario: Currency;
+      AValorDesconto: Currency;
+      AQuantidade: Real): Boolean;
+    function FechaCupom(
+      const AFormaPgto: string;
+      const ADescAcrescimo: Char;
+      AValorDescAcrescimo: Currency;
+      AValorDinheiro: Currency): Boolean; overload;
+    function IniciaFechamentoCupom(
+      const ADescAcrescimo: Char;
+      const ATipoDescAcrescimo: Char;
+      AValorDescAcrescimo: Currency): Boolean;
+    function EfetuaFormaPagamentoCupom(
+      const AFormaPgto: string;
+      AValor: Currency): Boolean;
+    function FechaCupom: Boolean; overload;
+    function CancelarCupom: Boolean;
+    function CancelarItemGen(const ANumeroItem : string) : Boolean;
+    procedure IdentificaCliente(
+      const ACodCli, ANomeCli, ACPFCNPJ, AIE, AEndereco, AData, AHora,
+      APlaca, ACidade : string;
+      const AOperador : string = '';
+      const AVendedor: string = '');
+    procedure IdentificaPlaca(const APlaca: string);
+    procedure LimpaIdentificacao;
+    function EmitirZ : Boolean;
+    function EmitirX : Boolean;
+    function ImprimeComprovanteVinculado(const ATexto: string; const AFormaPgto: string) : Boolean;
+    function FecharPorta: Boolean;
+    function EmitirLeituraMemFiscal(ADataInicial, ADataFinal: TDateTime) : Boolean;
+    function AbrirGaveta : Boolean;
+    function AutenticarDoc : Boolean;
+    function progAliquota(const Aliq: string) : Boolean;
+    function horarioVerao : Boolean;
+    function getNomeCliente: string;
+    function getCpfCnpjCliente: string;
+    function getIECliente: string;
+    function getEndereco: string;
+    function getCidade: string;
+    function getPlaca: string;
+    function getDataSaida: string;
+    function getHoraSaida: string;
+    function getOperador: string;
+    function getVendedor: string;
+    function getStatus : ifStatus;
+    function getUltErro: string;
+    function getValorTotal: Currency;
+    function getModelo: string;
+    function FaltaRealizarReducaoZ: Boolean;
+    function ReducaoZJaFoiRealizada: Boolean;
+  end;
+
+implementation
+
+end.

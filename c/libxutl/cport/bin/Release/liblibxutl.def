@@ -1,0 +1,19 @@
+EXPORTS
+    CreateStringUtils @1
+    _Z5rtrimPc @2
+    _ZN7libxutl14StringUtilsImp4trimEPc @3
+    _ZN7libxutl14StringUtilsImp5ltrimEPc @4
+    _ZN7libxutl14StringUtilsImp5rtrimEPc @5
+    _ZN7libxutl14StringUtilsImpC1Ev @6
+    _ZN7libxutl14StringUtilsImpC2Ev @7
+    _ZN7libxutl14StringUtilsImpD0Ev @8
+    _ZN7libxutl14StringUtilsImpD1Ev @9
+    _ZN7libxutl14StringUtilsImpD2Ev @10
+    _ZN7libxutl7DllMainEP11HINSTANCE__mPv@12 @11
+    _ZTIN7libxutl11StringUtilsE @12 DATA
+    _ZTIN7libxutl14StringUtilsImpE @13 DATA
+    _ZTSN7libxutl11StringUtilsE @14 DATA
+    _ZTSN7libxutl14StringUtilsImpE @15 DATA
+    _ZTVN7libxutl11StringUtilsE @16 DATA
+    _ZTVN7libxutl14StringUtilsImpE @17 DATA
+    main @18

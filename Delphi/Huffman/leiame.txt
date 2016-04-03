@@ -1,0 +1,4 @@
+Implementação do Algorítmo de Huffman em Delphi/Pascal
+Aluno: Everton de Vargas Agilar
+
+Delphi utilizado: Delphi 7, mas deve compilar em qualquer versão

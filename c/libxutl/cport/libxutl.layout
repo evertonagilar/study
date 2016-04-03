@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="imp\stringutils_imp.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="598" topLine="18" />
+	</File>
+	<File name="imp\stringutils_imp.h" open="1" top="0" tabpos="4">
+		<Cursor position="82" topLine="0" />
+	</File>
+	<File name="libxinit.h" open="1" top="0" tabpos="2">
+		<Cursor position="209" topLine="0" />
+	</File>
+	<File name="libxutl.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="560" topLine="0" />
+	</File>
+	<File name="libxutl.h" open="1" top="0" tabpos="3">
+		<Cursor position="64" topLine="0" />
+	</File>
+	<File name="stringutils.h" open="1" top="0" tabpos="6">
+		<Cursor position="106" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
+[Editors]
+Focused=0
+Order=3,0,1,2
+[Editor_0]
+Open=1
+Top=1
+CursorCol=11
+CursorRow=125
+TopLine=93
+LeftChar=1
+[Editor_1]
+Open=1
+Top=0
+CursorCol=1
+CursorRow=1
+TopLine=1
+LeftChar=1
+[Editor_2]
+Open=1
+Top=0
+CursorCol=19
+CursorRow=22
+TopLine=1
+LeftChar=1
+[Editor_3]
+Open=1
+Top=0
+CursorCol=1
+CursorRow=26
+TopLine=1
+LeftChar=1
+[Editor_4]
+Open=0
+Top=0
+CursorCol=20
+CursorRow=27
+TopLine=1
+LeftChar=1
+[Editor_5]
+Open=0
+Top=0
+CursorCol=20
+CursorRow=20
+TopLine=1
+LeftChar=1

@@ -1,0 +1,11 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+<!DOCTYPE artigo SYSTEM  "file:///home/everton/Desktop/artigo.dtd">
+
+<artigo>
+  <titulo> Meu Artigo </titulo>
+  <autor>
+    <nome>Joao  </nome>
+    <sobrenome> Silva </sobrenome>
+    <email> joao@gmail.com </email>
+  </autor>
+</artigo>

@@ -1,0 +1,193 @@
+Turbo Dump  Version 6.3.0.0 Copyright (c) 1988-2009 Embarcadero Technologies, Inc.
+                    Display of File libxutl.dll
+
+Old Executable Header
+
+DOS File Size                                       CD3Dh  ( 52541. )
+Load Image Size                                      450h  (  1104. )
+Relocation Table entry count                          0000h  (     0. )
+Relocation Table address                              0040h  (    64. )
+Size of header record      (in paragraphs)            0004h  (     4. )
+Minimum Memory Requirement (in paragraphs)            0000h  (     0. )
+Maximum Memory Requirement (in paragraphs)            FFFFh  ( 65535. )
+File load checksum                                    0000h  (     0. )
+Overlay Number                                        0000h  (     0. )
+
+Initial Stack Segment  (SS:SP)			  0000:00B8
+Program Entry Point    (CS:IP)			  0000:0000
+
+
+Portable Executable (PE) File
+
+Header base: 00000080
+
+CPU type                 80386
+Flags                    2306 [ executable symbols backwards 32bit nodebug library ]
+DLL flags                0000 [ ]
+Linker Version           2.38
+Time stamp               4BB8EE0A : Sun Apr 04 16:52:42 2010
+O/S Version              4.0
+User Version             1.0
+Subsystem Version        4.0
+Subsystem                0003 [ Windows character ]
+Object count             00000008
+Symbols offset           00006600
+Symbols count            000003DD
+Optional header size     00E0
+Magic #                  10B
+Code size                00004400
+Init Data size           00006200
+Uninit Data size         00004200
+Entry RVA                00001000
+Image base               645C0000
+Code base                00001000
+Data base                00006000
+Object/File align        00001000/00000200
+Reserved                 00000000
+Image size               00011000
+Header size              00000400
+Checksum                 000199DB
+Stack reserve/commit     00200000/00001000
+Heap reserve/commit      00100000/00001000
+Number interesting RVAs  00000010
+Name                   RVA       Size  
+------------------  --------  --------
+Exports             0000D000  000002AF
+Imports             0000E000  0000040C
+Resources           0000F000  00000314
+Exceptions          00000000  00000000
+Security            00000000  00000000
+Fixups              00010000  00000778
+Debug               00000000  00000000
+Description         00000000  00000000
+Global Ptr          00000000  00000000
+TLS                 00000000  00000000
+Callbacks           00000000  00000000
+Bound Imports       00000000  00000000
+Import Addr Table   00000000  00000000
+Delayed Imports     00000000  00000000
+COM Runtime         00000000  00000000
+reserved            00000000  00000000
+
+Object table:
+#   Name      VirtSize    RVA     PhysSize  Phys off  Flags   
+--  --------  --------  --------  --------  --------  --------
+01  .text     00004260  00001000  00004400  00000400  60000060 [CEIR]
+02  .data     00000040  00006000  00000200  00004800  C0000040 [IRW]
+03  .rdata    0000051C  00007000  00000600  00004A00  40000040 [IR]
+04  .bss      00004120  00008000  00000000  00000000  C0000080 [RUW]
+05  .edata    000002AF  0000D000  00000400  00005000  40000040 [IR]
+06  .idata    0000040C  0000E000  00000600  00005400  C0000040 [IRW]
+07  .rsrc     00000314  0000F000  00000400  00005A00  C0000040 [IRW]
+08  .reloc    00000778  00010000  00000800  00005E00  42000040 [DIR]
+
+Key to section flags:
+  C - contains code
+  D - discardable
+  E - executable
+  I - contains initialized data
+  R - readable
+  U - contains uninitialized data
+  W - writeable
+
+******************************************************************************
+Section:             Import
+File Offset:         00005400 (21504)
+  ImportLookUpTblRVA:0000E054
+  Time Stamp:        00000000
+  Forwarder Chain:   00000000 (index of first forwarder reference)
+
+Imports from KERNEL32.dll
+    (hint = 0001) AddAtomA
+    (hint = 0057) CreateSemaphoreA
+    (hint = 00AF) FindAtomA
+    (hint = 00DC) GetAtomNameA
+    (hint = 0143) GetLastError
+    (hint = 01EE) InterlockedDecrement
+    (hint = 01F2) InterlockedIncrement
+    (hint = 0272) ReleaseSemaphore
+    (hint = 02C5) SetLastError
+    (hint = 02EB) Sleep
+    (hint = 02F7) TlsAlloc
+    (hint = 02F8) TlsFree
+    (hint = 02F9) TlsGetValue
+    (hint = 02FA) TlsSetValue
+    (hint = 0325) WaitForSingleObject
+
+Imports from msvcrt.dll
+    (hint = 0071) _write
+
+Imports from msvcrt.dll
+    (hint = 0024) __dllonexit
+    (hint = 006F) _assert
+    (hint = 0098) _errno
+    (hint = 00E9) _iob
+    (hint = 0215) abort
+    (hint = 022D) fclose
+    (hint = 0230) fflush
+    (hint = 0238) fopen
+    (hint = 0239) fprintf
+    (hint = 023F) free
+    (hint = 026E) localtime
+    (hint = 0272) malloc
+    (hint = 027A) memset
+    (hint = 0293) sprintf
+    (hint = 0299) strcmp
+    (hint = 029B) strcpy
+    (hint = 029F) strlen
+    (hint = 02B1) time
+
+******************************************************************************
+Section:             Exports
+File Offset:         00005000 (20480)
+  Flags:             00000000
+  Time Stamp:        4BB8EE09 : Sun Apr 04 16:52:41 2010
+  Major Version:     0000
+  Minor Version:     0000
+
+Exports from libxutl.dll
+  14 exported name(s), 14 export addresse(s).  Ordinal base is 1.
+  Sorted by Name:
+    RVA      Ord. Hint Name
+    -------- ---- ---- ----
+    000011D0    1 0000 CreateStringUtils
+    000011D0    2 0001 CreateStringUtils@0
+    000013E0    3 0002 Zeos_GetLogFileName
+    000013E0    4 0003 Zeos_GetLogFileName@0
+    000013D0    5 0004 Zeos_SetLogFileName
+    000013D0    6 0005 Zeos_SetLogFileName@4
+    000012C0    7 0006 Zeos_StrDate
+    000012C0    8 0007 Zeos_StrDate@4
+    00001340    9 0008 Zeos_StrDateTime
+    00001340   10 0009 Zeos_StrDateTime@4
+    000013F0   11 000A Zeos_WriteAlert
+    000013F0   12 000B Zeos_WriteAlert@4
+    00001270   13 000C Zeos_ltrim
+    00001270   14 000D Zeos_ltrim@4
+
+******************************************************************************
+Section:             Resources
+File Offset:         00005A00 (23040)
+  Flags:             00000000
+  Time Stamp:        4BB8EE09 : Sun Apr 04 16:52:41 2010
+  Major Version:     0000
+  Minor Version:     0000
+
+Resources:
+Type          Name                   Lang Id
+--------------------------------------------
+[0 named entries, 1 ID entries]
+type: Version (16)  (next directory @00000018)
+
+              [0 named entries, 1 ID entries]
+              type: Cursor (1)  (next directory @00000030)
+
+                                     [0 named entries, 1 ID entries]
+                                     type: Unknown (1033)  (data @00000048)
+                                         Offset:    0000F058
+                                         Size:      000002BC
+                                         Code Page: 00000000
+                                         Reserved:  00000000
+
+
+

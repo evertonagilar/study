@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1266776691 source:/media/A478793878790A76_/Projetos/libxutl/cport/imp/stringutils_imp.cpp
+	<cstdlib>
+	<cstdlib>
+	<cstring>
+	<cstdio>
+	"stringutils_imp.h"
+	"..\libxinit.h"
+	"../libxinit.h"
+
+1266776609 /media/A478793878790A76_/Projetos/libxutl/cport/imp/stringutils_imp.h
+	"..\libxinit.h"
+	"..\stringutils.h"
+	"../libxinit.h"
+	"../stringutils.h"
+
+1266777534 source:/media/A478793878790A76_/Projetos/libxutl/cport/libxutl.cpp
+	<windows.h>
+	"libxutl.h"
+	"imp\stringutils_imp.h"
+	"libxutl.h"
+	"imp/stringutils_imp.h"
+
+1266768311 /media/A478793878790A76_/Projetos/libxutl/cport/libxutl.h
+	"libxinit.h"
+	"stringutils.h"
+
+1266777163 /media/A478793878790A76_/Projetos/libxutl/cport/libxinit.h
+
+1266767930 /media/A478793878790A76_/Projetos/libxutl/cport/stringutils.h
+	"libxinit.h"
+

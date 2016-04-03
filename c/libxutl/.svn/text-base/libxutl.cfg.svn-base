@@ -1,0 +1,44 @@
+-$A8
+-$B-
+-$C+
+-$D+
+-$E-
+-$F-
+-$G+
+-$H+
+-$I+
+-$J+
+-$K-
+-$L+
+-$M-
+-$N+
+-$O+
+-$P+
+-$Q-
+-$R-
+-$S-
+-$T-
+-$U-
+-$V+
+-$W-
+-$X+
+-$YD
+-$Z1
+-cg
+-AWinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+-H+
+-W+
+-M
+-$M16384,1048576
+-K$00210000
+-E"C:\PoliGestor"
+-LE"c:\program files (x86)\borland\delphi7\Projects\Bpl"
+-LN"c:\program files (x86)\borland\delphi7\Projects\Bpl"
+-U"D:\Projetos\PoliGestor\Componentes\ZeosDBO\packages\delphi7\build;D:\Projetos\PoliGestor\Componentes;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\CoopCalc;D:\Projetos\PoliGestor\Componentes\LabeledControls;C:\Arquivos de programas\Borland\Delphi7\FastMM492;C:\Arquivos de programas\Borland\Delphi7\FastCode.Libraries-0.6.4;C:\Arquivos de programas\Borland\Delphi7\FastMove303"
+-O"D:\Projetos\PoliGestor\Componentes\ZeosDBO\packages\delphi7\build;D:\Projetos\PoliGestor\Componentes;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\CoopCalc;D:\Projetos\PoliGestor\Componentes\LabeledControls;C:\Arquivos de programas\Borland\Delphi7\FastMM492;C:\Arquivos de programas\Borland\Delphi7\FastCode.Libraries-0.6.4;C:\Arquivos de programas\Borland\Delphi7\FastMove303"
+-I"D:\Projetos\PoliGestor\Componentes\ZeosDBO\packages\delphi7\build;D:\Projetos\PoliGestor\Componentes;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\CoopCalc;D:\Projetos\PoliGestor\Componentes\LabeledControls;C:\Arquivos de programas\Borland\Delphi7\FastMM492;C:\Arquivos de programas\Borland\Delphi7\FastCode.Libraries-0.6.4;C:\Arquivos de programas\Borland\Delphi7\FastMove303"
+-R"D:\Projetos\PoliGestor\Componentes\ZeosDBO\packages\delphi7\build;D:\Projetos\PoliGestor\Componentes;D:\Projetos\PoliGestor\Componentes\DB;D:\Projetos\PoliGestor\Componentes\CoopCalc;D:\Projetos\PoliGestor\Componentes\LabeledControls;C:\Arquivos de programas\Borland\Delphi7\FastMM492;C:\Arquivos de programas\Borland\Delphi7\FastCode.Libraries-0.6.4;C:\Arquivos de programas\Borland\Delphi7\FastMove303"
+-DZEOS_LIB; USE_SHAREMEM;LIBXUTLRTL
+-w-UNSAFE_TYPE
+-w-UNSAFE_CODE
+-w-UNSAFE_CAST

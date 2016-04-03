@@ -1,0 +1,141 @@
+Turbo Dump  Version 6.3.0.0 Copyright (c) 1988-2009 Embarcadero Technologies, Inc.
+                    Display of File libxio.dll
+
+Old Executable Header
+
+DOS File Size                                       3EF1h  ( 16113. )
+Load Image Size                                      450h  (  1104. )
+Relocation Table entry count                          0000h  (     0. )
+Relocation Table address                              0040h  (    64. )
+Size of header record      (in paragraphs)            0004h  (     4. )
+Minimum Memory Requirement (in paragraphs)            0000h  (     0. )
+Maximum Memory Requirement (in paragraphs)            FFFFh  ( 65535. )
+File load checksum                                    0000h  (     0. )
+Overlay Number                                        0000h  (     0. )
+
+Initial Stack Segment  (SS:SP)			  0000:00B8
+Program Entry Point    (CS:IP)			  0000:0000
+
+
+Portable Executable (PE) File
+
+Header base: 00000080
+
+CPU type                 80386
+Flags                    2306 [ executable symbols backwards 32bit nodebug library ]
+DLL flags                0000 [ ]
+Linker Version           2.38
+Time stamp               4BBCEB64 : Wed Apr 07 17:30:28 2010
+O/S Version              4.0
+User Version             1.0
+Subsystem Version        4.0
+Subsystem                0003 [ Windows character ]
+Object count             00000007
+Symbols offset           00001A00
+Symbols count            000001AD
+Optional header size     00E0
+Magic #                  10B
+Code size                00000A00
+Init Data size           00001600
+Uninit Data size         00000200
+Entry RVA                00001000
+Image base               6FC00000
+Code base                00001000
+Data base                00002000
+Object/File align        00001000/00000200
+Reserved                 00000000
+Image size               00008000
+Header size              00000400
+Checksum                 0000B1CB
+Stack reserve/commit     00200000/00001000
+Heap reserve/commit      00100000/00001000
+Number interesting RVAs  00000010
+Name                   RVA       Size  
+------------------  --------  --------
+Exports             00005000  00000177
+Imports             00006000  0000021C
+Resources           00000000  00000000
+Exceptions          00000000  00000000
+Security            00000000  00000000
+Fixups              00007000  000001B8
+Debug               00000000  00000000
+Description         00000000  00000000
+Global Ptr          00000000  00000000
+TLS                 00000000  00000000
+Callbacks           00000000  00000000
+Bound Imports       00000000  00000000
+Import Addr Table   00000000  00000000
+Delayed Imports     00000000  00000000
+COM Runtime         00000000  00000000
+reserved            00000000  00000000
+
+Object table:
+#   Name      VirtSize    RVA     PhysSize  Phys off  Flags   
+--  --------  --------  --------  --------  --------  --------
+01  .text     00000994  00001000  00000A00  00000400  60000060 [CEIR]
+02  .data     00000020  00002000  00000200  00000E00  C0000040 [IRW]
+03  .rdata    00000120  00003000  00000200  00001000  40000040 [IR]
+04  .bss      000000C0  00004000  00000000  00000000  C0000080 [RUW]
+05  .edata    00000177  00005000  00000200  00001200  40000040 [IR]
+06  .idata    0000021C  00006000  00000400  00001400  C0000040 [IRW]
+07  .reloc    000001B8  00007000  00000200  00001800  42000040 [DIR]
+
+Key to section flags:
+  C - contains code
+  D - discardable
+  E - executable
+  I - contains initialized data
+  R - readable
+  U - contains uninitialized data
+  W - writeable
+
+******************************************************************************
+Section:             Import
+File Offset:         00001400 (5120)
+  ImportLookUpTblRVA:00006040
+  Time Stamp:        00000000
+  Forwarder Chain:   00000000 (index of first forwarder reference)
+
+Imports from KERNEL32.dll
+    (hint = 0001) AddAtomA
+    (hint = 00AF) FindAtomA
+    (hint = 00DC) GetAtomNameA
+
+Imports from msvcrt.dll
+    (hint = 0024) __dllonexit
+    (hint = 0098) _errno
+    (hint = 00E9) _iob
+    (hint = 0215) abort
+    (hint = 022D) fclose
+    (hint = 0230) fflush
+    (hint = 0238) fopen
+    (hint = 0239) fprintf
+    (hint = 023F) free
+    (hint = 026E) localtime
+    (hint = 0272) malloc
+    (hint = 0293) sprintf
+    (hint = 029B) strcpy
+    (hint = 029F) strlen
+    (hint = 02B1) time
+
+******************************************************************************
+Section:             Exports
+File Offset:         00001200 (4608)
+  Flags:             00000000
+  Time Stamp:        4BBCEB64 : Wed Apr 07 17:30:28 2010
+  Major Version:     0000
+  Minor Version:     0000
+
+Exports from libxio.dll
+  6 exported name(s), 6 export addresse(s).  Ordinal base is 1.
+  Sorted by Name:
+    RVA      Ord. Hint Name
+    -------- ---- ---- ----
+    000011E0    6 0000 Zeos_GetLogFileName
+    000011E0    1 0001 Zeos_GetLogFileName@0
+    000011D0    2 0002 Zeos_SetLogFileName
+    000011D0    3 0003 Zeos_SetLogFileName@4
+    000011F0    4 0004 Zeos_WriteAlert
+    000011F0    5 0005 Zeos_WriteAlert@4
+
+

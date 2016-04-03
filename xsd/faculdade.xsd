@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			Trabalho de XML <br />
+			Nome: Everton de Vargas Agilar
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="TIdade">
+		<xs:annotation>
+			<xs:documentation>Define a idade de uma pessoa</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxInclusive value="120"  />
+			<xs:minInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TNome"	>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100" />
+			</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TPessoa">
+		<xs:annotation>
+			<xs:documentation>Define uma pessoa</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nome" minOccurs="1" maxOccurs="1" />
+			<xs:element name="idade" type="TIdade" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TProfessor">
+		<xs:annotation>
+			<xs:documentation>Define um professor</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TPessoa">
+				<xs:sequence>
+					<xs:element name="CT" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="area" type="xs:string" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TAluno">
+		<xs:annotation>
+			<xs:documentation>Define um aluno</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TPessoa">
+				<xs:sequence>
+					<xs:choice minOccurs="0" maxOccurs="1">
+						<xs:element name="pai" type="TPessoa" />
+						<xs:element name="responsavel" type="TPessoa" />
+					</xs:choice>
+					<xs:element name="disciplina" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>
+								Um aluno pode cursar quantas disciplinas quer mas há um limite de quantas ele realmente consegue!
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="orientador" type="TNome" minOccurs="1" maxOccurs="3" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TDisciplina"	>
+		<xs:sequence>
+			<xs:element name="nome" type="TNome" minOccurs="1" maxOccurs="1" />
+			<xs:element name="professor" type="TNome" minOccurs="1" maxOccurs="1" />
+			<xs:element name="media" type="xs:positiveInteger" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="faculdade">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reitor" type="TPessoa" maxOccurs="1" />
+				<xs:element name="professor" type="TProfessor" maxOccurs="unbounded" />
+				<xs:element name="aluno" type="TAluno" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,9 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ConsoleApplication2.Resources.resources
+obj\Debug\ConsoleApplication2.vbproj.GenerateResource.Cache
+bin\Debug\ConsoleApplication2.exe
+bin\Debug\ConsoleApplication2.pdb
+bin\Debug\ConsoleApplication2.xml
+obj\Debug\ConsoleApplication2.exe
+obj\Debug\ConsoleApplication2.xml
+obj\Debug\ConsoleApplication2.pdb

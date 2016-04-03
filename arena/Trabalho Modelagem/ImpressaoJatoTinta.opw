@@ -1,0 +1,23 @@
+[RESOURCES]
+Resource 2
+[VARIABLES]
+Nivel Tinta Otimo.NumberOut
+Normal.NumberOut
+Folha A4.NumberOut
+Qtd Folha A4.NumberOut
+Nivel Tinta Normal.NumberOut
+Nivel Tinta Economico.NumberOut
+Driver Pronto.NumberOut True
+Fim.NumberOut
+Aguarda Driver.NumberOut
+Otima.NumberOut
+Qtd Folha Carta.NumberOut
+Tinta Necessaria para Impressao.NumberOut
+Qtd Folha A5.NumberOut
+Numero de paginas para imprimir ?.NumberOut
+Driver Pronto.NumberOut False
+Folha A5.NumberOut
+Carta.NumberOut
+Numero Folhas.NumberOut
+Aguarda Driver.NumberIn
+Economica.NumberOut

@@ -1,0 +1,16 @@
+[RESOURCES]
+[VARIABLES]
+EsperarSinalAbrir.NumberIn
+seila
+TransitoLiberado.NumberOut
+AtravessarSinal.NumberOut True
+CriaCarros.NumberOut
+EmiteVermelho.NumberOut
+EsperarSinalAbrir.NumberOut
+Semaforo.NumberOut True
+Semaforo.NumberOut False
+CarroPassaSinal.NumberOut
+TransitoFechado.NumberOut
+Variable 1
+EmiteVerde.NumberOut
+AtravessarSinal.NumberOut False
