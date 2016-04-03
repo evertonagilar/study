@@ -1,0 +1,6 @@
+Em Haskell
+=============================
+
+map (isDigit) "everton123"
+
+filter (isDigit) "everton123"
