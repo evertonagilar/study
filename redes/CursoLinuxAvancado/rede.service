@@ -1,0 +1,12 @@
+[Unit]
+Description = Iniciar rede do servidor
+After = NetworkManager-wait-online.service network.target network-online.target dbus.service
+Wants = display-manager.service NetworkManager-wait-online.service network-online.target
+Requires = dbus.service
+
+[Service]
+Type = oneshot
+ExecStart = /usr/local/conf_rede.sh
+
+[Install]
+WantedBy = multi-user.target
