@@ -1,0 +1,1 @@
+./dhcpd -4 -s 192.168.0.3 -cf /usr/local/dhcp/etc/dhcpd.conf 
