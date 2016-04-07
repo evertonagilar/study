@@ -49,10 +49,11 @@ start() {
 }
 
 stop() {
+	route del -host 192.168.1.38 dev $iface_rede_a reject
+
 	ifconfig $iface_rede_a down
 	ifconfig $iface_rede_unb down
 	
-	route del -host 192.168.1.38 dev $iface_rede_a reject
 }
 
 case $1 in
