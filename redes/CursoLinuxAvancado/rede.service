@@ -5,7 +5,7 @@ Requires = dbus.service
 [Service]
 Type = oneshot
 ExecStart = /usr/local/conf_rede.sh start
-ExecStop = /usr/local/cconf_rede.sh stop
+ExecStop  = /usr/local/conf_rede.sh stop
 
 [Install]
 WantedBy = multi-user.target

@@ -45,7 +45,6 @@ start() {
 	route add default gw $meu_gw netmask 0.0.0.0 dev $iface_rede_unb
 
 	exit 0
-	
 }
 
 stop() {
@@ -54,6 +53,7 @@ stop() {
 	ifconfig $iface_rede_a down
 	ifconfig $iface_rede_unb down
 	
+	exit 0
 }
 
 case $1 in
