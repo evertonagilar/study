@@ -25,11 +25,12 @@ expr_bool -> expr bool_op expr: {expr_bool, {'$1', '$2', '$3'}}.
 expr -> term : {expr, '$1'}.
 expr -> expr add_op term : {expr, {'$1', '$2', '$3'}}.
 
-term -> factor : {term, '$1'}.
-term -> term mult_op factor : {term, {'$1', '$2', '$3'}}.
+term -> factor : '$1'.
+term -> term mult_op factor : {expr, {'$1', '$2', '$3'}}.
 
-factor -> integer : {factor, '$1'}.
-factor -> string : {factor, '$1'}.
+factor -> var : '$1'.
+factor -> integer : '$1'.
+factor -> string : '$1'.
 
 
 Erlang code.	
