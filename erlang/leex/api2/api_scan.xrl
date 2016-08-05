@@ -27,11 +27,6 @@ Rules.
 	
 {SingleQuoted} : {token, {string, TokenLine, lists:sublist(TokenChars, 2, TokenLen - 2)}}.
 
-%% Operador SQL-style
-
-and : {token, {intersection, TokenLine, list_to_atom(TokenChars)}}.
-or : {token, {union, TokenLine, list_to_atom(TokenChars)}}.
-
 %% Variable
 
 ({U}|{L}|_)({U}|{L}|_|{D})*	: {token, {var, TokenLine, TokenChars}}.
@@ -39,13 +34,25 @@ or : {token, {union, TokenLine, list_to_atom(TokenChars)}}.
 
 %% Operators
 
-\+ :	{token, {'+', TokenLine, list_to_atom(TokenChars)}}.
-\- :	{token, {'-', TokenLine, list_to_atom(TokenChars)}}.
-= :		{token, {'=', TokenLine, list_to_atom(TokenChars)}}.
-!= :	{token, {'!=', TokenLine, list_to_atom(TokenChars)}}.
-\<\> :	{token, {'!=', TokenLine, list_to_atom(TokenChars)}}.
-&& :	{token, {intersection, TokenLine, list_to_atom(TokenChars)}}.
-\|\| :	{token, {union, TokenLine, list_to_atom(TokenChars)}}.
+\+ :	{token, {add_op, TokenLine, list_to_atom(TokenChars)}}.
+\- :	{token, {add_op, TokenLine, list_to_atom(TokenChars)}}.
+\* :	{token, {mult_op, TokenLine, list_to_atom(TokenChars)}}.
+\/ :	{token, {mult_op, TokenLine, list_to_atom(TokenChars)}}.
+
+
+= :		{token, {assigment_op, TokenLine, list_to_atom(TokenChars)}}.
+
+
+== :		{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+(!=|\<\>) :	{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+>  :		{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+>= :		{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+<  :		{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+<= :		{token, {bool_op, TokenLine, list_to_atom(TokenChars)}}.
+
+
+\&\& :		{token, {set_op, TokenLine, list_to_atom(TokenChars)}}.
+\|\| :		{token, {set_op, TokenLine, list_to_atom(TokenChars)}}.
 
 
 Erlang code.
