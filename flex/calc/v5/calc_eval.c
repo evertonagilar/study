@@ -7,6 +7,74 @@
 #include "calc_ast.h"
 #include "calc_symbol.h"
 
+int eval_add(ast *node){
+	expr_ast *expr = (expr_ast*)node;
+	return eval(expr->l) + eval(expr->r);
+}
+
+int eval_minus(ast *node){
+	expr_ast *expr = (expr_ast*)node;
+	return eval(expr->l) - eval(expr->r);
+}
+
+int eval_mult(ast *node){
+	expr_ast *expr = (expr_ast*)node;
+	return eval(expr->l) * eval(expr->r);
+}
+
+int eval_div(ast *node){
+	expr_ast *expr = (expr_ast*)node;
+	return eval(expr->l) / eval(expr->r);
+}
+
+int eval_number(ast *node){
+	term_ast *num = (term_ast*)node;
+	return num->value;
+}
+
+int eval_identifier(ast *node){
+	identifier_ast *identifier = (identifier_ast*)node;
+	return identifier->value->as_int;
+}
+
+int eval_gt_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) > eval(expr->r) ? 1 : 0;
+}
+
+int eval_gte_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) >= eval(expr->r) ? 1 : 0;
+}
+
+int eval_lt_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) < eval(expr->r) ? 1 : 0;
+}
+
+int eval_lte_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) <= eval(expr->r) ? 1 : 0;
+}
+
+int eval_eq_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) == eval(expr->r) ? 1 : 0;
+}
+
+int eval_ne_op(ast *node){
+	expr_bool_ast *expr = (expr_bool_ast*)node;
+	return eval(expr->l) != eval(expr->r) ? 1 : 0;
+}
+
+int eval_assigment(ast *node){
+	assigment_ast *assigment = (assigment_ast*)node;
+	identifier_ast *identifier = (identifier_ast*)assigment->l;
+	expr_ast *expr = (expr_ast *)assigment->r;
+	identifier->value->as_int = eval(expr);
+	return identifier->value->as_int;
+}
+
 int eval(ast *node){
 	int result;
 	switch(node->node_type){
@@ -24,6 +92,9 @@ int eval(ast *node){
 			break;
 		case NUMBER:
 			result = eval_number(node);
+			break;
+		case IDENTIFIER:
+			result = eval_identifier(node);
 			break;
 		case GT_OP:
 			result = eval_gt_op(node);
@@ -43,21 +114,12 @@ int eval(ast *node){
 		case NE_OP:
 			result = eval_ne_op(node);
 			break;
+		case '=':
+			result = eval_assigment(node);
+			break;
 
 	}
 	return result;
 }
 
-/*int main(){
-	printf("teste expressao\n");
-	
-	ast *val5 = new_term_ast(NUMBER, 12);
-	ast *val12 = new_term_ast(NUMBER, 12);
-	ast *val2 = new_term_ast(NUMBER, 2);
-	ast *expr = new_expr_ast('-', val5, new_expr_ast('/', val12, val2));
-	int result = eval(expr);
-	printf("Result: %d\n", result);
-	
-}
-*/
 

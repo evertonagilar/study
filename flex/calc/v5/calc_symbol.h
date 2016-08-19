@@ -6,7 +6,7 @@
 
 typedef struct{
 	char *name;
-	int value;
+	int as_int;
 } symbol_t;
 
 symbol_t symbol_table[MAX_SYMBOL_TABLE];

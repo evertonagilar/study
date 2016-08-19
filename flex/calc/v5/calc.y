@@ -38,10 +38,6 @@ grammar: /* nothing */
 assigment: identifier	'='	expr					{ $$ = new_assigment_ast('=', $1, $3); }
 	
 	
-identifier:	IDENTIFIER								{ $$ = new_identifier_ast(IDENTIFIER, lookup($1)); }
-	;
-
-
 expr_bool: expr
 	|	expr_bool GT_OP  expr						{ $$ = new_expr_bool_ast(GT_OP, $1, $3); }
 	|	expr_bool GTE_OP expr						{ $$ = new_expr_bool_ast(GTE_OP, $1, $3); }
@@ -66,9 +62,13 @@ factor: term
 
 term: NUMBER										{ $$ = new_term_ast(NUMBER, $1); }
 	|	'-' NUMBER									{ $$ = new_term_ast(NUMBER, $2 * -1); }
+	| 	identifier									{ $$ = $1; }
 	|	'(' expr ')'								{ $$ = $2; }
     ;
     
+identifier:	IDENTIFIER								{ $$ = new_identifier_ast(IDENTIFIER, lookup($1)); }
+	;
+
 
 %%
 

@@ -43,60 +43,6 @@ ast *new_identifier_ast(int node_type, symbol_t *value){
 	return (ast*) result;
 }
 
-int eval_add(ast *node){
-	expr_ast *expr = (expr_ast*)node;
-	return eval(expr->l) + eval(expr->r);
-}
-
-int eval_minus(ast *node){
-	expr_ast *expr = (expr_ast*)node;
-	return eval(expr->l) - eval(expr->r);
-}
-
-int eval_mult(ast *node){
-	expr_ast *expr = (expr_ast*)node;
-	return eval(expr->l) * eval(expr->r);
-}
-
-int eval_div(ast *node){
-	expr_ast *expr = (expr_ast*)node;
-	return eval(expr->l) / eval(expr->r);
-}
-
-int eval_number(ast *node){
-	term_ast *num = (term_ast*)node;
-	return num->value;
-}
-
-int eval_gt_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) > eval(expr->r) ? 1 : 0;
-}
-
-int eval_gte_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) >= eval(expr->r) ? 1 : 0;
-}
-
-int eval_lt_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) < eval(expr->r) ? 1 : 0;
-}
-
-int eval_lte_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) <= eval(expr->r) ? 1 : 0;
-}
-
-int eval_eq_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) == eval(expr->r) ? 1 : 0;
-}
-
-int eval_ne_op(ast *node){
-	expr_bool_ast *expr = (expr_bool_ast*)node;
-	return eval(expr->l) != eval(expr->r) ? 1 : 0;
-}
 
 	
 

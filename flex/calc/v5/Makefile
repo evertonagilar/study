@@ -5,5 +5,10 @@ calc: calc.l calc.y calc_ast.c calc_ast.h calc_symbol.h calc_symbol.c calc_eval.
 	flex calc.l
 	$(CC) -o $@	calc_symbol.c calc_ast.c calc.tab.c lex.yy.c calc_eval.c -lfl
 	
+test: calc_symbol.c calc_eval.c calc_ast.c test.c
+	$(CC) -o test calc_symbol.c calc_eval.c calc_ast.c test.c
+	./test
+	
+	
 clean:	
 	rm -f calc.tab.h calc.tab.c lex.yy.c calc calc.o calc_ast *.o
