@@ -4,6 +4,7 @@
 #include <string.h>
 #include "calc_ast.h"
 #include "calc_symbol.h"
+#include "calc_eval.h"
 
 char *yylex();
 int yyerror(char *s);

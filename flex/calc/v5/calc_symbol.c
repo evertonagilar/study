@@ -22,6 +22,7 @@ symbol_t *lookup(char *name){
 	return result;
 }
 
+
 /*
 int main(){
 	symbol_t *var = lookup("valorTotal");

@@ -69,12 +69,13 @@
 #include <string.h>
 #include "calc_ast.h"
 #include "calc_symbol.h"
+#include "calc_eval.h"
 
 char *yylex();
 int yyerror(char *s);
  
 
-#line 78 "calc.tab.c" /* yacc.c:339  */
+#line 79 "calc.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -128,12 +129,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "calc.y" /* yacc.c:355  */
+#line 14 "calc.y" /* yacc.c:355  */
 
 	char *str;
 	int d;
 
-#line 137 "calc.tab.c" /* yacc.c:355  */
+#line 138 "calc.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -150,7 +151,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 154 "calc.tab.c" /* yacc.c:358  */
+#line 155 "calc.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -448,9 +449,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    31,    32,    33,    37,    40,    44,    45,
-      46,    47,    48,    49,    50,    54,    55,    56,    60,    61,
-      62,    66,    67,    68
+       0,    31,    31,    32,    33,    34,    38,    41,    45,    46,
+      47,    48,    49,    50,    51,    55,    56,    57,    61,    62,
+      63,    67,    68,    69
 };
 #endif
 
@@ -1244,115 +1245,115 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 31 "calc.y" /* yacc.c:1646  */
+#line 32 "calc.y" /* yacc.c:1646  */
     { printf("= %d\n", eval((yyvsp[-1].d))); }
-#line 1250 "calc.tab.c" /* yacc.c:1646  */
+#line 1251 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 32 "calc.y" /* yacc.c:1646  */
+#line 33 "calc.y" /* yacc.c:1646  */
     { printf("= %d\n", eval((yyvsp[-1].d))); }
-#line 1256 "calc.tab.c" /* yacc.c:1646  */
+#line 1257 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 33 "calc.y" /* yacc.c:1646  */
+#line 34 "calc.y" /* yacc.c:1646  */
     { printf("= %d\n", eval((yyvsp[-1].d))); }
-#line 1262 "calc.tab.c" /* yacc.c:1646  */
+#line 1263 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 37 "calc.y" /* yacc.c:1646  */
+#line 38 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_assigment_ast('=', (yyvsp[-2].str), (yyvsp[0].d)); }
-#line 1268 "calc.tab.c" /* yacc.c:1646  */
+#line 1269 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 40 "calc.y" /* yacc.c:1646  */
+#line 41 "calc.y" /* yacc.c:1646  */
     { (yyval.str) = new_identifier_ast(IDENTIFIER, lookup((yyvsp[0].str))); }
-#line 1274 "calc.tab.c" /* yacc.c:1646  */
+#line 1275 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 45 "calc.y" /* yacc.c:1646  */
+#line 46 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(GT_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1280 "calc.tab.c" /* yacc.c:1646  */
+#line 1281 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 46 "calc.y" /* yacc.c:1646  */
+#line 47 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(GTE_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1286 "calc.tab.c" /* yacc.c:1646  */
+#line 1287 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 47 "calc.y" /* yacc.c:1646  */
+#line 48 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(LT_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1292 "calc.tab.c" /* yacc.c:1646  */
+#line 1293 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 48 "calc.y" /* yacc.c:1646  */
+#line 49 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(LTE_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1298 "calc.tab.c" /* yacc.c:1646  */
+#line 1299 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 49 "calc.y" /* yacc.c:1646  */
+#line 50 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(EQ_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1304 "calc.tab.c" /* yacc.c:1646  */
+#line 1305 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 50 "calc.y" /* yacc.c:1646  */
+#line 51 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_bool_ast(NE_OP, (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1310 "calc.tab.c" /* yacc.c:1646  */
+#line 1311 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 55 "calc.y" /* yacc.c:1646  */
+#line 56 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_ast('+', (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1316 "calc.tab.c" /* yacc.c:1646  */
+#line 1317 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 56 "calc.y" /* yacc.c:1646  */
+#line 57 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_ast('-', (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1322 "calc.tab.c" /* yacc.c:1646  */
+#line 1323 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 61 "calc.y" /* yacc.c:1646  */
+#line 62 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_ast('*', (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1328 "calc.tab.c" /* yacc.c:1646  */
+#line 1329 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 62 "calc.y" /* yacc.c:1646  */
+#line 63 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_expr_ast('/', (yyvsp[-2].d), (yyvsp[0].d)); }
-#line 1334 "calc.tab.c" /* yacc.c:1646  */
+#line 1335 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 66 "calc.y" /* yacc.c:1646  */
+#line 67 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_term_ast(NUMBER, (yyvsp[0].d)); }
-#line 1340 "calc.tab.c" /* yacc.c:1646  */
+#line 1341 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 67 "calc.y" /* yacc.c:1646  */
+#line 68 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = new_term_ast(NUMBER, (yyvsp[0].d) * -1); }
-#line 1346 "calc.tab.c" /* yacc.c:1646  */
+#line 1347 "calc.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 68 "calc.y" /* yacc.c:1646  */
+#line 69 "calc.y" /* yacc.c:1646  */
     { (yyval.d) = (yyvsp[-1].d); }
-#line 1352 "calc.tab.c" /* yacc.c:1646  */
+#line 1353 "calc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1356 "calc.tab.c" /* yacc.c:1646  */
+#line 1357 "calc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1580,7 +1581,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 72 "calc.y" /* yacc.c:1906  */
+#line 73 "calc.y" /* yacc.c:1906  */
 
 
 
