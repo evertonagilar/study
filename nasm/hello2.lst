@@ -1,0 +1,18 @@
+     1                                  global _start
+     2                                  
+     3                                  section .text
+     4                                  _start:
+     5 00000000 B804000000              	mov	eax, 4 ; write
+     6 00000005 BB01000000              	mov	ebx, 1 ; stdout
+     7 0000000A B9[00000000]            	mov	ecx, msg
+     8 0000000F BA0E000000              	mov	edx, msg.len
+     9 00000014 CD80                    	int	0x80   ; write(stdout, msg, strlen(msg));
+    10                                  
+    11 00000016 B801000000              	mov	eax, 1 ; exit
+    12 0000001B BB00000000              	mov	ebx, 0
+    13 00000020 CD80                    	int	0x80   ; exit(0)
+    14                                  
+    15                                  section .data
+    16 00000000 48656C6C6F2C20776F-     msg:	db	"Hello, world!", 10
+    17 00000009 726C64210A         
+    18                                  .len:	equ	$ - msg
