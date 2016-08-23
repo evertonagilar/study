@@ -1,6 +1,6 @@
 section .text
 
-global _main
+global _start
 
 _start:
 
@@ -8,7 +8,7 @@ _start:
 	mov ecx, msg						; Arg 2: texto que será impresso
 	mov edx, len						; Arg 3: tamanho do texto	
 	mov eax, 4							; system call write
-	int 0x80							
+	int 0x80						
 	
 	mov eax, 1							; system call exit
 	int 0x80		
