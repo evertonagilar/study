@@ -1,1 +1,0 @@
-/usr/bin/cc    CMakeFiles/c_interpreter.dir/ci.c.o  -o c_interpreter 
