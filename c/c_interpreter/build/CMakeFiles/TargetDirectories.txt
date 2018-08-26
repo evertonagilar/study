@@ -1,0 +1,3 @@
+/home/agilar/desenvolvimento/c_interpreter/build/CMakeFiles/rebuild_cache.dir
+/home/agilar/desenvolvimento/c_interpreter/build/CMakeFiles/ci.dir
+/home/agilar/desenvolvimento/c_interpreter/build/CMakeFiles/edit_cache.dir
