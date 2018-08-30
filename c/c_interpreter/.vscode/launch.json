@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/ci",
-            "args": [ "/home/agilar/desenvolvimento/c_interpreter/ci.c" ],
+            "args": [ "/home/agilar/study/c/c_interpreter/ci.c" ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
