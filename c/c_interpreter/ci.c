@@ -150,16 +150,49 @@ void next()
     {
         ++src; // já aponta para o próximo carácter no código fonte
 
+        // pula linha em branco
         if (token == '\n')
         {
             ++line;
         }
+        // Pular macro pois nosso comilador não suporta
         else if (token == '#')
         {
-            // Pular macro pois nosso comilador não suporta
             while (*src != 0 && *src != '\n'){
                 src++;
             }
+        }
+        // parse identificadores
+        else if ((token >= 'a' && token <= 'z') || (token >= 'A' && token <= 'Z') || token == '_')
+        {
+            // endereço inicial do token
+            last_pos = src - 1;    
+            hash = token;
+
+            // computa um hash do token para pesquisa na tabela de símbolos
+            while ((*src >= 'a' && *src <= 'z') || (*src >= 'A' && *src <= 'Z') || (*src >= 'A' && *src <= 'Z') || (*src == '_'))
+            {
+                hash = hash * 147 + *src;
+                src++;
+            }
+
+            // pesquisa na tabela de símbolos com pesquisa linear
+            current_id = symbols;
+            while (current_id[Token])
+            {
+                if (current_id[Hash] == hash && !memcmp(current_id[Name], last_pos, src - last_pos)){
+                    // identificador encontrado, retorna este
+                    token = current_id[Token];
+                    return;
+                }
+                current_id = current_id + IDSize;
+            }
+
+            // insere novo identificador na tabela de símbolos
+            current_id[Name] = last_pos;
+            current_id[Hash] = Hash;
+            token = current_id[Token] = Id;
+            return;
         }
     }
 
