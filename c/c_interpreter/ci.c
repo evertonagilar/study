@@ -155,7 +155,7 @@ void next()
         {
             ++line;
         }
-        // Pular macro pois nosso comilador não suporta
+        // Pular macro pois nosso compilador não suporta
         else if (token == '#')
         {
             while (*src != 0 && *src != '\n'){
@@ -192,6 +192,34 @@ void next()
             current_id[Name] = last_pos;
             current_id[Hash] = Hash;
             token = current_id[Token] = Id;
+            return;
+        }
+        // parse números. three kinds: dec(123) hex(0x123) oct(017)
+        else if (token >= '0' && token <= '9')
+        {
+            token_val = token - 0;
+            // números decimais
+            if (token_val > 0){
+                while (*src >= '0' && *src <= '9'){
+                    token_val = token_val * 10 + *src++ - '0';
+                }
+            }else{
+                // números hexadecimais
+                if (*src == 'x' || *src == 'X'){
+                    token = *++src;
+                    while ((token >= '0' && token <= '9') || (token >= 'a' && token <= 'f') || (token >= 'A' && token <= 'F')){
+                        token_val = token_val * 16 + (token & 15) + (token >= 'A' ? 9 : 0);
+                        token = *++src;
+                    }
+                // números octais
+                }else {
+                    while (*src >= '0' && *src <= '9'){
+                        token_val = token_val * 8 + *src++ - '0';
+                    }
+                }
+            }
+
+            token = Num;
             return;
         }
     }
