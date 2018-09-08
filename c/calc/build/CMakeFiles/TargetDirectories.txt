@@ -1,0 +1,3 @@
+/home/agilar/study/c/calc/build/CMakeFiles/rebuild_cache.dir
+/home/agilar/study/c/calc/build/CMakeFiles/calc.dir
+/home/agilar/study/c/calc/build/CMakeFiles/edit_cache.dir
