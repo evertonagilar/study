@@ -10,6 +10,86 @@ int token;
 int token_val;
 char *lookahead;
 
+
+/*
+
+    <expr>      ::= <term> <expr_tail>
+
+    <expr_tail> ::= + <term> <expr_tail>
+                  | - <term> <expr_tail>
+                  | <empty> 
+
+    <term>      ::= <factor> <term_tail>
+
+    <term_tail> ::= * <factor> <term_tail>
+                  | / <factor> <term_tail>
+                  | <empty>
+
+    <factor>    ::= ( <expr> )
+                  | tkNum
+*/
+
+void match(int tk){
+    if (token != tk){
+        printf("Token esperado: %d mas obtido %d em vez disso\n", token, tk);
+        exit(EXIT_FAILURE);
+    }
+    next();
+}
+
+int factor(){
+    int value = 0;
+    if (token == '('){
+        match('(');
+        value = expr();
+        match(')');
+    }else{
+        value = token_val;
+        match(tkNum);
+    }
+    return value;
+}
+
+int term_tail(int lvalue){
+    if (token == '*'){
+        match('*');
+        int value = lvalue * factor();
+        return term_tail(value);
+    }else if (token == '/'){
+        match('/');
+        int value = lvalue / factor();
+        return term_tail(value);
+    }else{
+        return lvalue;
+    }
+}
+
+int term(){
+    int lvalue = factor();
+    return term_tail(lvalue);
+}
+
+expr_tail(int lvalue){
+    if (token == '+'){
+        match('+');
+        int value = lvalue + term();
+        return expr_tail(value);
+    }else if (token == '-'){
+        match('-');
+        int value = lvalue - term();
+        return expr_tail(value);
+    }else{
+        return lvalue;
+    }
+}
+
+int expr(){
+    int lvalue = term();
+    return expr_tail(lvalue);
+}
+
+
+
 // retorna o próximo token
 void next(){
     // pula espaços em branco e tabulações
@@ -33,16 +113,8 @@ void next(){
 }
 
 int eval(){
-    while (*lookahead){
-        next();
-        if (token == tkNum){
-            printf("token: %d\n", token_val);
-        }else{
-            printf("token: %c\n", token);
-        }
-    }
-    
-    return 1;
+    next();
+    return expr();
 }
 
 int main(int argc, char **argv){
@@ -52,10 +124,10 @@ int main(int argc, char **argv){
         memset(src, 0, sizeof(src));
         scanf("%s", src);
         if (!strcasecmp(src, "exit")){
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
         lookahead = src;
         printf("Result: %d\n", eval());
     };
-    return 0;
+    return EXIT_SUCCESS;
 }
