@@ -683,6 +683,4 @@ int main(int argc, char **argv)
     program();
     return eval();
 
-    puts("Pressione qualquer tecla para sair");
-    getc(fd);
 }
