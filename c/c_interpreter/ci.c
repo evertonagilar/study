@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "utils.c"
+#include "ci_btree.h"
 
 #define SYMBOLS_SIZE 256 * 1024 // Tamanho da tabela de símbolos
 
