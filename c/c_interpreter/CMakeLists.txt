@@ -10,4 +10,4 @@ set(CMAKE_CXX_FLAGS "-O0 -ggdb")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb")
 set(CMAKE_CXX_FLAGS_RELEASE "-O0 -ggdb")
 
-add_executable(ci ci.c ci_btree.h ci_btree.c)
+add_executable(ci ci.c ci_bstree.h ci_bstree.c)
