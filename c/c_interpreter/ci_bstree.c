@@ -10,7 +10,8 @@
 
 static bool ci_bstree_insert2(ci_bstree_t *bstree, ci_bstree_node_t **ppNode, const void *pData, size_t size);
 static const void *ci_bstree_search2(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode, const void *key);
-
+static bool ci_bstree_remove2(const ci_bstree_t *bstree, ci_bstree_node_t **ppNode, const void *key);
+static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode);
 
 // Helper functions
 
@@ -48,6 +49,14 @@ const void *ci_bstree_search(const ci_bstree_t *bstree, const void *key){
         return NULL;
     }
     return ci_bstree_search2(bstree, bstree->pRoot, key);
+}
+
+
+bool ci_bstree_remove(const ci_bstree_t *bstree, const void *key) {
+    if (bstree == NULL || key == NULL){
+        return false;
+    }
+    return ci_bstree_remove2(bstree, &bstree->pRoot, key);
 }
 
 
@@ -91,3 +100,36 @@ static const void *ci_bstree_search2(const ci_bstree_t *bstree, const ci_bstree_
     }
 }
 
+static bool ci_bstree_remove2(const ci_bstree_t *bstree, ci_bstree_node_t **ppNode, const void *key){
+    ci_bstree_node_t *pNode = *ppNode;
+    if (pNode == NULL){
+        return false;
+    }
+    int key2 = bstree->compute_key(pNode->data);
+    int cmp_result = bstree->cmp(key, key2);
+    if (cmp_result > 0){
+        return ci_bstree_remove2(bstree, &pNode->right, key);
+    }else if (cmp_result < 0){
+        return ci_bstree_remove2(bstree, &pNode->left, key);
+    }else{
+        // Tem apenas a folha da direita
+        if (pNode->left == NULL) {
+            *ppNode = pNode->right;
+            // Tem apenas a folha da esquerda
+        }else if (pNode->right == NULL){
+            *ppNode = pNode->left;
+        }else{
+            // Tem os dois nodes
+            ci_bstree_node_t *pMin = ci_bstree_detash_min(bstree, pNode->right);
+            *ppNode = pMin;
+            pMin->left = pNode->left;
+            pMin->right = pNode->right;
+        }
+        free(pNode);
+        return true;
+    }
+}
+
+static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode){
+    return NULL;
+}
