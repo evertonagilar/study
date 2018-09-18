@@ -3,7 +3,8 @@
 #include <memory.h>
 #include <string.h>
 #include <unistd.h>
-#include "utils.c"
+#include "ci_utils.c"
+#include "ci_bstree.h"
 
 #define SYMBOLS_SIZE 256 * 1024 // Tamanho da tabela de símbolos
 
@@ -222,9 +223,165 @@ void next()
             token = Num;
             return;
         }
-    }
+        // parse string literal
+        // nossa string suporta apenas \n
+        // processa e armazena a string em data
+        else if (token == '"' || token == '\''){
+            last_pos = data;
+            while (*src != 0 && *src != token){
+                token_val = *src++;
+                if (token_val == '\\'){
+                    token_val = *src++;
+                    // se for um caracter de escape, token_val eh \n
+                    if (token_val == 'n'){
+                        token_val = '\n';
+                    }
+                }
 
-    token = *src++;
+                if (token == '"'){
+                    *data++ = token_val;
+                }
+            }
+
+
+            src++;
+
+            if (token == '"'){
+                token_val = last_pos;
+            }else{
+                token = Num;
+            }
+
+            return;
+        }
+        // Operador div ou um comentário
+        else if (token == '/'){
+            // Mais um / eh comentário
+            if (*src = '/'){
+                // Pula comentários
+                while (*src != 0 && *src != '\n'){
+                    ++src;
+                    // vai voltar ao loop principal
+                }
+            }else{
+                // Eh operador de divisão
+                token = Div;
+                return;
+            }
+        }
+        // Operador de igualdade ou atribuição
+        else if (token == '='){
+            // Eh igualdade?
+            if (*src == '='){
+                src++;
+                token = Eq;
+            }else{
+                token = Assign;
+            }
+            return;
+        }
+        // Operador de adição ou incremento
+        else if (token == '+'){
+            // Eh incremento?
+            if (*src == '+'){
+                src++;
+                token = Inc;
+            }else{
+                token = Add;
+            }
+            return;
+        }
+        // Operador de subtração ou decremento
+        else if (token == '-'){
+            // Eh decremento?
+            if (*src == '-'){
+                src++;
+                token = Dec;
+            }else{
+                token = Dec;
+            }
+            return;
+        }
+        // Operador de desigualdade ou not
+        else if (token == '!'){
+            // Eh desigualdade?
+            if (*src == '='){
+                src++;
+                token = Ne;
+            }
+            return;
+        }
+        else if (token == '<') {
+            // parse '<=', '<<' or '<'
+            if (*src == '=') {
+                src ++;
+                token = Le;
+            } else if (*src == '<') {
+                src ++;
+                token = Shl;
+            } else {
+                token = Lt;
+            }
+            return;
+        }
+        else if (token == '>') {
+            // parse '>=', '>>' or '>'
+            if (*src == '=') {
+                src ++;
+                token = Ge;
+            } else if (*src == '>') {
+                src ++;
+                token = Shr;
+            } else {
+                token = Gt;
+            }
+            return;
+        }
+        else if (token == '|') {
+            // parse '|' or '||'
+            if (*src == '|') {
+                src ++;
+                token = Lor;
+            } else {
+                token = Or;
+            }
+            return;
+        }
+        else if (token == '&') {
+            // parse '&' and '&&'
+            if (*src == '&') {
+                src ++;
+                token = Lan;
+            } else {
+                token = And;
+            }
+            return;
+        }
+        else if (token == '^') {
+            token = Xor;
+            return;
+        }
+        else if (token == '%') {
+            token = Mod;
+            return;
+        }
+        else if (token == '*') {
+            token = Mul;
+            return;
+        }
+        else if (token == '[') {
+            token = Brak;
+            return;
+        }
+        else if (token == '?') {
+            token = Cond;
+            return;
+        }
+        else if (token == '~' || token == ';' || token == '{' || token == '}' || token == '(' || token == ')' || token == ']' || token == ',' || token == ':') {
+            // directly return the character as token;
+            return;
+        }
+    }
     return;
 }
 
@@ -240,7 +397,7 @@ void program()
     next();
     while (token > 0)
     {
-        printf("token is %c\n", token);
+        printf("token is %3d ('%c')\n", token, token);
         next();
     }
 }
@@ -443,6 +600,21 @@ int eval()
 
 int main(int argc, char **argv)
 {
+    ci_bstree_t *lista = ci_bstree_new(strcmp, NULL);
+
+    char str1[] = "erva mate";
+    ci_bstree_insert(lista, str1, strlen(str1));
+
+    char str2[] = "coca cola";
+    ci_bstree_insert(lista, str2, strlen(str2));
+
+    char str3[] = "notebook";
+    ci_bstree_insert(lista, str3, strlen(str3));
+
+    char *str = (char*) ci_bstree_search(lista, ci_bstree_default_key_func("coca cola"));
+    printf("A string eh %s\n", str);
+
+
     int i;
     FILE *fd;
     char erro_str[100];
@@ -527,6 +699,4 @@ int main(int argc, char **argv)
     program();
     return eval();
 
-    puts("Pressione qualquer tecla para sair");
-    getc(fd);
 }

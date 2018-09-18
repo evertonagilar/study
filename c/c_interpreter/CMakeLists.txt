@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(c_interpreter C)
+project(c_interpreter)
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ci
-        ci.c)
+include_directories(.)
+
+add_executable(c_interpreter
+        ci.c
+        ci_bstree.h
+        ci_bstree.c)
