@@ -11,7 +11,7 @@
 static bool ci_bstree_insert2(ci_bstree_t *bstree, ci_bstree_node_t **ppNode, const void *pData, size_t size);
 static const void *ci_bstree_search2(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode, const void *key);
 static bool ci_bstree_remove2(const ci_bstree_t *bstree, ci_bstree_node_t **ppNode, const void *key);
-static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode);
+static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_node_t **ppNode);
 
 // Helper functions
 
@@ -120,7 +120,7 @@ static bool ci_bstree_remove2(const ci_bstree_t *bstree, ci_bstree_node_t **ppNo
             *ppNode = pNode->left;
         }else{
             // Tem os dois nodes
-            ci_bstree_node_t *pMin = ci_bstree_detash_min(bstree, pNode->right);
+            ci_bstree_node_t *pMin = ci_bstree_detash_min(&pNode->right);
             *ppNode = pMin;
             pMin->left = pNode->left;
             pMin->right = pNode->right;
@@ -130,6 +130,14 @@ static bool ci_bstree_remove2(const ci_bstree_t *bstree, ci_bstree_node_t **ppNo
     }
 }
 
-static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_t *bstree, const ci_bstree_node_t *pNode){
-    return NULL;
+static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_node_t **ppNode){
+    ci_bstree_node_t *pNode = *ppNode;
+    if (pNode == NULL){
+        return NULL;
+    }else if (pNode->left != NULL){
+        return ci_bstree_detash_min(&pNode->left);
+    }else{
+        *ppNode = pNode->right;
+        return pNode;
+    }
 }

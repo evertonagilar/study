@@ -3,7 +3,7 @@
 #include <memory.h>
 #include <string.h>
 #include <unistd.h>
-#include "utils.c"
+#include "ci_utils.c"
 #include "ci_bstree.h"
 
 #define SYMBOLS_SIZE 256 * 1024 // Tamanho da tabela de símbolos
@@ -600,6 +600,21 @@ int eval()
 
 int main(int argc, char **argv)
 {
+    ci_bstree_t *lista = ci_bstree_new(strcmp, NULL);
+
+    char str1[] = "erva mate";
+    ci_bstree_insert(lista, str1, strlen(str1));
+
+    char str2[] = "coca cola";
+    ci_bstree_insert(lista, str2, strlen(str2));
+
+    char str3[] = "notebook";
+    ci_bstree_insert(lista, str3, strlen(str3));
+
+    char *str = (char*) ci_bstree_search(lista, ci_bstree_default_key_func("coca cola"));
+    printf("A string eh %s\n", str);
+
+
     int i;
     FILE *fd;
     char erro_str[100];
