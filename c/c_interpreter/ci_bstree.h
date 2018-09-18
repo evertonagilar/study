@@ -33,7 +33,7 @@ typedef struct {
 
 // Função padrão para retornar um key para um data
 // Retorna o data como key
-void *ci_bstree_default_key_func(const void *pData);
+const void *ci_bstree_default_key_func(const void *pData);
 
 // Cria uma nova bstree
 // cmp      -> função para comparação

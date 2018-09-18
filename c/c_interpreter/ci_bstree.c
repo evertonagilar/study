@@ -15,7 +15,7 @@ static const ci_bstree_node_t *ci_bstree_detash_min(const ci_bstree_node_t **ppN
 
 // Helper functions
 
-void *ci_bstree_default_key_func(const void *pData) {
+const void *ci_bstree_default_key_func(const void *pData) {
     return pData;
 }
 
@@ -27,7 +27,7 @@ ci_bstree_t *ci_bstree_new(ci_bstree_cmp_func_t *cmpFunc, ci_bstree_compute_key_
         return NULL;
     }
     ci_bstree_t *bstree = malloc(sizeof(ci_bstree_t));
-    if (!bstree){
+    if (bstree){
         bstree->pRoot = NULL;
         bstree->cmp = cmpFunc;
         bstree->compute_key = getKeyFunc == NULL ?  ci_bstree_default_key_func : getKeyFunc;
