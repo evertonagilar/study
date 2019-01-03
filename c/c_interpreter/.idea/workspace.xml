@@ -13,8 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9b560c51-2a28-4f87-8be6-c12b22feff57" name="Default Changelist" comment="btree">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ci_bstree.c" beforeDir="false" afterPath="$PROJECT_DIR$/ci_bstree.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ci_bstree.h" beforeDir="false" afterPath="$PROJECT_DIR$/ci_bstree.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -44,11 +42,13 @@
     <session id="1216620997">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.5" value="2" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.57" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -95,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ci.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10773">
-              <caret line="567" column="9" selection-start-line="567" selection-start-column="9" selection-end-line="567" selection-end-column="9" />
+            <state relative-caret-position="2508">
+              <caret line="132" selection-start-line="132" selection-end-line="132" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -107,11 +107,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ci_bstree.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
+            <state relative-caret-position="1064">
               <caret line="56" column="5" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-              <folding>
-                <element signature="e#110#129#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -119,8 +116,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ci_bstree.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="115" column="34" lean-forward="true" selection-start-line="115" selection-start-column="34" selection-end-line="115" selection-end-column="34" />
+            <state relative-caret-position="1192">
+              <caret line="114" column="40" lean-forward="true" selection-start-line="114" selection-start-column="40" selection-end-line="114" selection-end-column="40" />
               <folding>
                 <element signature="e#41#60#0" expanded="true" />
               </folding>
@@ -267,11 +264,13 @@
       <workItem from="1537130826400" duration="5027000" />
       <workItem from="1537192265449" duration="31000" />
       <workItem from="1537198578931" duration="6709000" />
+      <workItem from="1537214889457" duration="560000" />
+      <workItem from="1544019131396" duration="372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22989000" />
+    <option name="totallyTimeSpent" value="23921000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -283,11 +282,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1963" y="25" width="1637" height="1025" extended-state="6" />
+    <frame x="1971" y="27" width="1629" height="1023" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4939759" visible="true" weight="0.20238844" />
-      <window_info id="Structure" order="1" sideWeight="0.5060241" side_tool="true" visible="true" weight="0.20238844" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49209931" visible="true" weight="0.20783323" />
+      <window_info id="Structure" order="1" sideWeight="0.50790066" side_tool="true" visible="true" weight="0.20783323" />
       <window_info id="Favorites" order="2" sideWeight="0.5020534" side_tool="true" weight="0.13972381" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="1" show_stripe_button="false" />
@@ -436,16 +435,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ci.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10773">
-          <caret line="567" column="9" selection-start-line="567" selection-start-column="9" selection-end-line="567" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -453,20 +442,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ci.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2508">
+          <caret line="132" selection-start-line="132" selection-end-line="132" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ci_bstree.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
+        <state relative-caret-position="1064">
           <caret line="56" column="5" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
-          <folding>
-            <element signature="e#110#129#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ci_bstree.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="115" column="34" lean-forward="true" selection-start-line="115" selection-start-column="34" selection-end-line="115" selection-end-column="34" />
+        <state relative-caret-position="1192">
+          <caret line="114" column="40" lean-forward="true" selection-start-line="114" selection-start-column="40" selection-end-line="114" selection-end-column="40" />
           <folding>
             <element signature="e#41#60#0" expanded="true" />
           </folding>

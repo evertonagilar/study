@@ -1,0 +1,15 @@
+{
+  "name": "familia",
+  "version": "1.0.0",
+  "description": "familia",
+  "main": "familia",
+  "scripts": {
+    "test": "node familia"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
