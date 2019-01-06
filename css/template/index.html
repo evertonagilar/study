@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    
+    <style>
+    
+        * {
+            box-sizing: border-box;
+        }
+       
+        body {
+            margin: 0;
+            font-family: 'Oswald', sans-serif;
+            background-color: lightgray;
+
+        } 
+
+        .logo {
+            height: 80px;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        .cabecalho {
+            display: inline-block;
+            width: 100%;
+            height: 80px;
+            box-sizing: content-box;
+            background: #333;
+            border-bottom: solid 5px goldenrod;
+        }
+
+        .cabecalho a {
+            text-decoration: none;
+            font-size: 1em;
+            color: #eee;
+            cursor: pointer;
+        }
+
+        .menu {
+            display: inline-block;
+            vertical-align: top;
+            margin: 0;
+            padding: 25px;
+            color: white;
+            
+
+        }
+
+        .menu ul {
+            padding: 0;
+            margin: 0;
+        }
+    
+        .menu li {
+            display: inline-block;
+            margin: 0px 6px;
+        }
+
+        .menu a {
+            padding: 12px;
+        }
+
+        .menu a:hover,
+        .menu a.selected {
+            background-color: goldenrod;
+        }
+
+        .autenticacao {
+            float: right;
+            height: 80px;
+            padding: 25px;
+
+            
+        }
+
+        .botao {
+            border-radius: 30px;
+            padding: 10px 25px;
+            margin: 10px;
+        }
+
+        .destaque {
+            background: crimson;
+            color: #fff;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+    
+    <header class="cabecalho">
+
+        <img class="logo" src="logo.png" >
+
+        <ul class="menu">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#cursos">Cursos</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <div class="autenticacao">
+            <a>Entrar</a>
+            <a class="botao destaque">Registrar</a>
+        </div>
+
+    </header>
+
+
+    <script>
+    
+        window.onhashchange = function(e){
+            const oldUrl = e.oldURL.split('#')[1]
+            const newUrl = e.newURL.split('#')[1]
+            const oldLink = document.querySelector(`.menu a[href='#${oldUrl}']`)
+            const newLink = document.querySelector(`.menu a[href='#${newUrl}']`)
+            oldLink && oldLink.classList.remove('selected')
+            newLink && newLink.classList.add('selected')
+        }
+    
+        document.querySelector(`.menu a[href='#inicio']`).classList.add("selected")
+        location.hash = '#inicio'
+
+    </script>
+    
+
+</body>
+</html>

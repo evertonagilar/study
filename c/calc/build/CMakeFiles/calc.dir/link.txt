@@ -1,1 +1,1 @@
-/usr/bin/cc -O0 -ggdb -O0 -ggdb   CMakeFiles/calc.dir/calc.c.o  -o calc 
+/usr/bin/cc -static   CMakeFiles/calc.dir/calc.c.o  -o calc 
