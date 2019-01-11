@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Dados de Confirmação</title>
+</h:head>
+<h:body>
+
+    <h:panelGrid columns="2" >
+
+        <h:outputLabel value="Nome"></h:outputLabel>
+        <h:outputLabel value="#{pessoaController.pessoa.nome}"></h:outputLabel>
+
+        <h:outputLabel value="Email"></h:outputLabel>
+        <h:outputLabel value="#{pessoaController.pessoa.email}"></h:outputLabel>
+
+
+    </h:panelGrid>
+
+    <h:commandButton value="Voltar" onclick="window.history.back()" ></h:commandButton>
+    <h:commandButton value="Home" onclick="window.location.href = '/aulacdi/index.xhtml'" ></h:commandButton>
+
+
+</h:body>
+
+</html>
