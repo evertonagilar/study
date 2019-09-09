@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <script src="./eauth2.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            console.log("Autenticando OAuth2 com jErlangMs...");
+
+            e$().autenticate({
+                server: 'http://200.18.32.7:2301/authorize',
+                client_id: 2,
+                redirect_uri: '/portal/index.html',
+                onSuccess() {
+                    console.log('Autenticado com sucesso!');
+                },
+                onDenied() {
+                    console.log('Acesso negado!');
+                },
+                onError() {
+                    console.log('Deu erro!');
+                }
+            });
+
+        }, false);
+    </script>
+</body>
+
+</html>
