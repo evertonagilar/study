@@ -18,10 +18,15 @@
         window.addEventListener('load', () => {
             console.log("Autenticando OAuth2 com jErlangMs...");
 
+            // Monta a url do portal que está solicitando a autenticação
+            const redirect_uri = location.origin + location.pathname;
+
+            // Solicita autenticação via biblioteca jErlangMs
             e$().autenticate({
                 server: 'http://200.18.32.7:2301/authorize',
-                client_id: 2,
-                redirect_uri: '/portal/index.html',
+                client_id: 4,
+                client_secret: 'eoauth2',
+                redirect_uri: redirect_uri,
                 onSuccess() {
                     console.log('Autenticado com sucesso!');
                 },
