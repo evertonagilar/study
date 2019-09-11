@@ -9,9 +9,7 @@
 </head>
 
 <body>
-
-
-
+    <span></span>
     <script src="./eauth2.js"></script>
 
     <script>
@@ -27,8 +25,10 @@
                 client_id: 4,
                 client_secret: 'eauth2',
                 redirect_uri: redirect_uri,
-                onSuccess() {
-                    console.log('Autenticado com sucesso!');
+                onSuccess(response) {
+                    console.log('Autenticado com sucesso: ', response);
+                    const str = JSON.stringify(response, null, 2);
+                    document.querySelector('body span').innerHTML = str;
                 },
                 onDenied() {
                     console.log('Acesso negado!');
