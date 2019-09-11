@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: rgb(238, 238, 238);
+    font-size: 1vw;
+    border-top: 8px solid rgb(46, 49, 49);
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+@media (min-width:960px) {
+    .container {
+        width: 960px;
+        padding: 0;
+    }
+}
+
+
+/* estilos do header */
+
+.header {}
+
+.logo {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    border: 1px solid #000;
+}
+
+.titulo-site {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-size: 4vw;
+    text-transform: uppercase;
+}
+
+@media(min-width: 768px) {
+    .titulo-site {
+        font-size: 2vw;
+    }
+}
+
+@media(min-width: 2000px) {
+    .titulo-site {
+        font-size: 1vw;
+    }
+}
+
+
+/* estilos do menu */

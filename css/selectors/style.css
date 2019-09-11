@@ -1,0 +1,8 @@
+h1 {
+    border-bottom: 1px solid black;
+}
+
+h1+p {
+    color: crimson;
+    font-size: 28px;
+}
