@@ -10,13 +10,13 @@ const jErlangMs = e$ = function() {
             } else {
                 console.log(`Autenticate code ${code} received from ${document.referrer}.`)
                 const url = `${server}?grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`;
-                const authorizatoinHeader = 'Basic ' + btoa(client_id + ':' + client_secret);
+                const authorizationHeader = 'Basic ' + btoa(client_id + ':' + client_secret);
                 const optionsFetch = {
                     method: 'POST',
                     mode: 'cors',
                     headers: new Headers({
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': authorizatoinHeader
+                        'Authorization': authorizationHeader
                     })
                 }
                 fetch(url, optionsFetch)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -9,32 +9,37 @@
 </head>
 
 <body>
-
-
-
+    <span></span>
     <script src="./eauth2.js"></script>
 
     <script>
         window.addEventListener('load', () => {
+            debugger
             console.log("Autenticando OAuth2 com jErlangMs...");
 
             // Monta a url do portal que está solicitando a autenticação
-            const redirect_uri = '/index.html'
+            //const redirect_uri = '/diploma/index.html'
+            const redirect_uri = location.pathname;
+
+            // Quem é o nosso servidor de autenticação
+            const server = 'http://cpd007.ad.cpd.ufsm.br:32301/authorize';
 
             // Solicita autenticação via biblioteca jErlangMs
             e$().autenticate({
-                server: 'http://localhost:2301/authorize',
-                client_id: 4,
-                client_secret: 'eauth2',
+                server: server,
+                client_id: 3,
+                client_secret: 'CPD',
                 redirect_uri: redirect_uri,
-                onSuccess() {
-                    console.log('Autenticado com sucesso!');
+                onSuccess(response) {
+                    console.log('Autenticado com sucesso: ', response);
+                    const str = JSON.stringify(response, null, 2);
+                    document.querySelector('body span').innerHTML = str;
                 },
                 onDenied() {
                     console.log('Acesso negado!');
                 },
                 onError() {
-                    console.log('Deu erro!');
+                    console.log('Ops deu erro, o servidor tá fora!');
                 }
             });
 
