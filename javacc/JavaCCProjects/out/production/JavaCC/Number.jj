@@ -1,0 +1,59 @@
+
+PARSER_BEGIN(NumberParser)
+
+public class NumberParser {
+    public static void main(String args[]) throws ParseException {
+        NumberParser parser = new NumberParser(System.in);
+        while (true){
+            parser.Input();
+        }
+
+    }
+
+}
+
+PARSER_END(NumberParser)
+
+SKIP :
+{
+	" "
+	|"\t"
+	|"\r"
+}
+
+TOKEN:
+{
+    < NUMBER: (<DIGIT>)+("."(<DIGIT>)+)? >
+ |  < DIGIT: ["0"-"9"] >
+ |  < EOL: "\n" >
+ | < ADD : "+" >
+ | < MINUS : "-" >
+ | < DIV : "/" >
+ | < MULT : "*" >
+
+}
+
+
+void Input():
+{
+    double result;
+}
+{
+    result = expr()                 { System.out.println(result); }
+  |  <EOF>
+}
+
+double expr():
+{
+    double l, r;
+}
+{
+    l=<NUMBER>                      { return l; }
+  | l=<NUMBER> <ADD> r=<NUMBER>     { return l + r; }
+  | l=<NUMBER> <MINUS> r=<NUMBER>   { return l - r; }
+
+}
+
+
+
+

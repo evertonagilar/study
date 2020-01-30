@@ -1,0 +1,94 @@
+options {
+    LOOKAHEAD = 2;
+}
+
+PARSER_BEGIN(NumberParser)
+
+public class NumberParser {
+    public static void main(String args[]) throws ParseException {
+        NumberParser parser = new NumberParser(System.in);
+        while (true){
+            parser.Input();
+        }
+
+    }
+
+}
+
+PARSER_END(NumberParser)
+
+SKIP :
+{
+	" "
+	|"\t"
+	|"\r"
+}
+
+TOKEN:
+{
+    < NUMBER: (<DIGIT>)+("."(<DIGIT>)+)? >
+ |  < DIGIT: ["0"-"9"] >
+ |  < EOL: "\n" >
+ |  < ADD: "+" >
+ |  < MINUS: "-" >
+ |  < MULT: "*" >
+ |  < DIV: "/" >
+
+}
+
+
+void Input():
+{
+    double result;
+}
+{
+    result = expr()  <EOL>                { System.out.println(result); }
+    | <EOL>
+    |  <EOF>
+}
+
+double expr():
+{
+    double l, r;
+}
+{
+    l=term()
+    (
+        <ADD> r=expr()            { l = l + r; }
+     |  <MINUS> r=expr()          { l = l - r; }
+    )*                            { return l; }
+}
+
+double term():
+{
+    double l, r;
+}
+{
+    l=unary()
+    (
+        <MULT> r=term()            { l = l * r; }
+     |  <DIV> r=term()             { l = l / r; }
+    )*                             { return l; }
+}
+
+double unary():
+{
+    double l;
+}
+{
+      l=fator()                     { return l; }
+    | "-" l=fator()                 { return - l; }
+}
+
+
+double fator():
+{
+    double l;
+    Token t;
+}
+{
+      t=<NUMBER>                    { return Double.parseDouble(t.toString()); }
+    | "(" l=expr()  ")"             { return l; }
+}
+
+
