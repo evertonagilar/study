@@ -1,0 +1,33 @@
+public class webservice {
+
+    public static main(){
+        var lista =
+            from dbms.Aluno al join Curso c
+                on al.id_curso = c.id_curso
+            where c.ativo = 1
+            order by al.nome,
+                     c.nome
+            return as [{int id = al.id,
+                       string nome = al.nome}]
+
+        var lista2 =
+            from lista
+            where id % 2 == 0
+            order by nome;
+
+        var lista3 =
+            from lista2
+            where nome like '%agilar'
+            return as [ id ]
+
+        var sobrenome = [ {nome = "agilar"}, {nome = "kent"} ]
+
+        var lista4 =
+            from lista2 join sobrenome
+                on lista2.nome == sobrenome.nome
+            where nome like '%agilar'
+            return as [ id ]
+
+    }
+
+}

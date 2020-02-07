@@ -1,0 +1,12 @@
+
+class Webservice {
+
+    class Object {
+
+    }
+
+    Object dados;
+    int inteiro ;
+    string str;
+
+}
