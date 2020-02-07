@@ -1,0 +1,100 @@
+options{  static = false;  jdk_version = "1.8";}PARSER_BEGIN(SimpleJson)//package simplejson.javacc;
+
+public class SimpleJson{  public static void main(String args []) throws ParseException  {    while (true)    {    SimpleJson parse = new SimpleJson(System.in);      System.out.println("Reading from standard input...");      System.out.print("Enter a simple json :");      try      {        if (parse.readOneLine() == 0) {  
+        	System.out.println("Ok.");
+      	} else {
+      	    System.out.println("GoodBye.");
+			return;
+      	}      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        parse.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(SimpleJson)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN :{  <NUMBER : ("-")? (["0"-"9"] (["0"-"9"])*   		| (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?  		| "." (["0"-"9"])+ (<EXPONENT>)?  		| (["0"-"9"])+ <EXPONENT> )>  | <#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >  
+| < WORD_TOKEN : (["a"-"z"] | ["A"-"Z"]) >| < COMMA : "," >| < LEFT_OBJ : "{" >| < RIGHT_OBJ : "}" >| < LEFT_ARR : "[" >| < RIGHT_ARR :"]" >| < QUOTE : "\"" >| < COLON : ":">| < BOOLEAN : "true" | "false" >| < NULL : "null" >}int readOneLine() :{}{  run()
+  {
+    return 0;  }
+|
+  "exit"
+  {	return 1;
+  }}
+
+void run() :
+{}
+{
+  obj()
+|
+  array()
+}
+
+
+void obj() :
+{}
+{
+	< LEFT_OBJ > members() < RIGHT_OBJ >
+} 
+
+void members() : 
+{}
+{
+  pair() members1()
+|
+  {
+    return;
+  }
+}
+
+void members1() :
+{}
+{
+  < COMMA > pair() members1()
+|
+  {
+	return;
+  }
+}
+
+void pair() :
+{}
+{
+  < QUOTE > (< WORD_TOKEN >)+ < QUOTE > < COLON > value()
+}
+
+void array() :
+{}
+{
+  < LEFT_ARR > elem() < RIGHT_ARR >
+}
+
+void elem() : 
+{}
+{
+  value() elem1()
+|
+  {
+    return;
+  }
+}
+
+void elem1() :
+{}
+{
+  < COMMA > value() elem1()
+|
+  {
+	return;
+  }
+}
+
+void value() :
+{}
+{
+  obj()
+|
+  array()
+|
+  < NUMBER >
+|  LOOKAHEAD(2)
+  < QUOTE > (< WORD_TOKEN >)+ < QUOTE >|  < QUOTE > < NUMBER > < QUOTE >
+|
+  < BOOLEAN >
+|
+  < NULL >
+}
+
+
