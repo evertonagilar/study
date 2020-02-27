@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/agilar/study/c/minidb/database.c
+stdlib.h
+-
+string.h
+-
+stdio.h
+-
+ctype.h
+-
+database.h
+/home/agilar/study/c/minidb/database.h
+utils.h
+/home/agilar/study/c/minidb/utils.h
+
+/home/agilar/study/c/minidb/database.h
+
+/home/agilar/study/c/minidb/utils.h
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+

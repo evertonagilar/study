@@ -27,7 +27,7 @@ section .data
 section .bss
     argc   resd    1           
 
-section .code
+section .text
 
     global _start
 
@@ -48,7 +48,7 @@ _start:
     mov [argc], rcx
 
     ; verifica número de argumentos
-    cmp rcx, 1
+    cmp rcx, 0
     jz sem_argumentos
 
 
