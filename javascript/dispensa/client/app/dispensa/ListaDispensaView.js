@@ -37,6 +37,7 @@ class ListaDispensaView {
 
 
     update(lista) {
+        console.log("Atualizando view...")
         this._element.innerHTML = this.template(lista);
     }
 

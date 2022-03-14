@@ -9,6 +9,10 @@ class ListaDispensa {
         this._lista.push(negociacao);
     }
 
+    limpa(){
+        this._lista.length = 0;
+    }
+
     toArray(){
         return [].concat(this._lista);
     }

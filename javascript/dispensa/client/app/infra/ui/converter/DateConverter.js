@@ -19,13 +19,16 @@ class DateConverter {
     }
 
     static toText(date) {
-        return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+        const dia = date.getDate().toString().padStart(2, '0');
+        const mes = date.getMonth().toString().padStart(2, '0');
+        const ano = date.getFullYear();
+        return `${dia}/${mes}/${ano}`
     }
 
     static toTextYYYY_MM_DD(date) {
+        const dia = date.getDate().toString().padStart(2, '0');
+        const mes = date.getMonth().toString().padStart(2, '0');
         const ano = date.getFullYear();
-        const mes = new String(date.getMonth()).padStart(2, '0');
-        const dia = new String(date.getDate()).padStart(2, '0');
         return `${ano}-${mes}-${dia}`
     }
 
