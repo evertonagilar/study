@@ -3,50 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Processos Dispensa</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">
-    
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+
+
+
 </head>
 <body class="container">
-    
-    <h1 class="text-center">Processos Dispensa</h1>
 
-    <div id="message"></div>
-    
-    <form class="form">
-        
-        <div class="form-group">
-            <label for="data">Data</label>
-            <input type="date" id="data" class="form-control" required autofocus/>        
-        </div>    
-        
-        <div class="form-group">
-            <label for="quantidade">Quantidade</label>
-            <input type="number" min="1" step="1" id="quantidade" class="form-control" value="1" required/>
-        </div>
-        
-        <div class="form-group">
-            <label for="valor">Valor</label>
-            <input id="valor" type="number" class="form-control"  min="1" step="1" value="1" required />
-        </div>
-        
-        <button class="btn btn-primary" type="submit">Incluir</button>
-    </form>
-    
-    <div class="text-center">
-        <button id="botao-apaga" class="btn btn-primary text-center" type="button">
-            Apagar
-        </button>
-    </div> 
-    <br>
-    <br>
-    
-    <div id="lista_dispensa"></div>
+<h1 class="text-center">Processos Dispensa</h1>
 
+<div id="message"></div>
+
+<form class="form">
+    <fieldset class="fieldset">
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label for="data">Data</label>
+                <input type="text" class="datepicker_input form-control" id="data" required placeholder="dd/mm/yyyy">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" min="1" step="1" id="quantidade" class="form-control" value="1" required/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label for="valor">Valor</label>
+                <input id="valor" type="number" class="form-control" min="1" step="1" value="1" required/>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <div class="row m-4">
+        <div class="container">
+            <button class="btn btn-primary" type="submit">Incluir</button>
+            <button id="botao-apaga" class="btn btn-secondary" type="button">Apagar</button>
+            <button id="botao-importa" class="btn btn-secondary" type="button">Importar</button>
+        </div>
+    </div>
+</form>
+
+<div id="lista_dispensa"></div>
 
 </body>
 
 <!--<script src="app/index.js" ></script>-->
+<script src="app/infra/exception/RegraNegocioException.js"></script>
+<script src="app/infra/exception/InvalidDateException.js"></script>
 <script src="app/infra/util/DataBind.js"></script>
 <script src="app/infra/ui/converter/DateConverter.js"></script>
 <script src="app/infra/view/message/Message.js"></script>
@@ -55,6 +85,7 @@
 <script src="app/dispensa/Dispensa.js"></script>
 <script src="app/dispensa/ListaDispensa.js"></script>
 <script src="app/dispensa/ListaDispensaView.js"></script>
+<script src="app/dispensa/DispensaService.js"></script>
 <script src="app/dispensa/DispensaController.js"></script>
 <script src="app/app.js"></script>
 

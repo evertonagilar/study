@@ -4,7 +4,12 @@ class BaseController{
         this._messageView = new MessageView("#message");
     }
 
-    showMessage(text, type){
-        this._messageView.update(new Message(text, type));
+    infoMessage(text){
+        this._messageView.update(new Message(text, "info"));
     }
+
+    errorMessage(text){
+        this._messageView.update(new Message(text, "danger"));
+    }
+
 }

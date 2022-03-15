@@ -25,6 +25,7 @@ class DataBind {
                 return result;
             }
         });
+        view.update(model);
         return proxy;
     }
 
