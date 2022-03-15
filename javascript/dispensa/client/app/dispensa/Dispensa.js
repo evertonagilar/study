@@ -2,10 +2,10 @@ class Dispensa {
 
     constructor(_data, _quantidade, _valor) {
         Object.assign(this, {_quantidade, _valor});
-        this._data = new Date(_data.getTime());
-        if (!this._data){
+        if (!_data){
             throw new CampoObrigatorioException('Data');
         }
+        this._data = new Date(_data.getTime());
         if (!this._quantidade || this._quantidade < 0 || this._quantidade > 999){
             throw new RegraNegocioException("Quantidade inválida.");
         }
