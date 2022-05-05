@@ -1,0 +1,9 @@
+T__0=1
+T__1=2
+SAYS=3
+SHOUTS=4
+TEXT=5
+WHITESPACE=6
+NEWLINE=7
+'('=1
+')'=2
