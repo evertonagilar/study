@@ -1,4 +1,4 @@
-// Generated from /home/evertonagilar/desenvolvimento/workspace_producao/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
+// Generated from /home/evertonagilar/study/antlr/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
 package br.calc.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -88,6 +88,18 @@ public class CalcBaseListener implements CalcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionArgs(CalcParser.FunctionArgsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionArgs(CalcParser.FunctionArgsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunctionDecl(CalcParser.FunctionDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -95,6 +107,18 @@ public class CalcBaseListener implements CalcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionDecl(CalcParser.FunctionDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionParams(CalcParser.FunctionParamsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionParams(CalcParser.FunctionParamsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

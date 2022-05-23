@@ -37,18 +37,18 @@ WS  : (' ' | '\r' ) -> skip;
 
 /* parse rules */
 
-main    : ((functionDecl | statementBlock | statement) STATEMENT_RET? )+ ;
+main    : (functionDecl | statementBlock)+ ;
 
 statementBlock  :  BEGIN_BLOCK
-                       ( statement STATEMENT_RET )*
+                       ( statementBlock STATEMENT_RET? )*
                    END_BLOCK
+                   | ( statement STATEMENT_RET )
                 ;
 
 statement   : return
             | expression
             | assigment
             | functionCall
-            | statementBlock
             ;
 
 
@@ -61,9 +61,13 @@ expression      : fator
 
 assigment       : ID ASSIGN_OP expression ;
 
-functionCall    : ID LPARENT RPARENT ;
+functionCall    : ID LPARENT functionArgs RPARENT ;
 
-functionDecl    : ID LPARENT RPARENT statementBlock ;
+functionArgs   : fator? (',' fator)* ;
+
+functionDecl    : ID LPARENT functionParams RPARENT statementBlock ;
+
+functionParams  : ID? (',' ID)* ;
 
 return          : RETURN expression ;
 

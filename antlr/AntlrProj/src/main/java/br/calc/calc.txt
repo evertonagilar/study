@@ -1,2 +1,8 @@
+calculaArea(base, altura){
+    result = base * altura;
+    return result;
+}
 
-10+10;
+area = calculaArea(3, 4);
+area = calculaArea(3, 5);
+return area;

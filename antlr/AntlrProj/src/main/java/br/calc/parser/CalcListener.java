@@ -1,4 +1,4 @@
-// Generated from /home/evertonagilar/desenvolvimento/workspace_producao/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
+// Generated from /home/evertonagilar/study/antlr/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
 package br.calc.parser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -68,6 +68,16 @@ public interface CalcListener extends ParseTreeListener {
 	 */
 	void exitFunctionCall(CalcParser.FunctionCallContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CalcParser#functionArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionArgs(CalcParser.FunctionArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#functionArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionArgs(CalcParser.FunctionArgsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CalcParser#functionDecl}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +87,16 @@ public interface CalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionDecl(CalcParser.FunctionDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalcParser#functionParams}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionParams(CalcParser.FunctionParamsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#functionParams}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionParams(CalcParser.FunctionParamsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CalcParser#return}.
 	 * @param ctx the parse tree
