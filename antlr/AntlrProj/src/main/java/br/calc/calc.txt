@@ -1,8 +1,9 @@
-calculaArea(base, altura){
-    result = base * altura;
-    return result;
+igual(a, b){
+  if ( a == b ){
+      return 1;
+  }
+  return 0;
 }
 
-area = calculaArea(3, 4);
-area = calculaArea(3, 5);
-return area;
+
+igual(5, 5);

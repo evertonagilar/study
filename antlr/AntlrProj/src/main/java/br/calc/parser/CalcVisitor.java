@@ -11,11 +11,17 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface CalcVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link CalcParser#main}.
+	 * Visit a parse tree produced by {@link CalcParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMain(CalcParser.MainContext ctx);
+	T visitProgram(CalcParser.ProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalcParser#scriptBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScriptBlock(CalcParser.ScriptBlockContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CalcParser#statementBlock}.
 	 * @param ctx the parse tree
@@ -28,6 +34,12 @@ public interface CalcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatement(CalcParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalcParser#statementRet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementRet(CalcParser.StatementRetContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CalcParser#expression}.
 	 * @param ctx the parse tree
@@ -64,6 +76,12 @@ public interface CalcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionParams(CalcParser.FunctionParamsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalcParser#ifDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfDecl(CalcParser.IfDeclContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CalcParser#return}.
 	 * @param ctx the parse tree

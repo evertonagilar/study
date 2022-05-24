@@ -5,12 +5,20 @@ grammar Calc;
 fragment LETTER : [A-Za-z];
 fragment DIGIT : [0-9];
 
+IF          : 'if' ;
+ELSE        : 'else' ;
+
 ADD_OP      : '+' ;
 SUB_OP      : '-' ;
 MUL_OP      : '*' ;
 DIV_OP      : '/' ;
 POW_OP      : '^' ;
+EQUAL_OP    : '==' ;
 ASSIGN_OP   : '=' ;
+LT_OP       : '<' ;
+LTE_OP      : '<=' ;
+GT_OP       : '>' ;
+GTE_OP      : '>=' ;
 
 LPARENT     : '(' ;
 RPARENT     : ')' ;
@@ -37,27 +45,37 @@ WS  : (' ' | '\r' ) -> skip;
 
 /* parse rules */
 
-main    : (functionDecl | statementBlock)+ ;
+program    : (functionDecl | scriptBlock)+ | EOF ;
 
-statementBlock  :  BEGIN_BLOCK
-                       ( statementBlock STATEMENT_RET? )*
-                   END_BLOCK
-                   | ( statement STATEMENT_RET )
+scriptBlock   : statementBlock
+                |  statement+
                 ;
 
-statement   : return
-            | expression
-            | assigment
-            | functionCall
+statementBlock  :  BEGIN_BLOCK
+                       statement*
+                   END_BLOCK
+                ;
+
+statement   : return        statementRet
+            | expression    statementRet
+            | assigment     statementRet
+            | functionCall  statementRet
+            | ifDecl
+            | statementBlock
+            | statementRet
             ;
 
+statementRet    :   STATEMENT_RET ;
 
 expression      : fator
                 | LPARENT inner=expression RPARENT
                 | left=expression  operator=POW_OP  right=expression
                 | left=expression  operator=(MUL_OP | DIV_OP)  right=expression
                 | left=expression  operator=(ADD_OP | SUB_OP)  right=expression
+                | left=expression  operator=(LT_OP | LTE_OP | GT_OP | GTE_OP | EQUAL_OP)  right=expression
                 ;
+
+
 
 assigment       : ID ASSIGN_OP expression ;
 
@@ -68,6 +86,8 @@ functionArgs   : fator? (',' fator)* ;
 functionDecl    : ID LPARENT functionParams RPARENT statementBlock ;
 
 functionParams  : ID? (',' ID)* ;
+
+ifDecl          : IF LPARENT expression RPARENT trueStat=statementBlock (ELSE falseStat=statementBlock)? ;
 
 return          : RETURN expression ;
 

@@ -3,7 +3,8 @@ package br.calc;
 import br.calc.parser.CalcBaseVisitor;
 import br.calc.parser.CalcLexer;
 import br.calc.parser.CalcParser;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.*;
 
@@ -12,18 +13,47 @@ public class Compiler extends CalcBaseVisitor<Number> {
     private final Map<String, Function> functions = new HashMap<>();
     private final static Stack<Object> stack = new Stack<>();
     private final static Integer VOID = 0;
+    private Number currentResult = VOID;
 
     @Override
-    public Number visitMain(CalcParser.MainContext ctx) {
-        int n = ctx.getChildCount();
-        Number result = VOID;
-        for (int i=0; i < n; i++){
-            ParseTree c = ctx.getChild(i);
-            if (!c.getText().equals(";")) {
-                result = visit(c);
+    public Number visitScriptBlock(CalcParser.ScriptBlockContext ctx) {
+        if (ctx.statementBlock() != null) {
+            return visit(ctx.statementBlock());
+        } else {
+            Number result = currentResult;
+            for (CalcParser.StatementContext stat : ctx.statement()) {
+                result = visit(stat);
+                if (stat.start.getType() == CalcLexer.RETURN) {
+                    break;
+                }
+            }
+            return result;
+        }
+    }
+
+    @Override
+    public Number visitStatementBlock(CalcParser.StatementBlockContext ctx) {
+        Number result = currentResult;
+        for (CalcParser.StatementContext stat : ctx.statement()) {
+            result = visit(stat);
+            if (stat.start.getType() == CalcLexer.RETURN) {
+                break;
             }
         }
         return result;
+    }
+
+    @Override
+    public Number visitStatement(CalcParser.StatementContext ctx) {
+        ParseTree stat = ctx.getChild(0);
+        Number result = visit(stat);
+        currentResult = result;
+        return result;
+    }
+
+    @Override
+    public Number visitStatementRet(CalcParser.StatementRetContext ctx) {
+        return currentResult;
     }
 
     @Override
@@ -32,18 +62,9 @@ public class Compiler extends CalcBaseVisitor<Number> {
             return visit(ctx.inner);
         }
         if (ctx.operator != null) {
-            switch (ctx.operator.getType()) {
-                case (CalcLexer.POW_OP):
-                    return doMathOperation(visit(ctx.left), visit(ctx.right), '^');
-                case CalcLexer.MUL_OP:
-                    return doMathOperation(visit(ctx.left), visit(ctx.right), '*');
-                case CalcLexer.DIV_OP:
-                    return doMathOperation(visit(ctx.left), visit(ctx.right), '/');
-                case CalcLexer.ADD_OP:
-                    return doMathOperation(visit(ctx.left), visit(ctx.right), '+');
-                case CalcLexer.SUB_OP:
-                    return doMathOperation(visit(ctx.left), visit(ctx.right), '-');
-            }
+            final Number left = visit(ctx.left);
+            final Number right = visit(ctx.right);
+            return doMathOperation(left, right, ctx.operator.getType());
         }
         return visit(ctx.fator());
     }
@@ -85,11 +106,11 @@ public class Compiler extends CalcBaseVisitor<Number> {
         final Function function = (Function) stack.pop();
         final Map<String, Number> localVars = new HashMap<>();
         final Iterator<CalcParser.FatorContext> args = ctx.fator().iterator();
-        for (String paramName : function.getParams()){
-            if (args.hasNext()){
+        for (String paramName : function.getParams()) {
+            if (args.hasNext()) {
                 Number value = visit(args.next());
                 localVars.put(paramName, value);
-            }else{
+            } else {
                 localVars.put(paramName, VOID);
             }
         }
@@ -124,11 +145,11 @@ public class Compiler extends CalcBaseVisitor<Number> {
     @Override
     public Number visitVariableDecl(CalcParser.VariableDeclContext ctx) {
         final String varName = ctx.ID().getText();
-        if (!stack.isEmpty()){
+        if (!stack.isEmpty()) {
             Object localVars = stack.peek();
-            if (localVars != null && localVars instanceof Map){
-                if (((Map)localVars).containsKey(varName)) {
-                    return (Number) ((Map)localVars).get(varName);
+            if (localVars != null && localVars instanceof Map) {
+                if (((Map) localVars).containsKey(varName)) {
+                    return (Number) ((Map) localVars).get(varName);
                 }
             }
         }
@@ -139,53 +160,73 @@ public class Compiler extends CalcBaseVisitor<Number> {
     }
 
     @Override
-    public Number visitStatementBlock(CalcParser.StatementBlockContext ctx) {
-        Number result = 0;
-        int n = ctx.getChildCount();
-        for (int i=0; i < n; i++){
-            ParseTree c = ctx.getChild(i);
-            if (c.getClass() == CalcParser.StatementContext.class ||
-                c.getClass() == CalcParser.StatementBlockContext.class){
-                result = visit(c);
-            }
-        }
-        return result;
+    public Number visitReturn(CalcParser.ReturnContext ctx) {
+        return visit(ctx.expression());
     }
 
     @Override
-    public Number visitReturn(CalcParser.ReturnContext ctx) {
-        return visit(ctx.expression());
+    public Number visitIfDecl(CalcParser.IfDeclContext ctx) {
+        final Number cond = visit(ctx.expression());
+        if (cond.doubleValue() > 0) {
+            return visit(ctx.trueStat);
+        } else {
+            if (ctx.falseStat != null) {
+                return visit(ctx.falseStat);
+            }
+        }
+        return currentResult;
     }
 
     public void setVariable(final String Identifier, Number value) {
         variables.put(Identifier, value);
     }
 
-    private Number doMathOperation(final Number left, final Number right, char operation) {
+    private Number doMathOperation(final Number left, final Number right, int operation) {
         if (left instanceof Double || right instanceof Double) {
             switch (operation) {
-                case '+':
+                case CalcLexer.ADD_OP:
                     return left.doubleValue() + right.doubleValue();
-                case '-':
+                case CalcLexer.SUB_OP:
                     return left.doubleValue() - right.doubleValue();
-                case '*':
+                case CalcLexer.MUL_OP:
                     return left.doubleValue() * right.doubleValue();
-                case '/':
+                case CalcLexer.DIV_OP:
                     return left.doubleValue() / right.doubleValue();
+                case CalcLexer.LT_OP:
+                    return left.doubleValue() < right.doubleValue() ? 1 : 0;
+                case CalcLexer.LTE_OP:
+                    return left.doubleValue() <= right.doubleValue() ? 1 : 0;
+                case CalcLexer.GT_OP:
+                    return left.doubleValue() > right.doubleValue() ? 1 : 0;
+                case CalcLexer.GTE_OP:
+                    return left.doubleValue() >= right.doubleValue() ? 1 : 0;
+                case CalcLexer.EQUAL_OP:
+                    return left.doubleValue() == right.doubleValue() ? 1 : 0;
             }
         }
         switch (operation) {
-            case '+':
-                return left.intValue() + right.intValue();
-            case '-':
-                return left.intValue() - right.intValue();
-            case '*':
-                return left.intValue() * right.intValue();
-            case '/':
-                return left.intValue() / right.intValue();
-            default:
+            case CalcLexer.POW_OP:
                 return Math.pow(left.doubleValue(), right.doubleValue());
+            case CalcLexer.ADD_OP:
+                return left.intValue() + right.intValue();
+            case CalcLexer.SUB_OP:
+                return left.intValue() - right.intValue();
+            case CalcLexer.MUL_OP:
+                return left.intValue() * right.intValue();
+            case CalcLexer.DIV_OP:
+                return left.intValue() / right.intValue();
+            case CalcLexer.LT_OP:
+                return left.intValue() < right.intValue() ? 1 : 0;
+            case CalcLexer.LTE_OP:
+                return left.intValue() <= right.intValue() ? 1 : 0;
+            case CalcLexer.GT_OP:
+                return left.intValue() > right.intValue() ? 1 : 0;
+            case CalcLexer.GTE_OP:
+                return left.intValue() >= right.intValue() ? 1 : 0;
+            case CalcLexer.EQUAL_OP:
+                return left.intValue() == right.intValue() ? 1 : 0;
         }
+        return VOID;
     }
 
     private Number doNumber(String text, boolean isInt) {
@@ -200,4 +241,6 @@ public class Compiler extends CalcBaseVisitor<Number> {
     public Number visitErrorNode(ErrorNode node) {
         return super.visitErrorNode(node);
     }
+
+
 }

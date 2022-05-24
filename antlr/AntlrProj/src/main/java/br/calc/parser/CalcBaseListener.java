@@ -16,13 +16,25 @@ public class CalcBaseListener implements CalcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMain(CalcParser.MainContext ctx) { }
+	@Override public void enterProgram(CalcParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMain(CalcParser.MainContext ctx) { }
+	@Override public void exitProgram(CalcParser.ProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterScriptBlock(CalcParser.ScriptBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScriptBlock(CalcParser.ScriptBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -47,6 +59,18 @@ public class CalcBaseListener implements CalcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatement(CalcParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStatementRet(CalcParser.StatementRetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatementRet(CalcParser.StatementRetContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -119,6 +143,18 @@ public class CalcBaseListener implements CalcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionParams(CalcParser.FunctionParamsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfDecl(CalcParser.IfDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfDecl(CalcParser.IfDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
