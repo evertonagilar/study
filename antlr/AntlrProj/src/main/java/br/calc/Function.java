@@ -2,12 +2,18 @@ package br.calc;
 
 import org.antlr.v4.runtime.tree.RuleNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Function {
     private String name;
-    private List<String> params;
+    private List<String> params = new ArrayList<>();
     private RuleNode statementBlock;
+
+    public Function(final String name, final RuleNode statementBlock) {
+        this.name = name;
+        this.statementBlock = statementBlock;
+    }
 
     public String getName() {
         return name;
@@ -27,9 +33,5 @@ public class Function {
 
     public RuleNode getStatementBlock() {
         return statementBlock;
-    }
-
-    public void setStatementBlock(RuleNode statementBlock) {
-        this.statementBlock = statementBlock;
     }
 }

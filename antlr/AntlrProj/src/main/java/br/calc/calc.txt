@@ -1,9 +1,6 @@
-igual(a, b){
-  if ( a == b ){
-      return 1;
-  }
-  return 0;
+soma(a, b){
+  return a + b;
 }
 
-
-igual(5, 5);
+  return 10 + soma(2, 3);
+  

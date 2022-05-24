@@ -45,7 +45,7 @@ WS  : (' ' | '\r' ) -> skip;
 
 /* parse rules */
 
-program    : (functionDecl | scriptBlock)+ | EOF ;
+program    : (functionDecl | scriptBlock)+ ;
 
 scriptBlock   : statementBlock
                 |  statement+
@@ -59,7 +59,7 @@ statementBlock  :  BEGIN_BLOCK
 statement   : return        statementRet
             | expression    statementRet
             | assigment     statementRet
-            | functionCall  statementRet
+            | functionCall
             | ifDecl
             | statementBlock
             | statementRet
@@ -79,7 +79,7 @@ expression      : fator
 
 assigment       : ID ASSIGN_OP expression ;
 
-functionCall    : ID LPARENT functionArgs RPARENT ;
+functionCall    : ID LPARENT functionArgs RPARENT statementRet ;
 
 functionArgs   : fator? (',' fator)* ;
 

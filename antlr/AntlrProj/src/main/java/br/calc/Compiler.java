@@ -16,6 +16,20 @@ public class Compiler extends CalcBaseVisitor<Number> {
     private Number currentResult = VOID;
 
     @Override
+    public Number visitProgram(CalcParser.ProgramContext ctx) {
+        final Function mainFunc = new Function("main", null);
+        final Frame frame = new Frame(mainFunc, null);
+        stack.push(frame);
+        int n = ctx.getChildCount();
+        for (int i = 0; i < n; i++) {
+            ParseTree c = ctx.getChild(i);
+            currentResult = visit(c);
+        }
+        stack.pop();
+        return currentResult;
+    }
+
+    @Override
     public Number visitScriptBlock(CalcParser.ScriptBlockContext ctx) {
         if (ctx.statementBlock() != null) {
             return visit(ctx.statementBlock());
@@ -94,19 +108,20 @@ public class Compiler extends CalcBaseVisitor<Number> {
         if (function == null) {
             throw new CompilerException(ErrorMessages.UNDECLARED_FUNCTION, ctx);
         }
-        stack.push(function);
+        final Frame frame = new Frame(function, ctx.statementRet());
+        stack.push(frame); // Cria um frame a cada chamada de função
         visit(ctx.functionArgs());
         final Number result = visit(function.getStatementBlock());
-        stack.pop();    // pop local vars
+        stack.pop();    // pop frame
         return result;
     }
 
     @Override
     public Number visitFunctionArgs(CalcParser.FunctionArgsContext ctx) {
-        final Function function = (Function) stack.pop();
-        final Map<String, Number> localVars = new HashMap<>();
+        final Frame frame = (Frame) stack.peek();
+        final Map<String, Number> localVars = frame.getLocalVars();
         final Iterator<CalcParser.FatorContext> args = ctx.fator().iterator();
-        for (String paramName : function.getParams()) {
+        for (String paramName : frame.getFunction().getParams()) {
             if (args.hasNext()) {
                 Number value = visit(args.next());
                 localVars.put(paramName, value);
@@ -114,8 +129,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
                 localVars.put(paramName, VOID);
             }
         }
-        stack.push(localVars);
-        return VOID;
+        return currentResult;
     }
 
     @Override
@@ -125,9 +139,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
         if (function != null) {
             throw new CompilerException(ErrorMessages.DUPLICATED_FUNCTION, ctx);
         }
-        function = new Function();
-        function.setName(functionName);
-        function.setStatementBlock(ctx.statementBlock());
+        function = new Function(functionName, ctx.statementBlock());
         visit(ctx.functionParams());
         function.setParams((List<String>) stack.pop());
         functions.put(functionName, function);
@@ -146,11 +158,9 @@ public class Compiler extends CalcBaseVisitor<Number> {
     public Number visitVariableDecl(CalcParser.VariableDeclContext ctx) {
         final String varName = ctx.ID().getText();
         if (!stack.isEmpty()) {
-            Object localVars = stack.peek();
-            if (localVars != null && localVars instanceof Map) {
-                if (((Map) localVars).containsKey(varName)) {
-                    return (Number) ((Map) localVars).get(varName);
-                }
+            final Frame frame = (Frame) stack.peek();
+            if (frame.getLocalVars().containsKey(varName)) {
+                return frame.getLocalVars().get(varName);
             }
         }
         if (variables.containsKey(varName)) {
