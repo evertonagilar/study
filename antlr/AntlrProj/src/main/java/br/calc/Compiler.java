@@ -108,7 +108,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
         if (function == null) {
             throw new CompilerException(ErrorMessages.UNDECLARED_FUNCTION, ctx);
         }
-        final Frame frame = new Frame(function, ctx.statementRet());
+        final Frame frame = new Frame(function, null);
         stack.push(frame); // Cria um frame a cada chamada de função
         visit(ctx.functionArgs());
         final Number result = visit(function.getStatementBlock());

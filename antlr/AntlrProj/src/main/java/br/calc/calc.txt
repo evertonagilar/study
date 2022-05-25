@@ -1,6 +1,11 @@
-soma(a, b){
-  return a + b;
+max(a, b){
+      if (a > b){
+            return a;
+      }
+      return b;
 }
 
-  return 10 + soma(2, 3);
+return max(21, 3);
+
+
   
