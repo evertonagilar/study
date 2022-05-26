@@ -14,6 +14,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
     private final static Stack<Object> stack = new Stack<>();
     private final static Integer VOID = 0;
     private Number currentResult = VOID;
+    private boolean skipCurrentFunction = false;
 
     @Override
     public Number visitProgram(CalcParser.ProgramContext ctx) {
@@ -48,9 +49,14 @@ public class Compiler extends CalcBaseVisitor<Number> {
     @Override
     public Number visitStatementBlock(CalcParser.StatementBlockContext ctx) {
         Number result = currentResult;
+        Frame frame = (Frame) stack.peek();
         for (CalcParser.StatementContext stat : ctx.statement()) {
             result = visit(stat);
             if (stat.start.getType() == CalcLexer.RETURN) {
+                break;
+            }
+            if (skipCurrentFunction && (frame.getFunction().getStatementBlock() == ctx)){
+                skipCurrentFunction = false;
                 break;
             }
         }
@@ -171,6 +177,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
 
     @Override
     public Number visitReturn(CalcParser.ReturnContext ctx) {
+        skipCurrentFunction = true;
         return visit(ctx.expression());
     }
 
@@ -251,6 +258,4 @@ public class Compiler extends CalcBaseVisitor<Number> {
     public Number visitErrorNode(ErrorNode node) {
         return super.visitErrorNode(node);
     }
-
-
 }

@@ -1,11 +1,5 @@
-max(a, b){
-      if (a > b){
-            return a;
-      }
-      return b;
+avg(a, b){
+    return (a + b) / 2;
 }
 
-return max(21, 3);
-
-
-  
+return avg(10, 20)^2;
