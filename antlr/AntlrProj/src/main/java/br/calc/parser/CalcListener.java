@@ -8,15 +8,25 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface CalcListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link CalcParser#main}.
+	 * Enter a parse tree produced by {@link CalcParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterMain(CalcParser.MainContext ctx);
+	void enterProgram(CalcParser.ProgramContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CalcParser#main}.
+	 * Exit a parse tree produced by {@link CalcParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitMain(CalcParser.MainContext ctx);
+	void exitProgram(CalcParser.ProgramContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalcParser#scriptBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterScriptBlock(CalcParser.ScriptBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#scriptBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitScriptBlock(CalcParser.ScriptBlockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CalcParser#statementBlock}.
 	 * @param ctx the parse tree
@@ -37,6 +47,16 @@ public interface CalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatement(CalcParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalcParser#statementRet}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementRet(CalcParser.StatementRetContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#statementRet}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementRet(CalcParser.StatementRetContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CalcParser#expression}.
 	 * @param ctx the parse tree
@@ -68,6 +88,16 @@ public interface CalcListener extends ParseTreeListener {
 	 */
 	void exitFunctionCall(CalcParser.FunctionCallContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CalcParser#functionArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionArgs(CalcParser.FunctionArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#functionArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionArgs(CalcParser.FunctionArgsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CalcParser#functionDecl}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +107,26 @@ public interface CalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionDecl(CalcParser.FunctionDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalcParser#functionParams}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionParams(CalcParser.FunctionParamsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#functionParams}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionParams(CalcParser.FunctionParamsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalcParser#ifDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfDecl(CalcParser.IfDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalcParser#ifDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfDecl(CalcParser.IfDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CalcParser#return}.
 	 * @param ctx the parse tree
