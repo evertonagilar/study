@@ -1,4 +1,4 @@
-// Generated from /home/evertonagilar/desenvolvimento/workspace_producao/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
+// Generated from /home/evertonagilar/study/antlr/AntlrProj/src/main/resources/Calc.g4 by ANTLR 4.10.1
 package br.calc.parser;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

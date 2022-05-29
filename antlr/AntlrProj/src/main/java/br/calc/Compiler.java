@@ -14,6 +14,11 @@ public class Compiler extends CalcBaseVisitor<Number> {
     private final static Integer VOID = 0;
 
     @Override
+    public Number visitMain(CalcParser.MainContext ctx) {
+
+    }
+
+    @Override
     public Number visitExpression(CalcParser.ExpressionContext ctx) {
         if (ctx.LPARENT() != null) {
             return visit(ctx.inner);
