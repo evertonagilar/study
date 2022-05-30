@@ -5,11 +5,6 @@
 #ifndef VMPROJ_TYPES_H
 #define VMPROJ_TYPES_H
 
-typedef struct {
-    int opcode;
-    int arg1;
-} Instrucao;
-
 // instructions
 enum {
     LEA, IMM, JMP, CALL, JZ, JNZ, ENT, ADJ, LEV, LI, LC, SI, SC, PUSH,

@@ -5,33 +5,34 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include "types.h"
 
-void printInstrucao(Instrucao *instrucao) {
-    switch (instrucao->opcode) {
-        case IMM:
-            printf("\tIMM %d\n", instrucao->arg1);
-            break;
-        case PUSH:
-            printf("\tPUSH\n");
-            break;
-    }
+void printInstrucao(const int op, const int *pc, const int cycle) {
+    printf("%d> %.4s", cycle,
+           &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
+            "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
+            "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[op * 5]);
+    if (op <= ADJ)
+        printf(" %d\n", *pc);
+    else
+        printf("\n");
 }
 
-int openFileName(const char *fileName, int mode){
-    int fd = open(fileName, O_RDONLY);
-    if (fd == -1) {
+FILE *openFileName(const char *fileName, const char *modes){
+    FILE *fd = fopen(fileName, modes);
+    if (!fd) {
         printf("Não foi possível abrir arquivo %s. Code: %d", fileName, errno);
         exit(-1);
     }
+    return fd;
 }
 
 
-int getFileSize(int fd){
-    int current = lseek(fd, 0, SEEK_CUR);
-    int size = lseek(fd, 0, SEEK_END);
-    lseek(fd, current, SEEK_SET);
-    return size;
+long getFileSize(const FILE *fd){
+    long current = ftell(fd);
+    fseek(fd, 0, SEEK_END);
+    long result =  ftell(fd);
+    fseek(fd, current, SEEK_SET);
+    return result;
 }
