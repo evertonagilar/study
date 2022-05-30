@@ -14,6 +14,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
     private final static Stack<Object> stack = new Stack<>();
     private final static Integer VOID = 0;
     private Number currentResult = VOID;
+    private boolean skipCurrentFunction = false;
 
     @Override
     public Number visitProgram(CalcParser.ProgramContext ctx) {
@@ -48,9 +49,14 @@ public class Compiler extends CalcBaseVisitor<Number> {
     @Override
     public Number visitStatementBlock(CalcParser.StatementBlockContext ctx) {
         Number result = currentResult;
+        Frame frame = (Frame) stack.peek();
         for (CalcParser.StatementContext stat : ctx.statement()) {
             result = visit(stat);
             if (stat.start.getType() == CalcLexer.RETURN) {
+                break;
+            }
+            if (skipCurrentFunction && (frame.getFunction().getStatementBlock() == ctx)){
+                skipCurrentFunction = false;
                 break;
             }
         }
@@ -113,7 +119,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
         if (function == null) {
             throw new CompilerException(ErrorMessages.UNDECLARED_FUNCTION, ctx);
         }
-        final Frame frame = new Frame(function, ctx.statementRet());
+        final Frame frame = new Frame(function, null);
         stack.push(frame); // Cria um frame a cada chamada de função
         visit(ctx.functionArgs());
         final Number result = visit(function.getStatementBlock());
@@ -176,6 +182,7 @@ public class Compiler extends CalcBaseVisitor<Number> {
 
     @Override
     public Number visitReturn(CalcParser.ReturnContext ctx) {
+        skipCurrentFunction = true;
         return visit(ctx.expression());
     }
 
@@ -256,6 +263,4 @@ public class Compiler extends CalcBaseVisitor<Number> {
     public Number visitErrorNode(ErrorNode node) {
         return super.visitErrorNode(node);
     }
-
-
 }

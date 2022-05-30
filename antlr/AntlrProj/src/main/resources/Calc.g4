@@ -56,10 +56,9 @@ statementBlock  :  BEGIN_BLOCK
                    END_BLOCK
                 ;
 
-statement   : return        statementRet
+statement   : return
             | expression    statementRet
-            | assigment     statementRet
-            | functionCall
+            | assigment
             | ifDecl
             | statementBlock
             | statementRet
@@ -77,9 +76,9 @@ expression      : fator
 
 
 
-assigment       : ID ASSIGN_OP expression ;
+assigment       : ID ASSIGN_OP expression statementRet ;
 
-functionCall    : ID LPARENT functionArgs RPARENT statementRet ;
+functionCall    : ID LPARENT functionArgs RPARENT ;
 
 functionArgs   : fator? (',' fator)* ;
 
@@ -89,7 +88,7 @@ functionParams  : ID? (',' ID)* ;
 
 ifDecl          : IF LPARENT expression RPARENT trueStat=statementBlock (ELSE falseStat=statementBlock)? ;
 
-return          : RETURN expression ;
+return          : RETURN expression statementRet ;
 
 fator           : identifier
                 | number
