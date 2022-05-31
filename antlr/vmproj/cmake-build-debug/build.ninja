@@ -61,6 +61,12 @@ build CMakeFiles/vmproj.dir/utils.c.o: C_COMPILER__vmproj_Debug /home/evertonagi
   OBJECT_DIR = CMakeFiles/vmproj.dir
   OBJECT_FILE_DIR = CMakeFiles/vmproj.dir
 
+build CMakeFiles/vmproj.dir/test.c.o: C_COMPILER__vmproj_Debug /home/evertonagilar/study/antlr/vmproj/test.c || cmake_object_order_depends_target_vmproj
+  DEP_FILE = CMakeFiles/vmproj.dir/test.c.o.d
+  FLAGS = -g -std=gnu2x
+  OBJECT_DIR = CMakeFiles/vmproj.dir
+  OBJECT_FILE_DIR = CMakeFiles/vmproj.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target vmproj
@@ -69,7 +75,7 @@ build CMakeFiles/vmproj.dir/utils.c.o: C_COMPILER__vmproj_Debug /home/evertonagi
 #############################################
 # Link the executable vmproj
 
-build vmproj: C_EXECUTABLE_LINKER__vmproj_Debug CMakeFiles/vmproj.dir/main.c.o CMakeFiles/vmproj.dir/utils.c.o
+build vmproj: C_EXECUTABLE_LINKER__vmproj_Debug CMakeFiles/vmproj.dir/main.c.o CMakeFiles/vmproj.dir/utils.c.o CMakeFiles/vmproj.dir/test.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/vmproj.dir
   POST_BUILD = :

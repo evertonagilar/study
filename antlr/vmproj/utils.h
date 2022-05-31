@@ -7,9 +7,10 @@
 
 #include "types.h"
 
-void printInstrucao(const int op, const int *pc, const int cycle);
-FILE *openFileName(char *fileName, const char *modes);
+void printInstrucao(const long op, const long *pc, const int cycle);
+FILE *openFileName(char *filename, const char *modes);
 long getFileSize(const FILE *fd);
+void writeFile(const char *filename, const int *buf, int size);
 
 
 #endif //VMPROJ_UTILS_H

@@ -7,7 +7,7 @@
 #include "utils.h"
 
 void saveTest1(const char *filename) {
-    int src[4];
+    long src[4];
     src[0] = IMM;
     src[1] = 10;
     src[2] = PUSH;
@@ -18,7 +18,7 @@ void saveTest1(const char *filename) {
 }
 
 void saveTest2(const char *filename) {
-    int src[8];
+    long src[8];
     src[0] = IMM;
     src[1] = 10;
     src[2] = PUSH;
@@ -33,19 +33,26 @@ void saveTest2(const char *filename) {
 }
 
 void saveTest3(const char *filename) {
-    int *src = malloc(100);
+    const long filesize = 100 * sizeof(long);
+    long *src = malloc(filesize);
     int i = 0;
-    src[i++] = IMM;     // Carrega valor 10 em ax
+    long *b;
+    src[i++] = IMM;     // Carrega 10 em ax
     src[i++] = 10;
     src[i++] = PUSH;    // Coloca na pilha
     src[i++] = IMM;     // Carrega 4 em ax
     src[i++] = 4;
     src[i++] = EQ;      // 10 == 4 ?
-    src[i++] = JZ;
-
-
-
-    FILE *fd = openFileName(filename, "w");
-    fwrite(&src, sizeof(src), 1, fd);
-    fclose(fd);
+    src[i++] = JZ;      // ax ? pc + 1 : (int *) *pc;
+    b = &src[i];        // slot para endereço fim trueStatement
+    src[i++] = IMM;     // Carrega valor 50 em ax
+    src[i++] = 50;
+    src[i++] = PUSH;    // Coloca na pilha
+    src[i++] = EXIT;    // return 50
+    *b = &src[i];       // salva o endereço em b
+    src[i++] = IMM;     // Carrega valor 25 em ax
+    src[i++] = 25;
+    src[i++] = PUSH;    // Coloca na pilha
+    src[i++] = EXIT;    // return 25
+    writeFile(filename, src, filesize);
 }

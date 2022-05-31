@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "types.h"
 
-void printInstrucao(const int op, const int *pc, const int cycle) {
+void printInstrucao(const long op, const long *pc, const int cycle) {
     printf("%d> %.4s", cycle,
            &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
             "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
@@ -19,10 +19,10 @@ void printInstrucao(const int op, const int *pc, const int cycle) {
         printf("\n");
 }
 
-FILE *openFileName(const char *fileName, const char *modes){
-    FILE *fd = fopen(fileName, modes);
+FILE *openFileName(const char *filename, const char *modes){
+    FILE *fd = fopen(filename, modes);
     if (!fd) {
-        printf("Não foi possível abrir arquivo %s. Code: %d", fileName, errno);
+        printf("Não foi possível abrir arquivo %s. Code: %d", filename, errno);
         exit(-1);
     }
     return fd;
@@ -35,4 +35,10 @@ long getFileSize(const FILE *fd){
     long result =  ftell(fd);
     fseek(fd, current, SEEK_SET);
     return result;
+}
+
+void writeFile(const char *filename, const int *buf, int size){
+    FILE *fd = openFileName(filename, "w");
+    fwrite(buf, size, 1, fd);
+    fclose(fd);
 }

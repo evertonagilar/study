@@ -7,33 +7,34 @@
 #include <stdbool.h>
 #include "types.h"
 #include "utils.h"
+#include "test.h"
 
 #define WORKING_DIR "/home/evertonagilar/study/antlr/vmproj/";
 
 char *byteCodeFileName;             // arquivo com os byte code para interpretar
-int *text;                          // text segment
-int *old_text;                      // for dump text segment
-int *stack;                         // stack
+long byteCodeFileSize;               // default size of text/data/stack
+long *text;                          // text segment
+long *old_text;                      // for dump text segment
+long *stack;                        // stack
 char *data;                         // data segment
-int *pc, *bp, *sp, ax, cycle;       // virtual machine registers
-int poolsize;                       // default size of text/data/stack
-int debug = true;                   // imprimir as instruções enquanto interpreta?
-
+long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
+int debug = false;                   // imprimir as instruções enquanto interpreta?
+const int stackSize = 1000 * sizeof(long);
 
 void loadByteCode(const char *fileName) {
     const FILE *fd = openFileName(fileName, "r");
-    const long poolsize = getFileSize(fd);
-    text = malloc(poolsize);
-    fread(text, poolsize, 1, fd);
+    byteCodeFileSize = getFileSize(fd);
+    text = malloc(byteCodeFileSize);
+    fread(text, byteCodeFileSize, 1, fd);
     fclose(fd);
 }
 
 int runByteCode() {
-    int op, *tmp;
-    data = calloc(poolsize, 1);
-    stack = calloc(poolsize, 1);
+    long op, *tmp;
+    data = calloc(byteCodeFileSize, 1);
+    stack = calloc(stackSize, 1);
     pc = text;
-    bp = sp = stack + poolsize;     // sp sempre aponta para topo da pilha
+    bp = sp = stack + stackSize;     // sp sempre aponta para topo da pilha
     ax = 0;
     cycle = 0;
     while (1) {
@@ -173,10 +174,7 @@ int runByteCode() {
             ax = (int) (bp + *pc++);
         }                         // load address for arguments.
 
-        else if (op == EXIT) {
-            printf("exit(%d)", *sp);
-            return *sp;
-        } else if (op == OPEN) {
+        else if (op == OPEN) {
             ax = open((char *) sp[1], sp[0]);
         } else if (op == CLOS) {
             ax = close(*sp);
@@ -199,7 +197,7 @@ int runByteCode() {
 }
 
 int main(int argc, char **argv) {
-    printf("Executando máquina virtual\n");
+    printf("Executando máquina virtual (%d bits)\n", sizeof(long) * 8);
 
     if (argc < 2) {
         printf("Uso: vmproj file\n");
@@ -209,7 +207,7 @@ int main(int argc, char **argv) {
     byteCodeFileName = argv[1];
     printf("Carregando %s.\n", byteCodeFileName);
 
-    saveTest2(byteCodeFileName);
+    saveTest3(byteCodeFileName);
     loadByteCode(byteCodeFileName);
     runByteCode();
 
