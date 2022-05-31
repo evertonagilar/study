@@ -18,19 +18,18 @@ long *old_text;                      // for dump text segment
 long *stack;                        // stack
 char *data;                         // data segment
 long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
-int debug = false;                   // imprimir as instruções enquanto interpreta?
+int debug = true;                   // imprimir as instruções enquanto interpreta?
+
 const int stackSize = 1000 * sizeof(long);
 
-void loadByteCode(const char *fileName) {
-    const FILE *fd = openFileName(fileName, "r");
-    byteCodeFileSize = getFileSize(fd);
+void loadByteCode() {
+    byteCodeFileSize = getFileSizeByFileName(byteCodeFileName);
     text = malloc(byteCodeFileSize);
-    fread(text, byteCodeFileSize, 1, fd);
-    fclose(fd);
+    readFileAll(byteCodeFileName, text, byteCodeFileSize);
 }
 
 int runByteCode() {
-    long op, *tmp;
+    long op;
     data = calloc(byteCodeFileSize, 1);
     stack = calloc(stackSize, 1);
     pc = text;
@@ -39,7 +38,7 @@ int runByteCode() {
     cycle = 0;
     while (1) {
         cycle++;
-        op = *pc++; // get next operation code
+        op = (long) *pc++; // get next operation code
 
         // imprime a instrução a cada ciclo
         if (debug) {
@@ -51,14 +50,14 @@ int runByteCode() {
         switch (op) {
             case IMM:
                 // load immediate value to ax
-                ax = *pc++;
+                ax = (long) *pc++;
                 break;
             case PUSH:
                 // push the value of ax onto the stack
                 *--sp = ax;
                 break;
             case EXIT:
-                printf("exit(%d)", *sp);
+                printf("exit(%ld)", *sp);
                 return *sp;
             case ADD:
                 ax = *sp++ + ax;
@@ -110,11 +109,11 @@ int runByteCode() {
                 break;
             case JZ:
                 // jump if ax is zero
-                pc = ax ? pc + 1 : (int *) *pc;
+                pc = ax ? pc + 1 : (long *) *pc;
                 break;
             case JNZ:
                 // jump if ax is not zero
-                pc = ax ? (int *) *pc : pc + 1;
+                pc = ax ? (long *) *pc : pc + 1;
                 break;
 
             default:
@@ -181,7 +180,7 @@ int runByteCode() {
         } else if (op == READ) {
             ax = read(sp[2], (char *) sp[1], *sp);
         } else if (op == PRTF) {
-            tmp = sp + pc[1];
+            long *tmp = sp + pc[1];
             ax = printf((char *) tmp[-1], tmp[-2], tmp[-3], tmp[-4], tmp[-5], tmp[-6]);
         } else if (op == MALC) {
             ax = (int) malloc(*sp);
@@ -197,7 +196,7 @@ int runByteCode() {
 }
 
 int main(int argc, char **argv) {
-    printf("Executando máquina virtual (%d bits)\n", sizeof(long) * 8);
+    printf("Executando máquina virtual (%ld bits)\n", sizeof(long) * 8);
 
     if (argc < 2) {
         printf("Uso: vmproj file\n");
@@ -207,8 +206,8 @@ int main(int argc, char **argv) {
     byteCodeFileName = argv[1];
     printf("Carregando %s.\n", byteCodeFileName);
 
-    saveTest3(byteCodeFileName);
-    loadByteCode(byteCodeFileName);
+    geraByteCodeIfTest(byteCodeFileName);
+    loadByteCode();
     runByteCode();
 
     return 0;

@@ -1,5 +1,7 @@
 **/target
 *.log
 **/nodes_modules
-package-lock.json
-**cmake-build-debug
+**/package-lock.json
+**/cmake-build-debug
+*.class
+**/target

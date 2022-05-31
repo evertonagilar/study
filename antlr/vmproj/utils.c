@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "types.h"
 
-void printInstrucao(const long op, const long *pc, const int cycle) {
+void printInstrucao(long op, const long *pc, int cycle) {
     printf("%d> %.4s", cycle,
            &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
             "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
@@ -28,17 +28,29 @@ FILE *openFileName(const char *filename, const char *modes){
     return fd;
 }
 
-
-long getFileSize(const FILE *fd){
-    long current = ftell(fd);
+size_t getFileSize(FILE *fd){
+    size_t current = ftell(fd);
     fseek(fd, 0, SEEK_END);
-    long result =  ftell(fd);
+    size_t result =  ftell(fd);
     fseek(fd, current, SEEK_SET);
     return result;
 }
 
-void writeFile(const char *filename, const int *buf, int size){
+size_t getFileSizeByFileName(const char *filename) {
+    FILE *fd = openFileName(filename, "r");
+    size_t result = getFileSize(fd);
+    fclose(fd);
+    return result;
+}
+
+void writeFileAll(const char *filename, int *buf, size_t size){
     FILE *fd = openFileName(filename, "w");
     fwrite(buf, size, 1, fd);
+    fclose(fd);
+}
+
+void readFileAll(const char *filename, int *buf, size_t size){
+    const FILE *fd = openFileName(filename, "r");
+    fread(buf, size, 1, fd);
     fclose(fd);
 }
