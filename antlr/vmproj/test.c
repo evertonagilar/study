@@ -55,3 +55,36 @@ void geraByteCodeIfTest(const char *filename) {
     *text++ = EXIT;         // return 25
     writeFileAll(filename, src, filesize);
 }
+
+void geraByteCodeIfElseTest(const char *filename) {
+    const long filesize = 100 * sizeof(long);
+    long *text, *src;
+    long *label_else, *label_exit;
+    text = src = malloc(filesize);
+    *text++ = IMM;              // Carrega 10 em ax
+    *text++ = 10;
+    *text++ = PUSH;             // Coloca na pilha
+    *text++ = IMM;              // Carrega 4 em ax
+    *text++ = 4;
+    // if (10 > 4)
+    *text++ = GT;               // 10 > 4 ?
+    *text++ = JZ;               // ax ? pc + 1 : (long *) *pc;
+    label_else = text++;        // ponteiro para inicio do else usado pela instrução anterior
+    // {
+        *text++ = IMM;          // Carrega valor 5 em ax
+        *text++ = 5;
+        *text++ = PUSH;         // Coloca na pilha
+        *text++ = JMP;
+        label_exit = text++;    // ponteiro para fim if usado pela instrução anterior
+    // } else {
+        *label_else = text;     // salva o endereço do else no slot label_else
+        *text++ = IMM;          // Carrega valor 10 em ax
+        *text++ = 10;
+        *text++ = PUSH;         // Coloca na pilha
+    // }
+    // código após if
+    *label_exit = text;
+    *text++ = EXIT;             // return 25
+
+    writeFileAll(filename, src, filesize);
+}

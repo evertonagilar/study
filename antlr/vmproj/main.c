@@ -9,8 +9,6 @@
 #include "utils.h"
 #include "test.h"
 
-#define WORKING_DIR "/home/evertonagilar/study/antlr/vmproj/";
-
 char *byteCodeFileName;             // arquivo com os byte code para interpretar
 long byteCodeFileSize;               // default size of text/data/stack
 long *text;                          // text segment
@@ -115,7 +113,9 @@ int runByteCode() {
                 // jump if ax is not zero
                 pc = ax ? (long *) *pc : pc + 1;
                 break;
-
+            case JMP:
+                pc = (long *) *pc;
+                break;
             default:
                 printf("Instrução desconhecida: %d\n", op);
                 return -1;
@@ -206,7 +206,7 @@ int main(int argc, char **argv) {
     byteCodeFileName = argv[1];
     printf("Carregando %s.\n", byteCodeFileName);
 
-    geraByteCodeIfTest(byteCodeFileName);
+    geraByteCodeIfElseTest(byteCodeFileName);
     loadByteCode();
     runByteCode();
 
