@@ -3,5 +3,7 @@
 **/nodes_modules
 **/package-lock.json
 **/cmake-build-debug/*
+**/cmake-build-debug
+cmake-build-debug
 *.class
 **/target
