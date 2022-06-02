@@ -128,11 +128,11 @@ int startVM() {
             case JMP:
                 pc = (long *) *pc;
                 break;
-//            case CALL:
-//                // call subroutine
-//                *--sp = (int) (pc + 1);
-//                pc = (long *) *pc;
-//                break;
+            case CALL:
+                // call subroutine
+                *--sp = (long) (pc + 1);
+                pc = (long *) *pc;
+                break;
 //            case RET:
 //                // return from subroutine
 //                pc = (long *)*sp++;
@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    geraByteCodeIfElseTest(argv[1]);
+    geraByteCodeFunctionCall(argv[1]);
     mainModule = loadModule(argv[1]);
     startVM();
     freeModule(mainModule);

@@ -88,3 +88,47 @@ void geraByteCodeIfElseTest(const char *filename) {
 
     writeFileAll(filename, src, filesize);
 }
+
+void geraByteCodeFunctionCall(const char *filename){
+    const long filesize = 100 * sizeof(long);
+    long *text, *src;
+    long *label_function, *label_main;
+    text = src = malloc(filesize);
+
+    *text++ = JMP;                  // salta para o main quando o programa inicia
+    label_main = text++;            // ponteiro para o main
+    // soma(int a, int b){
+        *text++ = ENT;              // make new stack frame
+        // Carrega a em ax e depois na pilha
+        *text++ = LEA;
+        *text++ = 1;
+        *text++ = LI;
+        *text++ = PUSH;
+
+        // Carrega b em ax
+        *text++ = LEA;
+        *text++ = 2;
+        *text++ = LI;
+
+        *text++ = ADD;              // a + b
+
+        *text++ = LEV;               // restore call frame and pc
+    // }
+    // main function
+    *label_main = text;             // aqui começa o main
+    // push argument a
+    *text++ = IMM;
+    *text++ = 10;
+    *text++ = PUSH;
+    // push argument b
+    *text++ = IMM;
+    *text++ = 5;
+    *text++ = PUSH;
+    // call function
+    *text++ = CALL;
+    // exit program
+    *text++ = PUSH;
+    *text++ = EXIT;             // return 15
+
+    writeFileAll(filename, src, filesize);
+}
