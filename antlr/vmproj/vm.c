@@ -28,6 +28,8 @@ int startVM() {
     bp = sp = stack + stackSize;     // sp sempre aponta para topo da pilha
     ax = 0;
     cycle = 0;
+
+    printf("Carregando %s.\n", mainModule->filename);
     while (1) {
         cycle++;
         op = (long) *pc++; // get next operation code
@@ -170,10 +172,8 @@ int main(int argc, char **argv) {
         return -1;
     }
 
+    geraByteCodeIfElseTest(argv[1]);
     mainModule = loadModule(argv[1]);
-    printf("Carregando %s.\n", mainModule->filename);
-
-    geraByteCodeIfElseTest(mainModule->filename);
     startVM();
     freeModule(mainModule);
 
