@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="antlrProj" />
+        <module name="AntlrProj" />
         <module name="TextSearchProj" />
       </profile>
     </annotationProcessing>

@@ -1,14 +1,3 @@
-avg(a, b){
-    return (a + b) / 2;
+{
+    10 + 20;
 }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-10+10
-=======
-  return 10 + soma(2, 3);
-  
->>>>>>> 97aed36565800c08c035de2a83c7a4fa50a2f3bd
-=======
-return avg(10, 20)^2;
->>>>>>> return

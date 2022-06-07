@@ -1,6 +1,5 @@
 package br.calc;
 
-import br.calc.parser.CalcParser;
 import org.antlr.v4.runtime.RuleContext;
 
 import java.util.HashMap;

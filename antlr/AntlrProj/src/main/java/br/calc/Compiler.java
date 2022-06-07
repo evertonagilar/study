@@ -77,11 +77,6 @@ public class Compiler extends CalcBaseVisitor<Number> {
     }
 
     @Override
-    public Number visitMain(CalcParser.MainContext ctx) {
-
-    }
-
-    @Override
     public Number visitExpression(CalcParser.ExpressionContext ctx) {
         if (ctx.LPARENT() != null) {
             return visit(ctx.inner);
@@ -132,14 +127,14 @@ public class Compiler extends CalcBaseVisitor<Number> {
         final Frame frame = (Frame) stack.peek();
         final Map<String, Number> localVars = frame.getLocalVars();
         final Iterator<CalcParser.FatorContext> args = ctx.fator().iterator();
-        for (String paramName : frame.getFunction().getParams()) {
-            if (args.hasNext()) {
-                Number value = visit(args.next());
-                localVars.put(paramName, value);
-            } else {
-                localVars.put(paramName, VOID);
-            }
-        }
+//        for (String paramName : frame.getFn().getParams()) {
+//            if (args.hasNext()) {
+//                Number value = visit(args.next());
+//                localVars.put(paramName, value);
+//            } else {
+//                localVars.put(paramName, VOID);
+//            }
+//        }
         return currentResult;
     }
 

@@ -158,7 +158,7 @@ int startVM() {
                 ax = (long) (bp + *pc++);
                 break;
             default:
-                printf("Instrução desconhecida: %d\n", op);
+                printf("Instrução desconhecida: %ld\n", op);
                 return -1;
         }
     }
