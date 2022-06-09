@@ -98,6 +98,7 @@ void geraByteCodeFunctionCall(const char *filename){
     *text++ = JMP;                  // vai para o main
     label_main = text++;            // ponteiro para o main
 
+    // ****** função soma começa aqui *****
     label_function = text;          // ponteiro para função soma
     // soma(int a, int b){
         *text++ = ENT;              // make new stack frame
@@ -116,7 +117,7 @@ void geraByteCodeFunctionCall(const char *filename){
 
         *text++ = LEV;               // restore call frame and pc
     // }
-    // main function
+    // ****** função main começa aqui *****
     *label_main = text;             // aqui começa o main, salva no ponteiro
     // push argument a
     *text++ = IMM;
@@ -129,8 +130,7 @@ void geraByteCodeFunctionCall(const char *filename){
     // call function
     *text++ = CALL;
     *text++ = label_function;
-
-    // exit program
+    // próxima instrução após chamada função
     *text++ = PUSH;
     *text++ = EXIT;             // return 15
 

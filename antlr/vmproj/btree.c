@@ -6,7 +6,7 @@
 #include <malloc.h>
 #include "btree.h"
 
-// private functions
+// ********************************** private functions **********************************
 
 /*
  * Cria um novo node com m childrens
@@ -49,7 +49,8 @@ btree_node_t *add_btree_node(btree_node_t *h, int key, int height){
     return h;
 }
 
-// public functions
+
+// ********************************** public functions **********************************
 
 bool *add_btree(btree_t *btree, int key){
     btree_node_t *node = add_btree_node(btree->root, key, btree->height);
@@ -63,6 +64,9 @@ int main(int argc, char **argv) {
     bool inseriu;
     inseriu = add_btree(btree, 10);
     inseriu = add_btree(btree, 5);
+    inseriu = add_btree(btree, 15);
+    inseriu = add_btree(btree, 12);
+    inseriu = add_btree(btree, 7);
 
     printf("Btree criado com %d elementos.", btree->height);
 

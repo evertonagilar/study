@@ -154,7 +154,6 @@ public class BTree<Key extends Comparable<Key>, Value>  {
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public void put(Key key, Value val) {
-        if (key == null) throw new IllegalArgumentException("argument key to put() is null");
         Node u = insert(root, key, val, height);
         n++;
         if (u == null) return;
