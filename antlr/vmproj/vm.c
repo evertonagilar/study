@@ -164,7 +164,7 @@ int startVM() {
     }
 }
 
-int main(int argc, char **argv) {
+int _main(int argc, char **argv) {
     printf("Executando máquina virtual (%ld bits)\n", sizeof(long) * 8);
 
     if (argc < 2) {
