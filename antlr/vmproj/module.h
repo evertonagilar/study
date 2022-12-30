@@ -14,8 +14,8 @@ typedef struct {
 } module_t;
 
 
-module_t *loadModule(const char *filename);
-void freeModule(const module_t *module);
+module_t *loadModule(char *filename);
+void freeModule(module_t *module);
 
 
 #endif //VMPROJ_MODULE_H

@@ -49,7 +49,7 @@ void writeFileAll(const char *filename, int *buf, size_t size){
     fclose(fd);
 }
 
-void readFileAll(const char *filename, int *buf, size_t size){
+void readFileAll(const char *filename, void *buf, size_t size){
     const FILE *fd = openFileName(filename, "r");
     fread(buf, size, 1, fd);
     fclose(fd);

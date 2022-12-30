@@ -89,7 +89,7 @@ void geraByteCodeIfElseTest(const char *filename) {
     writeFileAll(filename, src, filesize);
 }
 
-void geraByteCodeFunctionCall(const char *filename){
+void criaByteCodeDeExemplo(const char *filename){
     const long filesize = 100 * sizeof(long);
     long *text, *src;
     long *label_function, *label_main;

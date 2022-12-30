@@ -10,26 +10,24 @@
 #include "test.h"
 #include "module.h"
 
-module_t *mainModule;               // módulo principal
-long *text;                         // text segment
-long *old_text;                     // for dump text segment
-long *stack;                        // stack
-char *data;                         // data segment
 long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
 int debug = true;                   // imprimir as instruções enquanto interpreta?
 
-const int stackSize = 1000 * sizeof(long);
+const int STACK_MAX_SIZE = 1000 * sizeof(long);
 
-int startVM() {
+int startVM(module_t *module) {
+    long *text;                         // text segment
+    long *old_text;                     // for dump text segment
     long op;
-    data = calloc(mainModule->size, 1);
-    stack = calloc(stackSize, 1);
-    pc = text = mainModule->text;
-    bp = sp = stack + stackSize;     // sp sempre aponta para topo da pilha
+    long *stack;                        // stack
+    char *data;                         // data segment
+    data = calloc(module->size, 1);
+    stack = calloc(STACK_MAX_SIZE, 1);
+    pc = text = module->text;
+    bp = sp = stack + STACK_MAX_SIZE;     // sp sempre aponta para topo da pilha
     ax = 0;
     cycle = 0;
 
-    printf("Carregando %s.\n", mainModule->filename);
     while (1) {
         cycle++;
         op = (long) *pc++; // get next operation code
@@ -164,7 +162,7 @@ int startVM() {
     }
 }
 
-int _main(int argc, char **argv) {
+int main(int argc, char **argv) {
     printf("Executando máquina virtual (%ld bits)\n", sizeof(long) * 8);
 
     if (argc < 2) {
@@ -172,9 +170,10 @@ int _main(int argc, char **argv) {
         return -1;
     }
 
-    geraByteCodeFunctionCall(argv[1]);
-    mainModule = loadModule(argv[1]);
-    startVM();
+    char *filenameMainModule = argv[1];
+    criaByteCodeDeExemplo(filenameMainModule);
+    module_t *mainModule = loadModule(filenameMainModule);
+    startVM(mainModule);
     freeModule(mainModule);
 
     return 0;

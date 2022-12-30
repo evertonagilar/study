@@ -89,7 +89,7 @@ btree_page_t *btree_page_insert(btree_page_t *page, int key, int height){
         if (page->m == ORDER){
             btree_page_split_t *split = btree_page_split(page);
             page->is_leaf = false;      // não é mais folha
-            page->
+            // todo page->
 
         }else {
             // Encontra a posição nas keys onde a nova key deve ficar
@@ -115,12 +115,12 @@ btree_page_t *btree_page_insert(btree_page_t *page, int key, int height){
 
 // ********************************** public functions **********************************
 
-bool *btree_insert(btree_t *btree, int key){
+bool btree_insert(btree_t *btree, int key){
     btree_page_t *node = btree_page_insert(btree->root, key, btree->height);
-    return node != NULL;
+    return true;
 }
 
-int main(int argc, char **argv) {
+int _main(int argc, char **argv) {
     puts("Programa teste btree\n");
 
     btree_t *btree = btree_new();

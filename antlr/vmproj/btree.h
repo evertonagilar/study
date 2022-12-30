@@ -35,7 +35,7 @@ typedef struct {
 } btree_page_split_t;
 
 btree_t *btree_new();
-bool *btree_insert(btree_t *btree, int key);
+bool btree_insert(btree_t *btree, int key);
 
 
 #endif //VMPROJ_BTREE_H

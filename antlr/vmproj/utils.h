@@ -12,7 +12,7 @@ FILE *openFileName(const char *filename, const char *modes);
 size_t getFileSize(FILE *fd);
 size_t getFileSizeByFileName(const char *filename);
 void writeFileAll(const char *filename, int *buf, size_t size);
-void readFileAll(const char *filename, int *buf, size_t size);
+void readFileAll(const char *filename, void *buf, size_t size);
 
 
 

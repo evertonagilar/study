@@ -6,7 +6,7 @@
 #include "module.h"
 #include "utils.h"
 
-module_t *loadModule(const char *filename) {
+module_t *loadModule(char *filename) {
     module_t *module = (module_t *) malloc(sizeof(module_t));
     module->filename = filename;
     module->size = getFileSizeByFileName(filename);
@@ -15,7 +15,7 @@ module_t *loadModule(const char *filename) {
     return module;
 }
 
-void freeModule(const module_t *module){
+void freeModule(module_t *module){
     free(module->text);
     free(module);
 }

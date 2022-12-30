@@ -9,6 +9,6 @@ void geraByteCodeValorNaPilhaTest(const char *filename);
 void geraByteCodeSomaTest(const char *filename);
 void geraByteCodeIfTest(const char *filename);
 void geraByteCodeIfElseTest(const char *filename);
-void geraByteCodeFunctionCall(const char *filename);
+void criaByteCodeDeExemplo(const char *filename);
 
 #endif //VMPROJ_TEST_H
