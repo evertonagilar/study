@@ -8,17 +8,6 @@
 #include <stdlib.h>
 #include "types.h"
 
-void printInstrucao(long op, const long *pc, int cycle) {
-    printf("%d> %.4s", cycle,
-           &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
-            "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
-            "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[op * 5]);
-    if (op <= ADJ)
-        printf(" %d\n", *pc);
-    else
-        printf("\n");
-}
-
 FILE *openFileName(const char *filename, const char *modes){
     FILE *fd = fopen(filename, modes);
     if (!fd) {
@@ -43,14 +32,14 @@ size_t getFileSizeByFileName(const char *filename) {
     return result;
 }
 
-void writeFileAll(const char *filename, int *buf, size_t size){
+void writeFileAll(const char *filename, void *buf, size_t size){
     FILE *fd = openFileName(filename, "w");
     fwrite(buf, size, 1, fd);
     fclose(fd);
 }
 
 void readFileAll(const char *filename, void *buf, size_t size){
-    const FILE *fd = openFileName(filename, "r");
+    FILE *fd = openFileName(filename, "r");
     fread(buf, size, 1, fd);
     fclose(fd);
 }

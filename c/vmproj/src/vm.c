@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include <memory.h>
 #include <stdbool.h>
 #include "types.h"
-#include "utils.h"
+#include "file_utils.h"
 #include "test.h"
 #include "module.h"
+#include "program.h"
 
 long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
 int debug = true;                   // imprimir as instruções enquanto interpreta?
@@ -162,6 +159,17 @@ int startVM(module_t *module) {
     }
 }
 
+void printInstrucao(long op, const long *pc, int cycle) {
+    printf("%d> %.4s", cycle,
+           &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
+            "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
+            "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[op * 5]);
+    if (op <= ADJ)
+        printf(" %ld\n", *pc);
+    else
+        printf("\n");
+}
+
 int main(int argc, char **argv) {
     printf("Executando máquina virtual (%ld bits)\n", sizeof(long) * 8);
 
@@ -170,9 +178,12 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    char *filenameMainModule = argv[1];
-    criaByteCodeDeExemplo(filenameMainModule);
-    module_t *mainModule = loadModule(filenameMainModule);
+    char *mainFileName = argv[1];
+    program_t *program = loadProgramStructure(mainFileName);
+    freeProgramStructure(program);
+
+    criaByteCodeDeExemplo(mainFileName);
+    module_t *mainModule = loadModule(mainFileName);
     startVM(mainModule);
     freeModule(mainModule);
 

@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "utils.h"
+#include "file_utils.h"
 
 void geraByteCodeValorNaPilhaTest(const char *filename) {
     long src[4];
@@ -48,7 +48,7 @@ void geraByteCodeIfTest(const char *filename) {
     *text++ = 50;
     *text++ = PUSH;         // Coloca na pilha
     *text++ = EXIT;         // return 50
-    *b =  text;            // salva o endereço em b
+    *b = (long) text;       // salva o endereço em b
     *text++ = IMM;          // Carrega valor 25 em ax
     *text++ = 25;
     *text++ = PUSH;         // Coloca na pilha
@@ -77,13 +77,13 @@ void geraByteCodeIfElseTest(const char *filename) {
         *text++ = JMP;
         label_exit = text++;    // ponteiro para fim if usado pela instrução anterior
     // } else {
-        *label_else = text;     // salva o endereço do else no slot label_else
+        *label_else = (long) text;     // salva o endereço do else no slot label_else
         *text++ = IMM;          // Carrega valor 10 em ax
         *text++ = 10;
         *text++ = PUSH;         // Coloca na pilha
     // }
     // código após if
-    *label_exit = text;
+    *label_exit = (long) text;
     *text++ = EXIT;             // return 25
 
     writeFileAll(filename, src, filesize);
@@ -118,7 +118,7 @@ void criaByteCodeDeExemplo(const char *filename){
         *text++ = LEV;               // restore call frame and pc
     // }
     // ****** função main começa aqui *****
-    *label_main = text;             // aqui começa o main, salva no ponteiro
+    *label_main = (long) text;             // aqui começa o main, salva no ponteiro
     // push argument a
     *text++ = IMM;
     *text++ = 10;
@@ -129,7 +129,7 @@ void criaByteCodeDeExemplo(const char *filename){
     *text++ = PUSH;
     // call function
     *text++ = CALL;
-    *text++ = label_function;
+    *text++ = (long) label_function;
     // próxima instrução após chamada função
     *text++ = PUSH;
     *text++ = EXIT;             // return 15
