@@ -2,8 +2,8 @@
 // Created by evertonagilar on 01/06/22.
 //
 
-#ifndef VMPROJ_MODULE_H
-#define VMPROJ_MODULE_H
+#ifndef VMPROJ_AGL_MODULE_H
+#define VMPROJ_AGL_MODULE_H
 
 #include <stddef.h>
 #include <glib.h>
@@ -15,11 +15,11 @@ typedef struct {
     long *text;                     // text segment
     bool compiled;
     GList *imports;
-} module_t;
+} agl_module_t;
 
 
-module_t *loadModule(char *fileName);
-void freeModule(module_t *module);
+agl_module_t *agl_module_load(char *fileName);
+void agl_module_free(agl_module_t *module);
 
 
-#endif //VMPROJ_MODULE_H
+#endif //VMPROJ_AGL_MODULE_H

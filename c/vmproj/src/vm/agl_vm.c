@@ -1,36 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "types.h"
-#include "file_utils.h"
-#include "test.h"
-#include "module.h"
-#include "program.h"
-
-long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
-int debug = true;                   // imprimir as instruções enquanto interpreta?
+#include "agl_vm.h"
 
 const int STACK_MAX_SIZE = 1000 * sizeof(long);
 
-int startVM(module_t *module) {
+void printInstrucao(long op, const long *pc, int cycle) {
+    printf("%d> %.4s", cycle,
+           &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
+            "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
+            "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[op * 5]);
+    if (op <= ADJ)
+        printf(" %ld\n", *pc);
+    else
+        printf("\n");
+}
+
+agl_vm_t *agl_vm_create(char *filename, bool debug) {
+    agl_vm_t *vm = malloc(sizeof(agl_vm_t));
+    vm->program = agl_program_load(filename);
+    vm->debug = debug;
+    return vm;
+}
+
+int agl_vm_start(agl_vm_t *vm) {
+    long *pc, *bp, *sp, ax, cycle;      // virtual machine registers
     long *text;                         // text segment
     long *old_text;                     // for dump text segment
     long op;
     long *stack;                        // stack
     char *data;                         // data segment
-    data = calloc(module->size, 1);
+    data = calloc(vm->program->module->size, 1);
     stack = calloc(STACK_MAX_SIZE, 1);
-    pc = text = module->text;
+    pc = text = vm->program->module->text;
     bp = sp = stack + STACK_MAX_SIZE;     // sp sempre aponta para topo da pilha
     ax = 0;
     cycle = 0;
 
     while (1) {
         cycle++;
-        op = (long) *pc++; // get next operation code
+        op = (long) *pc++; // get agl_lexer_next_token operation code
 
         // imprime a instrução a cada ciclo
-        if (debug) {
+        if (vm->debug) {
             printInstrucao(op, pc, cycle);
         }
 
@@ -159,34 +171,7 @@ int startVM(module_t *module) {
     }
 }
 
-void printInstrucao(long op, const long *pc, int cycle) {
-    printf("%d> %.4s", cycle,
-           &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
-            "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
-            "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[op * 5]);
-    if (op <= ADJ)
-        printf(" %ld\n", *pc);
-    else
-        printf("\n");
+void agl_vm_free(agl_vm_t *vm) {
+    agl_program_free(vm->program);
+    free(vm);
 }
-
-int main(int argc, char **argv) {
-    printf("Executando máquina virtual (%ld bits)\n", sizeof(long) * 8);
-
-    if (argc < 2) {
-        printf("Uso: vmproj file\n");
-        return -1;
-    }
-
-    char *mainFileName = argv[1];
-    program_t *program = loadProgramStructure(mainFileName);
-    freeProgramStructure(program);
-
-    criaByteCodeDeExemplo(mainFileName);
-    module_t *mainModule = loadModule(mainFileName);
-    startVM(mainModule);
-    freeModule(mainModule);
-
-    return 0;
-}
-

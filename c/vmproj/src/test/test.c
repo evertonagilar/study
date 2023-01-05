@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "file_utils.h"
+#include "../utils/agl_file_utils.h"
 
 void geraByteCodeValorNaPilhaTest(const char *filename) {
     long src[4];
@@ -12,7 +12,7 @@ void geraByteCodeValorNaPilhaTest(const char *filename) {
     src[1] = 10;
     src[2] = PUSH;
     src[3] = EXIT;
-    FILE *fd = openFileName(filename, "w");
+    FILE *fd = agl_openFileName(filename, "w");
     fwrite(&src, sizeof(src), 1, fd);
     fclose(fd);
 }
@@ -27,7 +27,7 @@ void geraByteCodeSomaTest(const char *filename) {
     src[5] = ADD;
     src[6] = PUSH;
     src[7] = EXIT;
-    FILE *fd = openFileName(filename, "w");
+    FILE *fd = agl_openFileName(filename, "w");
     fwrite(&src, sizeof(src), 1, fd);
     fclose(fd);
 }
@@ -53,7 +53,7 @@ void geraByteCodeIfTest(const char *filename) {
     *text++ = 25;
     *text++ = PUSH;         // Coloca na pilha
     *text++ = EXIT;         // return 25
-    writeFileAll(filename, src, filesize);
+    agl_writeFileAll(filename, src, filesize);
 }
 
 void geraByteCodeIfElseTest(const char *filename) {
@@ -86,7 +86,7 @@ void geraByteCodeIfElseTest(const char *filename) {
     *label_exit = (long) text;
     *text++ = EXIT;             // return 25
 
-    writeFileAll(filename, src, filesize);
+    agl_writeFileAll(filename, src, filesize);
 }
 
 void criaByteCodeDeExemplo(const char *filename){
@@ -134,5 +134,5 @@ void criaByteCodeDeExemplo(const char *filename){
     *text++ = PUSH;
     *text++ = EXIT;             // return 15
 
-    writeFileAll(filename, src, filesize);
+    agl_writeFileAll(filename, src, filesize);
 }

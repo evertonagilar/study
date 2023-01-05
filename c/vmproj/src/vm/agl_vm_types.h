@@ -2,8 +2,8 @@
 // Created by evertonagilar on 29/05/22.
 //
 
-#ifndef VMPROJ_TYPES_H
-#define VMPROJ_TYPES_H
+#ifndef VMPROJ_AGL_VM_TYPES_H
+#define VMPROJ_AGL_VM_TYPES_H
 
 // instructions
 enum {
@@ -13,4 +13,4 @@ enum {
 };
 
 
-#endif //VMPROJ_TYPES_H
+#endif //VMPROJ_AGL_VM_TYPES_H

@@ -6,9 +6,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
-#include "types.h"
 
-FILE *openFileName(const char *filename, const char *modes){
+FILE *agl_openFileName(const char *filename, const char *modes){
     FILE *fd = fopen(filename, modes);
     if (!fd) {
         printf("Não foi possível abrir arquivo %s. Code: %d", filename, errno);
@@ -17,7 +16,7 @@ FILE *openFileName(const char *filename, const char *modes){
     return fd;
 }
 
-size_t getFileSize(FILE *fd){
+size_t agl_getFileSize(FILE *fd){
     size_t current = ftell(fd);
     fseek(fd, 0, SEEK_END);
     size_t result =  ftell(fd);
@@ -25,21 +24,22 @@ size_t getFileSize(FILE *fd){
     return result;
 }
 
-size_t getFileSizeByFileName(const char *filename) {
-    FILE *fd = openFileName(filename, "r");
-    size_t result = getFileSize(fd);
+size_t agl_getFileSizeByFileName(const char *filename) {
+    FILE *fd = agl_openFileName(filename, "r");
+    size_t result = agl_getFileSize(fd);
     fclose(fd);
     return result;
 }
 
-void writeFileAll(const char *filename, void *buf, size_t size){
-    FILE *fd = openFileName(filename, "w");
+void agl_writeFileAll(const char *filename, void *buf, size_t size){
+    FILE *fd = agl_openFileName(filename, "w");
     fwrite(buf, size, 1, fd);
     fclose(fd);
 }
 
-void readFileAll(const char *filename, void *buf, size_t size){
-    FILE *fd = openFileName(filename, "r");
-    fread(buf, size, 1, fd);
+size_t agl_readFileAll(const char *filename, void *buf, size_t size){
+    FILE *fd = agl_openFileName(filename, "r");
+    size_t bytesRead = fread(buf, 1, size, fd);
     fclose(fd);
+    return bytesRead;
 }
