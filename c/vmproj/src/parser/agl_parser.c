@@ -9,8 +9,8 @@
 
 void program(scanner_t *scanner) {
     agl_lexer_next_token(scanner);
-    while (scanner->token > 0){
-        printf("token is: %c\n", scanner->token);
+    while (scanner->token != NULL){
+        printf("value is: %s\n", scanner->token->value);
         agl_lexer_next_token(scanner);
     }
 }

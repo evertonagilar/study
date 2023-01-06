@@ -18,6 +18,6 @@ FILE(GLOB SRC_PARSER src/parser/*.c)
 FILE(GLOB SRC_UTILS src/utils/*.c)
 FILE(GLOB SRC_VM src/vm/*.c)
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SRC} ${SRC_PARSER} ${SRC_UTILS} ${SRC_VM} src/agl.c src/agl.h)
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SRC} ${SRC_PARSER} ${SRC_UTILS} ${SRC_VM} src/agl.c src/agl.h src/parser/agl_symbol_table.c src/parser/agl_symbol_table.h)
 
 TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${GLIB_LIBRARIES})
