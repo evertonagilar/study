@@ -30,6 +30,7 @@ typedef struct {
     agl_identifier_t *identifier;
     agl_token_type type;
     char *value;
+    int line;
 } agl_token_t;
 
 agl_token_t *agl_token_new();

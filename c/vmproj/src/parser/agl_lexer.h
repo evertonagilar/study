@@ -11,14 +11,13 @@
 typedef struct {
     char *src;              // pointer to source code string
     char *lookahead;        // pointer to next identifier
-    int line;               // line of the token
-    agl_token_t *token;     // current identifier
+    int line;               // current line of scanner
     agl_symbol_table_t *symbolTable;
 } agl_scanner_t;
 
-agl_scanner_t *agl_lexer_create(agl_module_t *module);
+agl_scanner_t *agl_lexer_create(const agl_module_t *module);
 void agl_lexer_free(agl_scanner_t *scanner);
-bool agl_lexer_next_token(agl_scanner_t *scanner);
+agl_token_t *agl_lexer_next_token(agl_scanner_t *scanner);
 
 
 #endif //VMPROJ_AGL_LEXER_H
