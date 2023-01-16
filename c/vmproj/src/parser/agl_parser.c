@@ -13,31 +13,47 @@ agl_parse_tree_node_t *agl_parse_tree_node_create(agl_token_t *token){
     return node;
 }
 
-void scan_tokens(agl_parse_tree_t *parseTree, agl_scanner_t *scanner) {
+void agl_parse_tree_node_free(agl_parse_tree_node_t *node){
+    free(node);
+}
+
+void agl_parser_ast_visit(const agl_parse_tree_t *ast, agl_parse_tree_callback_visitor cb){
+    agl_parse_tree_node_t *node = ast->root;
+    agl_parse_tree_node_t *nextNode = NULL;
+    while (node != NULL){
+        nextNode = node->next;
+        cb(node);
+        node = nextNode;
+    }
+}
+
+agl_parse_tree_t *agl_parser_create_ast(const agl_module_t *module){
+    agl_parse_tree_t *ast = malloc(sizeof(agl_parse_tree_t));
+    ast->root = NULL;
+    ast->childCount = 0;
+    agl_scanner_t *scanner = agl_lexer_create(module);
     agl_parse_tree_node_t *node, *currentNode;
     agl_token_t *token = agl_lexer_next_token(scanner);
     while (token->type != tkEof){
         printf("token is: %d\n", token->type);
         node = agl_parse_tree_node_create(token);
-        if (parseTree->root == NULL){
-            parseTree->root = node;
+        if (ast->root == NULL){
+            ast->root = node;
             currentNode = node;
         }else{
             currentNode->next = node;
             currentNode = node;
         }
-        ++parseTree->childCount;
+        ++ast->childCount;
         token = agl_lexer_next_token(scanner);
     }
+    agl_lexer_free(scanner);
+    return ast;
 }
 
-agl_parse_tree_t *agl_parser_create_ast(const agl_module_t *module) {
-    agl_parse_tree_t *parseTree = malloc(sizeof(agl_parse_tree_t));
-    parseTree->root = NULL;
-    parseTree->childCount = 0;
-    agl_scanner_t *scanner = agl_lexer_create(module);
-    scan_tokens(parseTree, scanner);
-    agl_lexer_free(scanner);
+void agl_parser_free_ast(agl_parse_tree_t *ast){
+    agl_parser_ast_visit(ast, agl_parse_tree_node_free);
+    free(ast);
 }
 
 
