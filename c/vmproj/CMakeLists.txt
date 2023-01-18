@@ -13,11 +13,9 @@ INCLUDE_DIRECTORIES(
 
 LINK_DIRECTORIES(${GLIB_LIBRARY_DIRS})
 
-FILE(GLOB SRC src/*.c)
-FILE(GLOB SRC_PARSER src/parser/*.c)
-FILE(GLOB SRC_UTILS src/utils/*.c)
-FILE(GLOB SRC_VM src/vm/*.c)
+FILE(GLOB SRC_C src/*.c)
+FILE(GLOB SRC_H src/*.h)
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SRC} ${SRC_PARSER} ${SRC_UTILS} ${SRC_VM} src/agl.c src/agl.h src/parser/agl_symbol_table.c src/parser/agl_symbol_table.h src/parser/agl_token.c src/parser/agl_token.h)
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SRC_H} ${SRC_C})
 
 TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${GLIB_LIBRARIES})

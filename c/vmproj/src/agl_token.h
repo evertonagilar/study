@@ -18,17 +18,13 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_TOKEN_H
+#define VMPROJ_AGL_TOKEN_H
+
 #include "agl_global.h"
 
+agl_token_t *agl_token_new();
+void agl_token_free(agl_token_t *token);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
-
-
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_TOKEN_H

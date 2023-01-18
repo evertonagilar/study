@@ -18,17 +18,19 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include "agl_global.h"
+#ifndef VMPROJ_AGL_FILE_UTILS_H
+#define VMPROJ_AGL_FILE_UTILS_H
+
+#include <stdio.h>
+
+void printInstrucao(long op, const long *pc, int cycle);
+FILE *agl_openFileName(const char *filename, const char *modes);
+size_t agl_getFileSize(FILE *fd);
+size_t agl_getFileSizeByFileName(const char *filename);
+void agl_writeFileAll(const char *filename, void *buf, size_t size);
+size_t agl_readFileAll(const char *filename, void *buf, size_t size);
 
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
 
-
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_FILE_UTILS_H

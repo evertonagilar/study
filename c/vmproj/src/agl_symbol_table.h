@@ -18,17 +18,19 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_SYMBOL_TABLE_H
+#define VMPROJ_AGL_SYMBOL_TABLE_H
+
 #include "agl_global.h"
 
+agl_identifier_t *agl_identifier_create();
+void agl_identifier_free(agl_identifier_t *id);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
+agl_symbol_table_t *agl_symbol_table_create();
+void agl_symbol_table_free(agl_symbol_table_t *table);
+void agl_symbol_table_push(agl_symbol_table_t *table, agl_identifier_t *id);
+agl_identifier_t * agl_symbol_table_get(agl_symbol_table_t *table, char *identifier, int identifier_sz);
 
 
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_SYMBOL_TABLE_H

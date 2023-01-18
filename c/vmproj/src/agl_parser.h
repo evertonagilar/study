@@ -18,17 +18,21 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_PARSER_H
+#define VMPROJ_AGL_PARSER_H
+
 #include "agl_global.h"
 
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
+/*
+ * Definição do callback para função visitor agl_parser_ast_visit
+ * Se retornar true continua visitando os nós.
+ */
+typedef bool agl_parse_tree_callback_visitor(agl_parse_tree_node_t *node);
 
+agl_parse_tree_t *agl_parser_create_ast(agl_scanner_t *scanner);
+void agl_parser_free_ast(agl_parse_tree_t *ast);
+void agl_parser_ast_visit(agl_parse_tree_node_t *node, agl_parse_tree_callback_visitor cb);
 
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_PARSER_H

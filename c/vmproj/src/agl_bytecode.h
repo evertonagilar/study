@@ -18,17 +18,13 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_BYTECODE_H
+#define VMPROJ_AGL_BYTECODE_H
+
 #include "agl_global.h"
 
+agl_bytecode_t *agl_bytecode_create(agl_source_file_t *sourceFile);
+void agl_bytecode_free(agl_bytecode_t *bytecode);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
-
-
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_BYTECODE_H

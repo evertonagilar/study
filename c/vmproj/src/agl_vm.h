@@ -18,17 +18,15 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_VM_H
+#define VMPROJ_AGL_VM_H
+
 #include "agl_global.h"
+#include <stdbool.h>
 
+agl_vm_t *agl_vm_create(char *filename, bool debug);
+int agl_vm_start(agl_vm_t *vm);
+void agl_vm_free(agl_vm_t *vm);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
-
-
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_VM_H

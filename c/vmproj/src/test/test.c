@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "../utils/agl_file_utils.h"
+#include "../agl_file_utils.h"
 
 void geraByteCodeValorNaPilhaTest(const char *filename) {
     long src[4];

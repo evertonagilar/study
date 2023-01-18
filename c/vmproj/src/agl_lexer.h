@@ -18,17 +18,15 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
 
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#ifndef VMPROJ_AGL_LEXER_H
+#define VMPROJ_AGL_LEXER_H
+
 #include "agl_global.h"
 
+agl_scanner_t *agl_lexer_create(agl_source_file_t *sourceFile);
+void agl_lexer_free(agl_scanner_t *scanner);
+agl_token_t *agl_lexer_next_token(agl_scanner_t *scanner);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
 
-
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //VMPROJ_AGL_LEXER_H

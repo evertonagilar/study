@@ -1,29 +1,41 @@
-//
-// Created by evertonagilar on 01/06/22.
-//
+/*
+ * %CopyrightBegin%
+ *
+ * Copyright Everton de Vargas Agilar 2022. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * %CopyrightEnd%
+ */
 
-#include "agl.h"
+
+#include "agl_module.h"
 #include <glib/glist.h>
-
-void agl_module_compile(agl_module_t *module){
-    agl_parse_tree_t *ast = agl_parser_create_ast(module);
-    agl_parser_free_ast(ast);
-}
 
 agl_module_t *agl_module_load(char *fileName) {
     agl_module_t *module = (agl_module_t *) malloc(sizeof(agl_module_t));
-    module->filename = strdup(fileName);
-    module->size = agl_getFileSizeByFileName(fileName);
-    module->text = malloc(module->size);
+    module->sourceFile = agl_source_file_create(fileName);
+    //mainModule->text = malloc(mainModule->size);
     module->compiled = false;
     module->imports = g_list_alloc();
-    agl_module_compile(module);
+    module->bytecode = agl_bytecode_create(module->sourceFile);
     return module;
 }
 
 void agl_module_free(agl_module_t *module){
-    free(module->text);
     g_list_free(module->imports);
+    agl_bytecode_free(module->bytecode);
+    agl_source_file_free(module->sourceFile);
     free(module);
 }
 

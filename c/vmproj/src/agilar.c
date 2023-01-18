@@ -18,17 +18,20 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
-
-#include <glib.h>
-#include <stddef.h>
-#include <stdbool.h>
+#include <stdio.h>
 #include "agl_global.h"
 
+int main(int argc, char **argv) {
+    printf("Agilar Compiler Runtime(%ld bits)\n", sizeof(long) * 8);
 
-agl_program_t *agl_program_load(char *programFileName);
-void *agl_program_free(agl_program_t *program);
+    if (argc < 2) {
+        printf("Uso: vmproj file\n");
+        return -1;
+    }
 
+    char *programFileName = argv[1];
+    agl_vm_t *vm = agl_vm_create(programFileName, true);
+    agl_vm_free(vm);
 
-#endif //VMPROJ_AGL_PROGRAM_H
+    return 0;
+}
