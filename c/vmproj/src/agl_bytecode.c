@@ -28,7 +28,7 @@ void agl_bytecode_error(char *msg){
 }
 
 void agl_bytecode_emit_declaration(agl_parse_tree_node_t *nodeStatement) {
-    printf("emit declaration %s\n", nodeStatement->token->identifier->value);
+    printf("emit declaration %s\n", nodeStatement->token->symbol->value);
     return;
 }
 

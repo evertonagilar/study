@@ -24,13 +24,13 @@
 
 #include "agl_global.h"
 
-agl_identifier_t *agl_identifier_create();
-void agl_identifier_free(agl_identifier_t *id);
+agl_symbol_t *agl_identifier_create();
+void agl_identifier_free(agl_symbol_t *id);
 
 agl_symbol_table_t *agl_symbol_table_create();
 void agl_symbol_table_free(agl_symbol_table_t *table);
-void agl_symbol_table_push(agl_symbol_table_t *table, agl_identifier_t *id);
-agl_identifier_t * agl_symbol_table_get(agl_symbol_table_t *table, char *identifier, int identifier_sz);
+agl_symbol_t *agl_symbol_table_get(agl_symbol_table_t *table, char *identifier, int identifier_sz);
+agl_symbol_t *agl_symbol_table_push(agl_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
 
 
 #endif //VMPROJ_AGL_SYMBOL_TABLE_H

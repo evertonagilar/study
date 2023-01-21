@@ -26,13 +26,13 @@
 #include <glib.h>
 #include <stdbool.h>
 
-enum agl_identifier_type_t { id, ifsmnt, whilesmnt, forsmnt };
+enum agl_symbol_type_t { stIdentifier, stKeyword };
 
 typedef struct {
-    enum agl_identifier_type_t type;
+    enum agl_symbol_type_t type;
     int hash;
     char *value;
-} agl_identifier_t;
+} agl_symbol_t;
 
 typedef enum {
     tkIf,
@@ -55,7 +55,7 @@ typedef enum {
 
 typedef struct {
     int hash;
-    agl_identifier_t *identifier;
+    agl_symbol_t *symbol;
     agl_token_type type;
     char *value;
     int line;
@@ -63,12 +63,12 @@ typedef struct {
 
 typedef struct {
     int size;
-    agl_identifier_t *itens;
+    agl_symbol_t *itens;
 } agl_symbol_table_t;
 
 typedef struct {
     char *src;              // pointer to source code string
-    char *lookahead;        // pointer to next identifier
+    char *lookahead;        // pointer to next symbol
     int line;               // current line of scanner
     agl_symbol_table_t *symbolTable;
 } agl_scanner_t;

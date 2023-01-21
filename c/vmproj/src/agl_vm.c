@@ -70,7 +70,7 @@ int agl_vm_start(agl_vm_t *vm) {
 
         switch (op) {
             case IMM:
-                // load immediate identifier to ax
+                // load immediate symbol to ax
                 ax = (long) *pc++;
                 break;
             case LC:
@@ -82,15 +82,15 @@ int agl_vm_start(agl_vm_t *vm) {
                 ax = *(long *) ax;
                 break;
             case SC:
-                // save character to address, identifier in ax, address on stack
+                // save character to address, symbol in ax, address on stack
                 ax = *(char *) *sp++ = ax;
                 break;
             case SI:
-                // save integer to address, identifier in ax, address on stack
+                // save integer to address, symbol in ax, address on stack
                 *(long *) *sp++ = ax;
                 break;
             case PUSH:
-                // push the identifier of ax onto the stack
+                // push the symbol of ax onto the stack
                 *--sp = ax;
                 break;
             case EXIT:

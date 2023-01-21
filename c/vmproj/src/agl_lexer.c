@@ -23,14 +23,34 @@
 #include <ctype.h>
 #include "agl_lexer.h"
 
+void loadLanguageKeyworks(agl_scanner_t *scanner);
+
+/*
+ * Load symbol table with language keywords
+ *
+ */
+void loadLanguageKeywords(agl_scanner_t *scanner) {
+    char keywords[] = "char else enum if int return sizeof while void";
+    char *lookahead = &keywords;
+    while (*lookahead){
+        char *last_lookahead = lookahead;
+        while (isalnum(*lookahead)){
+            lookahead++;
+        }
+        agl_symbol_table_push(scanner->symbolTable, last_lookahead, lookahead - last_lookahead, stKeyword);
+        ++lookahead;
+    }
+}
+
 agl_scanner_t *agl_lexer_create(agl_source_file_t *sourceFile) {
     agl_scanner_t *scanner = malloc(sizeof(agl_scanner_t));
     scanner->src = malloc(sourceFile->size + 1);
     scanner->lookahead = scanner->src;
     scanner->line = 1;
     size_t bytesRead = agl_readFileAll(sourceFile->filename, scanner->src, sourceFile->size);
-    scanner->src[bytesRead] = 0; // adiciona EOF
+    scanner->src[bytesRead] = 0; // add EOF
     scanner->symbolTable = agl_symbol_table_create();
+    loadLanguageKeywords(scanner);
     return scanner;
 }
 
@@ -51,7 +71,7 @@ agl_token_t * agl_lexer_next_token(agl_scanner_t *scanner) {
                 hash = hash * 100 + *scanner->lookahead;
                 scanner->lookahead++;
             }
-            token->identifier = agl_symbol_table_get(scanner->symbolTable, last_lookahead, scanner->lookahead - last_lookahead);
+            token->symbol = agl_symbol_table_get(scanner->symbolTable, last_lookahead, scanner->lookahead - last_lookahead);
             token->type = tkIdentifier;
             break;
         }else if (isblank(ch)) {
