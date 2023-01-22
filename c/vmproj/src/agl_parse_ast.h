@@ -19,12 +19,12 @@
  */
 
 
-#ifndef VMPROJ_AGL_BYTECODE_H
-#define VMPROJ_AGL_BYTECODE_H
+#ifndef VMPROJ_AGL_PARSE_AST_H
+#define VMPROJ_AGL_PARSE_AST_H
 
 #include "agl_global.h"
 
-agl_bytecode_t *agl_bytecode_create(agl_source_file_t *sourceFile);
-void agl_bytecode_free(agl_bytecode_t *bytecode);
+agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile);
+void agl_parse_ast_free(agl_parse_ast_t *parseAST);
 
-#endif //VMPROJ_AGL_BYTECODE_H
+#endif //VMPROJ_AGL_PARSE_AST_H

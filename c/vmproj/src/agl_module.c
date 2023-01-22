@@ -25,16 +25,16 @@
 agl_module_t *agl_module_load(char *fileName) {
     agl_module_t *module = (agl_module_t *) malloc(sizeof(agl_module_t));
     module->sourceFile = agl_source_file_create(fileName);
-    //mainModule->text = malloc(mainModule->size);
+    //mainModule->text = malloc(mainModule->count);
     module->compiled = false;
     module->imports = g_list_alloc();
-    module->bytecode = agl_bytecode_create(module->sourceFile);
+    module->parseAST = agl_parse_ast_create(module->sourceFile);
     return module;
 }
 
 void agl_module_free(agl_module_t *module){
     g_list_free(module->imports);
-    agl_bytecode_free(module->bytecode);
+    agl_parse_ast_free(module->parseAST);
     agl_source_file_free(module->sourceFile);
     free(module);
 }

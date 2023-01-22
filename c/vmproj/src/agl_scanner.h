@@ -19,18 +19,14 @@
  */
 
 
-#ifndef VMPROJ_AGL_SYMBOL_TABLE_H
-#define VMPROJ_AGL_SYMBOL_TABLE_H
+#ifndef VMPROJ_AGL_SCANNER_H
+#define VMPROJ_AGL_SCANNER_H
 
 #include "agl_global.h"
 
-agl_symbol_t *agl_identifier_create();
-void agl_identifier_free(agl_symbol_t *id);
-
-agl_symbol_table_t *agl_symbol_table_create();
-void agl_symbol_table_free(agl_symbol_table_t *table);
-agl_symbol_t *agl_symbol_table_get(agl_symbol_table_t *table, char *identifier, int identifier_sz);
-agl_symbol_t *agl_symbol_table_push(agl_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
+agl_scanner_t *agl_scanner_create(agl_source_file_t *sourceFile);
+void agl_scanner_free(agl_scanner_t *scanner);
+agl_token_t *agl_scanner_next_token(agl_scanner_t *scanner);
 
 
-#endif //VMPROJ_AGL_SYMBOL_TABLE_H
+#endif //VMPROJ_AGL_SCANNER_H

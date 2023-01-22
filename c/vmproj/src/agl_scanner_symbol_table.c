@@ -21,19 +21,19 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "agl_symbol_table.h"
+#include "agl_scanner_symbol_table.h"
 
 static const int INITIAL_CAPACITY = 100;
 
-agl_symbol_table_t *agl_symbol_table_create() {
-    agl_symbol_table_t *t = malloc(sizeof(agl_symbol_table_t));
-    t->size = 0;
+agl_scanner_symbol_table_t *agl_scanner_symbol_table_create() {
+    agl_scanner_symbol_table_t *t = malloc(sizeof(agl_scanner_symbol_table_t));
+    t->count = 0;
     t->itens = malloc(sizeof(agl_symbol_t*) * INITIAL_CAPACITY);
     return t;
 }
 
-void agl_symbol_table_free(agl_symbol_table_t *table) {
-    for (int i = 0; i < table->size; i++){
+void agl_scanner_symbol_table_free(agl_scanner_symbol_table_t *table) {
+    for (int i = 0; i < table->count; i++){
         agl_symbol_t *id = table->itens + i;
         free(id->value);
     }
@@ -45,22 +45,22 @@ void agl_symbol_table_free(agl_symbol_table_t *table) {
  * Get a symbol from symbol table or insert it if doesn't exist and return
  *
  */
-agl_symbol_t *agl_symbol_table_get(agl_symbol_table_t *table, char *identifier, int identifier_sz) {
+agl_symbol_t *agl_scanner_symbol_table_get_or_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type) {
     agl_symbol_t *id;
-    for (int i = 0; i < table->size; i++){
+    for (int i = 0; i < table->count; i++){
         id = table->itens + i;
         if (strncmp(id->value, identifier, identifier_sz) == 0){
             return id;
         }
     }
-    id = agl_symbol_table_push(table, identifier, identifier_sz, stIdentifier);
+    id = agl_scanner_symbol_table_push(table, identifier, identifier_sz, type);
     return id;
 }
 
-agl_symbol_t *agl_symbol_table_push(agl_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type) {
-    agl_symbol_t *id = table->itens + table->size;
+agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type) {
+    agl_symbol_t *id = table->itens + table->count;
     id->value = strndup(identifier, identifier_sz);
-    id->hash = table->size++;
+    id->hash = table->count++;
     id->type = type;
     return id;
 }

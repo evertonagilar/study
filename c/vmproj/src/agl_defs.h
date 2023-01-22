@@ -51,51 +51,52 @@ typedef enum {
     tkSemicolon,
     tkEof,
     tkVoid
-} agl_token_type;
+} agl_token_type_t;
 
 typedef struct {
     int hash;
     agl_symbol_t *symbol;
-    agl_token_type type;
+    agl_token_type_t type;
     char *value;
     int line;
 } agl_token_t;
 
 typedef struct {
-    int size;
+    int count;
     agl_symbol_t *itens;
-} agl_symbol_table_t;
+} agl_scanner_symbol_table_t;
 
 typedef struct {
     char *src;              // pointer to source code string
     char *lookahead;        // pointer to next symbol
-    int line;               // current line of scanner
-    agl_symbol_table_t *symbolTable;
+    int line;               // node line of scanner
+    agl_scanner_symbol_table_t *symbolTable;
 } agl_scanner_t;
 
-typedef struct agl_parse_tree_node_t {
+typedef struct agl_lexer_node_t {
     agl_token_t *token;
-    struct agl_parse_tree_node_t *next;
-} agl_parse_tree_node_t;
+    struct agl_lexer_node_t *next;
+} agl_lexer_node_t;
 
-typedef struct agl_parse_tree_t {
-    agl_parse_tree_node_t *root;
-    int childCount;
-} agl_parse_tree_t;
-
-typedef struct {
-    agl_parse_tree_t *ast;
-    agl_parse_tree_node_t *node;
-} agl_parse_tree_visitor_t;
-
-typedef struct {
+typedef struct agl_lexer_t {
     agl_scanner_t *scanner;
-    agl_parse_tree_t *ast;
-} agl_bytecode_t;
+    agl_lexer_node_t *root;
+    int childCount;
+} agl_lexer_t;
+
+typedef struct {
+    agl_lexer_t *ast;
+    agl_lexer_node_t *node;
+} agl_lexer_visitor_t;
+
+typedef struct {
+    agl_lexer_t *lexer;
+    agl_lexer_node_t *node;
+} agl_parse_ast_t;
 
 typedef struct {
     char *filename;                 // source filename
-    size_t size;                    // size of file
+    size_t size;                    // count of file
 } agl_source_file_t;
 
 typedef struct {
@@ -103,7 +104,7 @@ typedef struct {
     long *text;                         // text segment
     bool compiled;
     GList *imports;
-    agl_bytecode_t *bytecode;
+    agl_parse_ast_t *parseAST;
 } agl_module_t;
 
 typedef struct {

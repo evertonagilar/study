@@ -24,9 +24,15 @@
 
 #include "agl_global.h"
 
-agl_scanner_t *agl_lexer_create(agl_source_file_t *sourceFile);
-void agl_lexer_free(agl_scanner_t *scanner);
-agl_token_t *agl_lexer_next_token(agl_scanner_t *scanner);
 
+/*
+ * Definição do callback para função visitor agl_lexer_node_visit
+ * Se retornar true continua visitando os nós.
+ */
+typedef bool agl_lexer_node_callback_visitor(agl_lexer_node_t *node);
+
+agl_lexer_t *agl_lexer_create(agl_source_file_t  *sourceFile);
+void agl_lexer_free(agl_lexer_t *lexer);
+void agl_lexer_node_visit(agl_lexer_node_t *node, agl_lexer_node_callback_visitor cb);
 
 #endif //VMPROJ_AGL_LEXER_H

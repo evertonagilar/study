@@ -19,20 +19,15 @@
  */
 
 
-#ifndef VMPROJ_AGL_PARSER_H
-#define VMPROJ_AGL_PARSER_H
+#ifndef VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
+#define VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
 
 #include "agl_global.h"
 
+agl_scanner_symbol_table_t *agl_scanner_symbol_table_create();
+void agl_scanner_symbol_table_free(agl_scanner_symbol_table_t *table);
+agl_symbol_t *agl_scanner_symbol_table_get_or_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
+agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
 
-/*
- * Definição do callback para função visitor agl_parser_ast_visit
- * Se retornar true continua visitando os nós.
- */
-typedef bool agl_parse_tree_callback_visitor(agl_parse_tree_node_t *node);
 
-agl_parse_tree_t *agl_parser_create_ast(agl_scanner_t *scanner);
-void agl_parser_free_ast(agl_parse_tree_t *ast);
-void agl_parser_ast_visit(agl_parse_tree_node_t *node, agl_parse_tree_callback_visitor cb);
-
-#endif //VMPROJ_AGL_PARSER_H
+#endif //VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H

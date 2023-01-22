@@ -50,7 +50,7 @@ int agl_vm_start(agl_vm_t *vm) {
     long op;
     long *stack;                        // stack
     char *data;                         // data segment
-    //data = calloc(vm->program->mainModule->sourceFile->size, 1);
+    //data = calloc(vm->program->mainModule->sourceFile->count, 1);
     stack = calloc(STACK_MAX_SIZE, 1);
     pc = text = vm->program->mainModule->text;
     bp = sp = stack + STACK_MAX_SIZE;     // sp sempre aponta para topo da pilha
@@ -59,7 +59,7 @@ int agl_vm_start(agl_vm_t *vm) {
 
     while (1) {
         cycle++;
-        op = (long) *pc++; // get agl_lexer_next_token operation code
+        op = (long) *pc++; // get agl_scanner_next_token operation code
 
         // imprime a instrução a cada ciclo
         if (vm->debug) {
@@ -171,7 +171,7 @@ int agl_vm_start(agl_vm_t *vm) {
                 sp = sp - *pc++;
                 break;
             case ADJ:
-                // add esp, <size>
+                // add esp, <count>
                 sp = sp + *pc++;
                 break;
             case LEV:
