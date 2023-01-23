@@ -38,28 +38,34 @@
  *
  */
 
-void error(char *msg){
+void parseError(char *msg){
     printf("Error: %s\n", msg);
     exit(EXIT_FAILURE);
 }
 
-void match(struct agl_lexer_node_t *node, agl_token_type_t type){
-    if (node->token->type != type){
-        error( "Esperado identificador");
+void nextToken(agl_parse_ast_context_t *parseAST){
+    parseAST->priorNode = parseAST->currentNode;
+    parseAST->currentNode = parseAST->currentNode->next;
+}
+
+void matchToken(agl_parse_ast_context_t *parseAST, agl_token_type_t type){
+    if (parseAST->currentNode->token->type != type){
+        parseError("Esperado identificador");
     }
+    nextToken(parseAST);
 }
 
-void emitVarDecls(agl_parse_ast_t *parseAST) {
-
-}
-
-void emitFuncDecls(agl_parse_ast_t *parseAST) {
+void emitVarDecls(agl_parse_ast_context_t *parseAST) {
 
 }
 
-void emitDecls(agl_parse_ast_t *parseAST) {
-    match(parseAST->node, tkIdentifier);
-    if (parseAST->node->next->next->token->type == tkOpenP){
+void emitFuncDecls(agl_parse_ast_context_t *parseAST) {
+
+}
+
+void emitDecls(agl_parse_ast_context_t *parseAST) {
+    matchToken(parseAST, tkIdentifier);
+    if (parseAST->currentNode->next->next->token->type == tkOpenP){
         emitFuncDecls(parseAST);
     }else{
         emitVarDecls(parseAST);
@@ -67,8 +73,8 @@ void emitDecls(agl_parse_ast_t *parseAST) {
     return;
 }
 
-bool doStatement(agl_parse_ast_t *parseAST) {
-    switch (parseAST->node->token->type){
+bool doStatement(agl_parse_ast_context_t *parseAST) {
+    switch (parseAST->currentNode->token->type){
         case tkIdentifier:
             emitDecls(parseAST);
             break;
@@ -76,15 +82,26 @@ bool doStatement(agl_parse_ast_t *parseAST) {
     return true;
 }
 
-agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile){
-    agl_parse_ast_t *parseAST = malloc(sizeof(agl_module_t));
+void doProgram(agl_parse_ast_context_t *parseAST) {
+    matchToken(parseAST, tkProgram);
+    if (parseAST->currentNode->token->type == tkIdentifier){
+        parseAST->ast = malloc(sizeof(agl_parse_ast_t));
+        parseAST->ast->type = tkProgram;
+        parseAST->ast->programSmnt.programName = parseAST->currentNode->token->symbol->value;
+    }else{
+        parseError("Esperado nome do programa após token program");
+    }
+}
+
+agl_parse_ast_context_t *agl_parse_ast_create(agl_source_file_t *sourceFile){
+    agl_parse_ast_context_t *parseAST = malloc(sizeof(agl_module_t));
     parseAST->lexer = agl_lexer_create(sourceFile);
-    parseAST->node = parseAST->lexer->root;
-    doStatement(parseAST);
+    parseAST->currentNode = parseAST->lexer->root;
+    doProgram(parseAST);
     return parseAST;
 }
 
-void agl_parse_ast_free(agl_parse_ast_t *parseAST){
+void agl_parse_ast_free(agl_parse_ast_context_t *parseAST){
     agl_lexer_free(parseAST->lexer);
     free(parseAST);
 }

@@ -26,8 +26,8 @@
 
 agl_scanner_symbol_table_t *agl_scanner_symbol_table_create();
 void agl_scanner_symbol_table_free(agl_scanner_symbol_table_t *table);
-agl_symbol_t *agl_scanner_symbol_table_get_or_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
-agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, enum agl_symbol_type_t type);
+agl_symbol_t *agl_scanner_symbol_table_get_or_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, agl_symbol_class_t symbolClass, agl_token_type_t tokenType);
+agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, agl_symbol_class_t symbolClass, agl_token_type_t tokenType);
 
 
 #endif //VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H

@@ -23,22 +23,6 @@
 #include <ctype.h>
 #include "agl_scanner.h"
 
-/*
- * Load symbol table with language keywords
- *
- */
-void loadLanguageKeywords(agl_scanner_t *scanner) {
-    char *keywords = "char else enum if int return sizeof while void\0";
-    char *lookahead = keywords;
-    while (*lookahead){
-        char *last_lookahead = lookahead;
-        while (isalnum(*lookahead)){
-            lookahead++;
-        }
-        agl_scanner_symbol_table_push(scanner->symbolTable, last_lookahead, lookahead - last_lookahead, stKeyword);
-        ++lookahead;
-    }
-}
 
 agl_scanner_t *agl_scanner_create(agl_source_file_t *sourceFile) {
     agl_scanner_t *scanner = malloc(sizeof(agl_scanner_t));
@@ -48,7 +32,6 @@ agl_scanner_t *agl_scanner_create(agl_source_file_t *sourceFile) {
     size_t bytesRead = agl_readFileAll(sourceFile->filename, scanner->src, sourceFile->size);
     scanner->src[bytesRead] = 0; // add EOF
     scanner->symbolTable = agl_scanner_symbol_table_create();
-    loadLanguageKeywords(scanner);
     return scanner;
 }
 
@@ -70,7 +53,8 @@ agl_token_t * agl_scanner_next_token(agl_scanner_t *scanner) {
                 scanner->lookahead++;
             }
             token->symbol = agl_scanner_symbol_table_get_or_push(scanner->symbolTable, last_lookahead,
-                                                                 scanner->lookahead - last_lookahead, tkIdentifier);
+                                                                 scanner->lookahead - last_lookahead, scIdentifier, tkIdentifier);
+            token->type = token->symbol->tokenType;
             break;
         }else if (isblank(ch)) {
             while (isblank(*scanner->lookahead)) {

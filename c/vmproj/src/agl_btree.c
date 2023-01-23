@@ -39,7 +39,7 @@
 // ********************************** private functions **********************************
 
 /*
- * Cria um novo node com m childrens
+ * Cria um novo currentNode com m childrens
  *
  */
 btree_page_t *btree_page_new(int m) {

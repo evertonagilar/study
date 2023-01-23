@@ -1,0 +1,1 @@
+program teste002import io.ReadFileinterfaceconst int SUCCESS = 1int main()implementationint main(){    return SUCCESS}

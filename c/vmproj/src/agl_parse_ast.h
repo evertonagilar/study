@@ -24,7 +24,7 @@
 
 #include "agl_global.h"
 
-agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile);
-void agl_parse_ast_free(agl_parse_ast_t *parseAST);
+agl_parse_ast_context_t *agl_parse_ast_create(agl_source_file_t *sourceFile);
+void agl_parse_ast_free(agl_parse_ast_context_t *parseAST);
 
 #endif //VMPROJ_AGL_PARSE_AST_H

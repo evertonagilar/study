@@ -26,18 +26,22 @@
 #include <glib.h>
 #include <stdbool.h>
 
-enum agl_symbol_type_t { stIdentifier, stKeyword };
+typedef enum agl_symbol_class_t {
+    scIdentifier,
+    scKeyword
+} agl_symbol_class_t;
 
-typedef struct {
-    enum agl_symbol_type_t type;
-    int hash;
-    char *value;
-} agl_symbol_t;
-
-typedef enum {
-    tkIf,
+typedef enum{
+    tkProgram,
+    tkChar,
     tkElse,
+    tkEnum,
+    tkIf,
+    tkInt,
+    tkReturn,
+    tkSizeOf,
     tkWhile,
+    tkVoid,
     tkIdentifier,
     tkDot,
     tkPlus,
@@ -49,15 +53,20 @@ typedef enum {
     tkOpenP,
     tkCloseP,
     tkSemicolon,
-    tkEof,
-    tkVoid
+    tkEof
 } agl_token_type_t;
+
+typedef struct {
+    agl_symbol_class_t symbolClass;
+    agl_token_type_t tokenType;
+    int hash;
+    char *value;
+} agl_symbol_t;
 
 typedef struct {
     int hash;
     agl_symbol_t *symbol;
     agl_token_type_t type;
-    char *value;
     int line;
 } agl_token_t;
 
@@ -69,7 +78,7 @@ typedef struct {
 typedef struct {
     char *src;              // pointer to source code string
     char *lookahead;        // pointer to next symbol
-    int line;               // node line of scanner
+    int line;               // currentNode line of scanner
     agl_scanner_symbol_table_t *symbolTable;
 } agl_scanner_t;
 
@@ -89,10 +98,19 @@ typedef struct {
     agl_lexer_node_t *node;
 } agl_lexer_visitor_t;
 
+typedef union {
+    agl_token_type_t type;
+    union {
+        char *programName;
+    } programSmnt;
+} agl_parse_ast_t;
+
 typedef struct {
     agl_lexer_t *lexer;
-    agl_lexer_node_t *node;
-} agl_parse_ast_t;
+    agl_lexer_node_t *priorNode;
+    agl_lexer_node_t *currentNode;
+    agl_parse_ast_t *ast;
+} agl_parse_ast_context_t;
 
 typedef struct {
     char *filename;                 // source filename
@@ -104,7 +122,7 @@ typedef struct {
     long *text;                         // text segment
     bool compiled;
     GList *imports;
-    agl_parse_ast_t *parseAST;
+    agl_parse_ast_context_t *parseAST;
 } agl_module_t;
 
 typedef struct {

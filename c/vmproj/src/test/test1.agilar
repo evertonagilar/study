@@ -1,1 +1,1 @@
-int variavel = 10;void main(){    return;}Ponto getCoordenadas(){    return new Ponto(10, 20);}
+program teste001
