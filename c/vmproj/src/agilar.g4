@@ -18,15 +18,28 @@
  * %CopyrightEnd%
  */
 
+grammar agilar;
 
-#ifndef VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
-#define VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
+/*
+    Lexer rules
+*/
 
-#include "agl_global.h"
+fragment LOWERCASE_CHARS    : [a-zá-ú] ;
+fragment UPPERCASE_CHARS    : [A-ZÁ-Ú] ;
+fragment DIGIT              : [0-9] ;
+fragment DIGIT_GT_0         : [1-9] ;
 
-agl_scanner_symbol_table_t *agl_scanner_symbol_table_create();
-void agl_scanner_symbol_table_free(agl_scanner_symbol_table_t *table);
-agl_symbol_t *agl_scanner_symbol_table_get_or_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, agl_symbol_class_t symbolClass, agl_token_type_t tokenType);
-agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, char *identifier, int identifier_sz, agl_symbol_class_t symbolClass, agl_token_type_t tokenType);
+WHITESPACE          : (' ' | '\t') -> skip;
 
-#endif //VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
+IDENTIFIER: ( DIGIT_GT_0 | UPPERCASE_CHARS | LOWERCASE_CHARS ) ( DIGIT | UPPERCASE_CHARS | LOWERCASE_CHARS )+;
+
+END : ';' ;
+
+/*
+    Parse rules
+*/
+
+program : programSmnt ;
+
+programSmnt: 'program' IDENTIFIER END? ;
+

@@ -23,6 +23,8 @@
 
 /*
  *
+ * init     : program identifier
+ *
  * statement -> decls
  *
  * decls -> funcDecls | varDecls
@@ -31,7 +33,7 @@
  *
  * funcDecls -> type id '(' paramList ')' '{' statement '}'
  *
- *
+ * identifier -> [ 1-9 ]
  *
  *
  *
@@ -87,7 +89,7 @@ void doProgram(agl_parse_ast_context_t *parseAST) {
     if (parseAST->currentNode->token->type == tkIdentifier){
         parseAST->ast = malloc(sizeof(agl_parse_ast_t));
         parseAST->ast->type = tkProgram;
-        parseAST->ast->programSmnt.programName = parseAST->currentNode->token->symbol->value;
+        parseAST->ast->programSmnt.programName = parseAST->currentNode->token->symbol->name;
     }else{
         parseError("Esperado nome do programa após token program");
     }

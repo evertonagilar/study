@@ -26,6 +26,31 @@
 #include <glib.h>
 #include <stdbool.h>
 
+static char *agl_token_text[] = {
+        "program",
+        "char",
+        "else",
+        "enum",
+        "if",
+        "int",
+        "return",
+        "sizeof",
+        "while",
+        "void",
+        "identifier",
+        ".",
+        "+",
+        "-",
+        "*",
+        "/",
+        "==",
+        "=",
+        "(",
+        ")",
+        ";",
+        "\n"
+};
+
 typedef enum agl_symbol_class_t {
     scIdentifier,
     scKeyword
@@ -60,7 +85,7 @@ typedef struct {
     agl_symbol_class_t symbolClass;
     agl_token_type_t tokenType;
     int hash;
-    char *value;
+    char *name;
 } agl_symbol_t;
 
 typedef struct {
