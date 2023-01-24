@@ -51,7 +51,7 @@ agl_lexer_t *agl_lexer_create(agl_source_file_t  *sourceFile){
     agl_lexer_node_t *node, *currentNode;
     agl_token_t *token = agl_scanner_next_token(lexer->scanner);
     while (token->type != tkEof){
-        printf("token is: %d\n", token->type);
+        printf("currentToken is: %d\n", token->type);
         node = agl_lexer_node_create(token);
         if (lexer->root == NULL){
             lexer->root = node;
@@ -77,4 +77,31 @@ void agl_lexer_free(agl_lexer_t *lexer){
     free(lexer);
 }
 
+agl_lexer_iterator_t *agl_lexer_iterator_create(agl_lexer_t *lexer){
+    agl_lexer_iterator_t *iterator = malloc(sizeof(agl_lexer_iterator_t));
+    iterator->lexer = lexer;
+    iterator->currentNode = lexer->root;
+    iterator->priorNode = NULL;
+}
 
+agl_token_t *agl_lexer_next_token(agl_lexer_iterator_t *iterator){
+    iterator->priorNode = iterator->currentNode;
+    iterator->currentNode = iterator->currentNode->next;
+    return iterator->currentNode->token;
+}
+
+agl_token_t *agl_lexer_first_token(agl_lexer_iterator_t *iterator){
+    return iterator->lexer->root->token;
+}
+
+agl_token_t *agl_lexer_current_token(agl_lexer_iterator_t *iterator){
+    return iterator->currentNode->token;
+}
+
+agl_token_t *agl_lexer_prior_token(agl_lexer_iterator_t *iterator){
+    return iterator->priorNode->token;
+}
+
+void *agl_lexer_iterator_free(agl_lexer_iterator_t *iterator){
+    free(iterator);
+}

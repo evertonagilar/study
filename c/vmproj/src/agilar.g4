@@ -24,14 +24,18 @@ grammar agilar;
     Lexer rules
 */
 
-fragment LOWERCASE_CHARS    : [a-zá-ú] ;
-fragment UPPERCASE_CHARS    : [A-ZÁ-Ú] ;
+fragment LOWERCASE_LETTER    : [a-zá-ú] ;
+fragment UPPERCASE_LETTER    : [A-ZÁ-Ú] ;
+fragment LETTER              : ( LOWERCASE_LETTER | UPPERCASE_LETTER ) ;
 fragment DIGIT              : [0-9] ;
 fragment DIGIT_GT_0         : [1-9] ;
+fragment SIGN               : [ + | - ] ;
 
-WHITESPACE          : (' ' | '\t') -> skip;
+WHITESPACE : (' ' | '\t') -> skip;
 
-IDENTIFIER: ( DIGIT_GT_0 | UPPERCASE_CHARS | LOWERCASE_CHARS ) ( DIGIT | UPPERCASE_CHARS | LOWERCASE_CHARS )+;
+IDENTIFIER : LETTER | ( DIGIT | LETTER )*;
+
+NL : ( '\r'? '\n' | '\r') ? -> skip;
 
 END : ';' ;
 
@@ -39,7 +43,13 @@ END : ';' ;
     Parse rules
 */
 
-program : programSmnt ;
+program: programId programBody  ;
 
-programSmnt: 'program' IDENTIFIER END? ;
+programId : 'program' IDENTIFIER END? ;
+
+programBody : interfaceDecl implementationDecl ;
+
+interfaceDecl : 'interface' ;
+
+implementationDecl : 'implementation' ;
 

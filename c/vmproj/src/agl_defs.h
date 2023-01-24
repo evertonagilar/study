@@ -38,6 +38,8 @@ static char *agl_token_text[] = {
         "while",
         "void",
         "identifier",
+        "interface",
+        "implementation",
         ".",
         "+",
         "-",
@@ -68,6 +70,8 @@ typedef enum{
     tkWhile,
     tkVoid,
     tkIdentifier,
+    tkInterface,
+    tkImplementation,
     tkDot,
     tkPlus,
     tkMinus,
@@ -119,22 +123,17 @@ typedef struct agl_lexer_t {
 } agl_lexer_t;
 
 typedef struct {
-    agl_lexer_t *ast;
-    agl_lexer_node_t *node;
-} agl_lexer_visitor_t;
+    agl_lexer_t *lexer;
+    agl_lexer_node_t *currentNode;
+    agl_lexer_node_t *priorNode;
+} agl_lexer_iterator_t;
 
-typedef union {
-    agl_token_type_t type;
-    union {
-        char *programName;
-    } programSmnt;
-} agl_parse_ast_t;
+#include "agl_parse_ast_defs.h"
 
 typedef struct {
     agl_lexer_t *lexer;
-    agl_lexer_node_t *priorNode;
-    agl_lexer_node_t *currentNode;
-    agl_parse_ast_t *ast;
+    agl_lexer_iterator_t *tokenIterator;
+    agl_program_ast_t *ast;
 } agl_parse_ast_context_t;
 
 typedef struct {
