@@ -6,7 +6,7 @@
 #define VMPROJ_AGL_PARSE_AST_DEFS_H
 
 /*
- * Parse lexer structs
+ * Parse AST structs
  *
  */
 
@@ -19,11 +19,11 @@ typedef struct {
 } agl_program_id_ast_t;
 
 typedef struct {
-
+    agl_token_t *token;
 } agl_interface_decl_ast_t;
 
 typedef struct {
-
+    agl_token_t *token;
 } agl_implementation_decl_ast_t;
 
 typedef struct {

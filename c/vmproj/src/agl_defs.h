@@ -130,11 +130,20 @@ typedef struct {
 
 #include "agl_parse_ast_defs.h"
 
+/*
+ * agl_parse_ast_context_t é um objeto de contexto passado durante a construção do parse
+ * para dar acesso ao analisador léxico.
+ *
+ */
 typedef struct {
     agl_lexer_t *lexer;
     agl_lexer_iterator_t *tokenIterator;
     agl_program_ast_t *ast;
 } agl_parse_ast_context_t;
+
+typedef struct {
+    agl_program_ast_t *ast;
+} agl_parse_ast_t;
 
 typedef struct {
     char *filename;                 // source filename
@@ -146,7 +155,7 @@ typedef struct {
     long *text;                         // text segment
     bool compiled;
     GList *imports;
-    agl_parse_ast_context_t *parseAST;
+    agl_parse_ast_t *parseAST;
 } agl_module_t;
 
 typedef struct {
