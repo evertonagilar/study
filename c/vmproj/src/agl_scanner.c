@@ -26,17 +26,14 @@
 
 agl_scanner_t *agl_scanner_create(agl_source_file_t *sourceFile) {
     agl_scanner_t *scanner = malloc(sizeof(agl_scanner_t));
-    scanner->src = malloc(sourceFile->size + 1);
+    scanner->src = sourceFile->stream;
     scanner->lookahead = scanner->src;
     scanner->line = 1;
-    size_t bytesRead = agl_readFileAll(sourceFile->filename, scanner->src, sourceFile->size);
-    scanner->src[bytesRead] = 0; // add EOF
     scanner->symbolTable = agl_scanner_symbol_table_create();
     return scanner;
 }
 
 void agl_scanner_free(agl_scanner_t *scanner) {
-    free(scanner->src);
     agl_scanner_symbol_table_free(scanner->symbolTable);
     free(scanner);
 }

@@ -33,6 +33,14 @@ fragment SIGN               : [ + | - ] ;
 
 WHITESPACE : (' ' | '\t') -> skip;
 
+VOID : 'void' ;
+
+INT : 'int' ;
+
+OPEN_P : '(' ;
+
+CLOSE_P : ')' ;
+
 IDENTIFIER : LETTER | ( DIGIT | LETTER )*;
 
 NL : ( '\r'? '\n' | '\r') ? -> skip;
@@ -49,7 +57,11 @@ programId : 'program' IDENTIFIER END? ;
 
 programBody : interfaceDecl implementationDecl ;
 
-interfaceDecl : 'interface' ;
+interfaceDecl : 'interface' funcDecl*;
 
 implementationDecl : 'implementation' ;
+
+funcDecl : typeDecl IDENTIFIER OPEN_P CLOSE_P END?;
+
+typeDecl : VOID | INT ;
 

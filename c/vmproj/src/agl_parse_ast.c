@@ -45,8 +45,8 @@ bool isTokenType(agl_token_t *token, agl_token_type_t type){
 
 agl_token_t *matchToken(agl_parse_ast_context_t *context, agl_token_type_t type){
     agl_token_t  *token = currentToken(context);
-    if (isTokenType(token, type)){
-        parseError("Esperado identificador");
+    if (!isTokenType(token, type)){
+        printf("Error: Sintáxe inválida, token esperado: %s mas encontrado %s\n", agl_token_text[type], agl_token_text[token->type]);
     }
     nextToken(context);
     return token;

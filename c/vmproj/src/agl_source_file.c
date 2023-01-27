@@ -27,6 +27,9 @@ agl_source_file_t *agl_source_file_create(const char *filename) {
     agl_source_file_t *sourceFile = malloc(sizeof(agl_source_file_t));
     sourceFile->filename = strdup(filename);
     sourceFile->size = agl_getFileSizeByFileName(filename);
+    sourceFile->stream = malloc(sourceFile->size + 1);
+    size_t bytesRead = agl_readFileAll(sourceFile->filename, sourceFile->stream, sourceFile->size);
+    sourceFile->stream[bytesRead] = 0; // add EOF
     return sourceFile;
 }
 

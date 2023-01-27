@@ -75,6 +75,9 @@ void loadLanguageKeywords(agl_scanner_symbol_table_t *table) {
     agl_scanner_symbol_table_push_keyword(table, tkSizeOf);
     agl_scanner_symbol_table_push_keyword(table, tkWhile);
     agl_scanner_symbol_table_push_keyword(table, tkVoid);
+    agl_scanner_symbol_table_push_keyword(table, tkVoid);
+    agl_scanner_symbol_table_push_keyword(table, tkInterface);
+    agl_scanner_symbol_table_push_keyword(table, tkImplementation);
 }
 
 agl_scanner_symbol_table_t *agl_scanner_symbol_table_create() {

@@ -49,8 +49,9 @@ agl_lexer_t *agl_lexer_create(agl_source_file_t  *sourceFile){
     lexer->root = NULL;
     lexer->childCount = 0;
     agl_lexer_node_t *node, *currentNode;
-    agl_token_t *token = agl_scanner_next_token(lexer->scanner);
-    while (token->type != tkEof){
+    agl_token_t *token;
+    do {
+        token = agl_scanner_next_token(lexer->scanner);
         printf("currentToken is: %d\n", token->type);
         node = agl_lexer_node_create(token);
         if (lexer->root == NULL){
@@ -61,8 +62,7 @@ agl_lexer_t *agl_lexer_create(agl_source_file_t  *sourceFile){
             currentNode = node;
         }
         ++lexer->childCount;
-        token = agl_scanner_next_token(lexer->scanner);
-    }
+    } while (token->type != tkEof);
     return lexer;
 }
 

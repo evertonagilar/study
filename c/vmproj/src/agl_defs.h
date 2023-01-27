@@ -148,6 +148,7 @@ typedef struct {
 typedef struct {
     char *filename;                 // source filename
     size_t size;                    // count of file
+    char *stream;                   // stream of file
 } agl_source_file_t;
 
 typedef struct {
