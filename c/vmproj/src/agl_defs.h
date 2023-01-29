@@ -85,6 +85,11 @@ typedef enum{
     tkEof
 } agl_token_type_t;
 
+typedef enum {
+    ftVoid,
+    ftInt
+} agl_func_type_t;
+
 typedef struct {
     agl_symbol_class_t symbolClass;
     agl_token_type_t tokenType;

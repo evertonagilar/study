@@ -22,40 +22,39 @@
 
 ////////////////////////////////////////// Function support///////////////////////////////////////////////////////////
 
-void parseError(char *msg){
+void parse_error(char *msg) {
     printf("Error: %s\n", msg);
     exit(EXIT_FAILURE);
 }
 
-agl_token_t *nextToken(agl_parse_ast_context_t *context){
-    return agl_lexer_next_token(context->tokenIterator);
-}
-
-agl_token_t *currentToken(agl_parse_ast_context_t *context){
-    return agl_lexer_current_token(context->tokenIterator);
-}
-
-agl_token_t *priorToken(agl_parse_ast_context_t *context){
-    return agl_lexer_prior_token(context->tokenIterator);
-}
-
-bool isTokenType(agl_token_t *token, agl_token_type_t type){
-    return token != NULL && token->type == type;
-}
-
-agl_token_t *matchToken(agl_parse_ast_context_t *context, agl_token_type_t type){
-    agl_token_t  *token = currentToken(context);
-    if (!isTokenType(token, type)){
-        printf("Error: Sintáxe inválida, token esperado: %s mas encontrado %s\n", agl_token_text[type], agl_token_text[token->type]);
-    }
-    nextToken(context);
+agl_token_t *get_token_and_next(agl_parse_ast_context_t *context) {
+    agl_token_t *token = agl_lexer_current_token(context->tokenIterator);
+    agl_lexer_next_token(context->tokenIterator);
     return token;
 }
 
-agl_token_t *matchTokenBacktrack(agl_parse_ast_context_t *context, agl_token_type_t type){
-    agl_token_t  *token = currentToken(context);
-    if (isTokenType(token, type)){
-        parseError("Esperado identificador");
+agl_token_t *get_current_token(agl_parse_ast_context_t *context) {
+    agl_token_t *token = agl_lexer_current_token(context->tokenIterator);
+    return token;
+}
+
+inline bool is_token_type(agl_token_t *token, agl_token_type_t type) {
+    return token != NULL && token->type == type;
+}
+
+agl_token_t *match_token(agl_parse_ast_context_t *context, agl_token_type_t type) {
+    agl_token_t *token = get_token_and_next(context);
+    if (!is_token_type(token, type)) {
+        printf("Error: Sintáxe inválida, token esperado: %s mas encontrado %s\n", agl_token_text[type],
+               agl_token_text[token->type]);
+    }
+    return token;
+}
+
+agl_token_t *match_token_backtrack(agl_parse_ast_context_t *context, agl_token_type_t type) {
+    agl_token_t *token = get_current_token(context);
+    if (is_token_type(token, type)) {
+        parse_error("Esperado identificador");
     }
     return token;
 }
@@ -71,8 +70,8 @@ void emitFuncDecls(agl_parse_ast_context_t *context) {
 }
 
 void emitDecls(agl_parse_ast_context_t *context) {
-//    matchToken(context, tkIdentifier);
-//    if (context->currentNode->next->next->currentToken->type == tkOpenP){
+//    match_token(context, tkIdentifier);
+//    if (context->currentNode->next->next->get_current_token->type == tkOpenP){
 //        emitFuncDecls(context);
 //    }else{
 //        emitVarDecls(context);
@@ -81,7 +80,7 @@ void emitDecls(agl_parse_ast_context_t *context) {
 }
 
 bool doStatement(agl_parse_ast_context_t *context) {
-//    switch (context->currentNode->currentToken->type){
+//    switch (context->currentNode->get_current_token->type){
 //        case tkIdentifier:
 //            emitDecls(context);
 //            break;
@@ -90,68 +89,94 @@ bool doStatement(agl_parse_ast_context_t *context) {
 }
 
 agl_identifier_ast_t *identifier(agl_parse_ast_context_t *context) {
-    agl_token_t *token = matchToken(context, tkIdentifier);
+    agl_token_t *token = match_token(context, tkIdentifier);
     agl_identifier_ast_t *identifierAST = malloc(sizeof(agl_identifier_ast_t));
     identifierAST->token = token;
     return identifierAST;
 }
 
 
-agl_program_id_ast_t *programId(agl_parse_ast_context_t *context, agl_program_ast_t *programAST) {
-    matchToken(context, tkProgram);
+agl_program_id_ast_t *program_id(agl_parse_ast_context_t *context, agl_program_ast_t *programAST) {
+    match_token(context, tkProgram);
     agl_program_id_ast_t *programId = malloc(sizeof(agl_program_id_ast_t));
     programId->programName = identifier(context);
     return programId;
 }
 
-agl_interface_decl_ast_t *interfaceDecl(agl_parse_ast_context_t *context) {
-    agl_token_t *token = matchToken(context, tkInterface);
+agl_func_type_t func_type_decl(agl_parse_ast_context_t *context) {
+    agl_token_t *token = get_current_token(context);
+    switch (token->type) {
+        case tkVoid :
+            return ftVoid;
+        case tkInt :
+            return ftInt;
+        default:
+            parse_error("Type exptected");
+    }
+}
+
+void func_list_decl_tail(agl_parse_ast_context_t *context, agl_list_t *list) {
+    agl_func_ast_t *func = malloc(sizeof(agl_func_ast_t));
+    func->type = func_type_decl(context);
+    func->identifier = identifier(context);
+    agl_list_add(list, func);
+}
+
+agl_list_t *func_list_decl(agl_parse_ast_context_t *context) {
+    agl_list_t *list = agl_list_create(30);
+    func_list_decl_tail(context, list);
+    return list;
+}
+
+agl_interface_decl_ast_t *interface_decl(agl_parse_ast_context_t *context) {
+    agl_token_t *token = match_token(context, tkInterface);
     agl_interface_decl_ast_t *interfaceDeclAST = malloc(sizeof(agl_interface_decl_ast_t));
     interfaceDeclAST->token = token;
+    interfaceDeclAST->funcListDecl = func_list_decl(context);
     return interfaceDeclAST;
 }
 
-agl_implementation_decl_ast_t *implementationDecl(agl_parse_ast_context_t *context) {
-    agl_token_t *token = matchToken(context, tkImplementation);
+agl_implementation_decl_ast_t *implementation_decl(agl_parse_ast_context_t *context) {
+    agl_token_t *token = match_token(context, tkImplementation);
     agl_implementation_decl_ast_t *implementationDeclAST = malloc(sizeof(agl_implementation_decl_ast_t));
     implementationDeclAST->token = token;
     return implementationDeclAST;
 }
 
-agl_program_body_ast_t *programBody(agl_parse_ast_context_t *context, agl_program_ast_t *programAST) {
+agl_program_body_ast_t *program_body(agl_parse_ast_context_t *context, agl_program_ast_t *programAST) {
     agl_program_body_ast_t *programBodyAST = malloc(sizeof(agl_program_body_ast_t));
-    programBodyAST->interfaceDecl = interfaceDecl(context);
-    programBodyAST->implementationDecl = implementationDecl(context);
+    programBodyAST->interfaceDecl = interface_decl(context);
+    programBodyAST->implementationDecl = implementation_decl(context);
     return programBodyAST;
 }
 
 /*
- * Início do AST
+ * Início do AST em program
  *
  */
 agl_program_ast_t *program(agl_parse_ast_context_t *context) {
     agl_program_ast_t *programAST = malloc(sizeof(agl_program_ast_t));
-    programAST->programId = programId(context, programAST);
-    programAST->programBody = programBody(context, programAST);
+    programAST->programId = program_id(context, programAST);
+    programAST->programBody = program_body(context, programAST);
     return programAST;
 }
 
 /////////////////////////////////////////////// AST ///////////////////////////////////////////////////////////////////
 
-agl_parse_ast_context_t *agl_parse_ast_create_context(agl_source_file_t *sourceFile){
+agl_parse_ast_context_t *agl_parse_ast_create_context(agl_source_file_t *sourceFile) {
     agl_parse_ast_context_t *context = malloc(sizeof(agl_parse_ast_context_t));
     context->lexer = agl_lexer_create(sourceFile);
     context->tokenIterator = agl_lexer_iterator_create(context->lexer);
     return context;
 }
 
-void agl_parse_ast_free_context(agl_parse_ast_context_t *context){
+void agl_parse_ast_free_context(agl_parse_ast_context_t *context) {
     agl_lexer_free(context->lexer);
     agl_lexer_iterator_free(context->tokenIterator);
     free(context);
 }
 
-agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile){
+agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile) {
     agl_parse_ast_context_t *context = agl_parse_ast_create_context(sourceFile);
     agl_parse_ast_t *parseAST = malloc(sizeof(agl_parse_ast_t));
     parseAST->ast = program(context);
@@ -159,7 +184,7 @@ agl_parse_ast_t *agl_parse_ast_create(agl_source_file_t *sourceFile){
     return parseAST;
 }
 
-void agl_parse_ast_free(agl_parse_ast_t *parseAST){
+void agl_parse_ast_free(agl_parse_ast_t *parseAST) {
     free(parseAST);
 }
 

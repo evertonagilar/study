@@ -28,30 +28,30 @@
 typedef struct {
     int key;
     void *value;
-} btree_key_entry;
+} agl_btree_key_entry_t;
 
 
 typedef struct {
     int m;                                       // número de filhos da página
     bool is_leaf;                                // indica se a página é uma folha
-    btree_key_entry *keys[ORDER];                // array de keys entries
+    agl_btree_key_entry_t *keys[ORDER];                // array de keys entries
     struct btree_page_t *children[ORDER-1];
-} btree_page_t;
+} agl_btree_page_t;
 
 typedef struct {
     int n;                              // quantos elementos estão na btree
     int height;                         // altura da btree
-    btree_page_t *root;                 // root da btree
-} btree_t;
+    agl_btree_page_t *root;                 // root da btree
+} agl_btree_t;
 
 typedef struct {
-    btree_page_t *left;
-    btree_page_t *right;
-    btree_key_entry *key_do_meio;
+    agl_btree_page_t *left;
+    agl_btree_page_t *right;
+    agl_btree_key_entry_t *key_do_meio;
 } btree_page_split_t;
 
-btree_t *btree_new();
-bool btree_insert(btree_t *btree, int key);
+agl_btree_t *btree_new();
+bool btree_insert(agl_btree_t *btree, int key);
 
 
 #endif //VMPROJ_AGL_BTREE_H

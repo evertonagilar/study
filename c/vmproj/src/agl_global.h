@@ -22,6 +22,7 @@
 #ifndef VMPROJ_GLOBAL_H
 #define VMPROJ_GLOBAL_H
 
+#include "agl_list.h"
 #include "agl_defs.h"
 #include "agl_file_utils.h"
 #include "agl_source_file.h"

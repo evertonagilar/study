@@ -52,7 +52,7 @@ agl_lexer_t *agl_lexer_create(agl_source_file_t  *sourceFile){
     agl_token_t *token;
     do {
         token = agl_scanner_next_token(lexer->scanner);
-        printf("currentToken is: %d\n", token->type);
+        printf("get_current_token is: %d\n", token->type);
         node = agl_lexer_node_create(token);
         if (lexer->root == NULL){
             lexer->root = node;

@@ -42,8 +42,8 @@
  * Cria um novo currentNode com m childrens
  *
  */
-btree_page_t *btree_page_new(int m) {
-    btree_page_t * new_page = malloc(sizeof (btree_page_t));
+agl_btree_page_t *btree_page_new(int m) {
+    agl_btree_page_t * new_page = malloc(sizeof (agl_btree_page_t));
     new_page->m = m;
     new_page->is_leaf = true;
     return new_page;
@@ -54,8 +54,8 @@ btree_page_t *btree_page_new(int m) {
  * Cria a btree
  *
  */
-btree_t *btree_new(){
-    btree_t * btree = malloc(sizeof (btree_t));
+agl_btree_t *btree_new(){
+    agl_btree_t * btree = malloc(sizeof (agl_btree_t));
     btree->root = btree_page_new(0);
     btree->n = 0;
     btree->height = 0;
@@ -63,8 +63,8 @@ btree_t *btree_new(){
 }
 
 
-btree_key_entry *btree_key_entry_new(int key){
-    btree_key_entry *entry = malloc(sizeof(btree_key_entry));
+agl_btree_key_entry_t *btree_key_entry_new(int key){
+    agl_btree_key_entry_t *entry = malloc(sizeof(agl_btree_key_entry_t));
     entry->key = key;
     return entry;
 }
@@ -73,7 +73,7 @@ btree_key_entry *btree_key_entry_new(int key){
  *
  *
  */
-btree_page_split_t *btree_page_split(btree_page_t *page){
+btree_page_split_t *btree_page_split(agl_btree_page_t *page){
     btree_page_split_t *result = malloc(sizeof(btree_page_split_t));
     result->left = btree_page_new(page->m/2-1);  // subtrai 1 porque a maior key do lado esquerdo é promovida
     result->right = btree_page_new(page->m/2);
@@ -84,7 +84,7 @@ btree_page_split_t *btree_page_split(btree_page_t *page){
         result->left->keys[i] = page->keys[i];
     }
     // Copia as keys maiores que key_do_meio para right
-    btree_key_entry **pentry = result->right->keys;
+    agl_btree_key_entry_t **pentry = result->right->keys;
     for (int i = page->m/2; i < page->m; i++){
         *pentry++ = page->keys[i];
     }
@@ -95,7 +95,7 @@ btree_page_split_t *btree_page_split(btree_page_t *page){
 /*
  *
  */
-btree_page_t *btree_page_insert(btree_page_t *page, int key, int height){
+agl_btree_page_t *btree_page_insert(agl_btree_page_t *page, int key, int height){
     int i;
 
     // Se a página é folha, vamos descobrir onde ela vai ser amazenada no array keys
@@ -131,15 +131,15 @@ btree_page_t *btree_page_insert(btree_page_t *page, int key, int height){
 
 // ********************************** public functions **********************************
 
-bool btree_insert(btree_t *btree, int key){
-    btree_page_t *node = btree_page_insert(btree->root, key, btree->height);
+bool btree_insert(agl_btree_t *btree, int key){
+    agl_btree_page_t *node = btree_page_insert(btree->root, key, btree->height);
     return true;
 }
 
 int _main(int argc, char **argv) {
     puts("Programa teste btree\n");
 
-    btree_t *btree = btree_new();
+    agl_btree_t *btree = btree_new();
     bool inseriu;
 
     // 5  10  12  15

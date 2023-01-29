@@ -18,12 +18,20 @@ typedef struct {
     agl_identifier_ast_t *programName;
 } agl_program_id_ast_t;
 
+
+typedef struct {
+    agl_func_type_t type;
+    agl_identifier_ast_t *identifier;
+} agl_func_ast_t;
+
 typedef struct {
     agl_token_t *token;
+    agl_list_t *funcListDecl;
 } agl_interface_decl_ast_t;
 
 typedef struct {
     agl_token_t *token;
+    agl_list_t funcListDecl;
 } agl_implementation_decl_ast_t;
 
 typedef struct {

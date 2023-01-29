@@ -24,6 +24,26 @@
 int main(int argc, char **argv) {
     printf("Agilar Compiler Runtime(%ld bits)\n", sizeof(long) * 8);
 
+    agl_list_t *l = agl_list_create(100);
+    int v1 = 120;
+    int v2 = 100;
+    int v3 = 20;
+    int v4 = 3580;
+    agl_list_add(l, &v1);
+    agl_list_add(l, &v2);
+    agl_list_add(l, &v3);
+    agl_list_add(l, &v4);
+
+    int *v = agl_list_get(l, 1);
+    printf("valor %d\n", *v);
+
+    agl_list_iterator_t *it = agl_list_iterator(l);
+    int *value;
+    while (value = agl_list_iterator_next(it)){
+        printf("valor %d\n", *value);
+    }
+
+
     if (argc < 2) {
         printf("Uso: vmproj file\n");
         return -1;

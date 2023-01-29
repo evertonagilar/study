@@ -51,17 +51,17 @@ END : ';' ;
     Parse rules
 */
 
-program: programId programBody  ;
+program: program_id program_body  ;
 
-programId : 'program' IDENTIFIER END? ;
+program_id : 'program' IDENTIFIER END? ;
 
-programBody : interfaceDecl implementationDecl ;
+program_body : interface_decl implementation_decl ;
 
-interfaceDecl : 'interface' funcDecl*;
+interface_decl : 'interface' func_list_decl*;
 
-implementationDecl : 'implementation' ;
+implementation_decl : 'implementation' ;
 
-funcDecl : typeDecl IDENTIFIER OPEN_P CLOSE_P END?;
+func_list_decl : func_type_decl IDENTIFIER OPEN_P CLOSE_P END?;
 
-typeDecl : VOID | INT ;
+func_type_decl : VOID | INT ;
 
