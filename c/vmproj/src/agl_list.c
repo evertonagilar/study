@@ -57,7 +57,7 @@ int agl_list_count(agl_list_t *list){
     return list->count;
 }
 
-agl_list_iterator_t *agl_list_iterator(const agl_list_t *list){
+agl_list_iterator_t *agl_list_iterator(agl_list_t *list){
     agl_list_iterator_t *iterator = malloc(sizeof(agl_list_iterator_t));
     iterator->list = list;
     iterator->index = 0;

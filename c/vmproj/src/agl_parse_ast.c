@@ -38,7 +38,7 @@ agl_token_t *get_current_token(agl_parse_ast_context_t *context) {
     return token;
 }
 
-inline bool is_token_type(agl_token_t *token, agl_token_type_t type) {
+bool is_token_type(agl_token_t *token, agl_token_type_t type) {
     return token != NULL && token->type == type;
 }
 
@@ -51,13 +51,6 @@ agl_token_t *match_token(agl_parse_ast_context_t *context, agl_token_type_t type
     return token;
 }
 
-agl_token_t *match_token_backtrack(agl_parse_ast_context_t *context, agl_token_type_t type) {
-    agl_token_t *token = get_current_token(context);
-    if (is_token_type(token, type)) {
-        parse_error("Esperado identificador");
-    }
-    return token;
-}
 
 /////////////////////////////////////////////// AST ///////////////////////////////////////////////////////////////////
 
@@ -103,6 +96,18 @@ agl_program_id_ast_t *program_id(agl_parse_ast_context_t *context, agl_program_a
     return programId;
 }
 
+bool is_func_type_decl(agl_parse_ast_context_t *context) {
+    agl_token_t *token = get_current_token(context);
+    switch (token->type) {
+        case tkVoid :
+            return true;
+        case tkInt :
+            return true;
+        default:
+            return false;
+    }
+}
+
 agl_func_type_t func_type_decl(agl_parse_ast_context_t *context) {
     agl_token_t *token = get_current_token(context);
     switch (token->type) {
@@ -116,10 +121,14 @@ agl_func_type_t func_type_decl(agl_parse_ast_context_t *context) {
 }
 
 void func_list_decl_tail(agl_parse_ast_context_t *context, agl_list_t *list) {
-    agl_func_ast_t *func = malloc(sizeof(agl_func_ast_t));
-    func->type = func_type_decl(context);
-    func->identifier = identifier(context);
-    agl_list_add(list, func);
+    tail_recursion:
+    if (is_func_type_decl(context)) {
+        agl_func_ast_t *func = malloc(sizeof(agl_func_ast_t));
+        func->type = func_type_decl(context);
+        func->identifier = identifier(context);
+        agl_list_add(list, func);
+        goto tail_recursion;
+    }
 }
 
 agl_list_t *func_list_decl(agl_parse_ast_context_t *context) {

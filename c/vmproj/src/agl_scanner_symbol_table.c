@@ -55,9 +55,9 @@ agl_symbol_t *agl_scanner_symbol_table_push(agl_scanner_symbol_table_t *table, c
     return id;
 }
 
-void agl_scanner_symbol_table_push_keyword(agl_scanner_symbol_table_t *table, agl_token_type_t tokenType) {
+void agl_scanner_symbol_table_push_keyword(agl_scanner_symbol_table_t *table, agl_symbol_class_t symbolClass, agl_token_type_t tokenType) {
     char *identifier = agl_token_text[tokenType];
-    agl_scanner_symbol_table_push(table, identifier, 0, scKeyword, tokenType);
+    agl_scanner_symbol_table_push(table, identifier, 0, symbolClass, tokenType);
 }
 
 /*
@@ -65,19 +65,18 @@ void agl_scanner_symbol_table_push_keyword(agl_scanner_symbol_table_t *table, ag
  *
  */
 void loadLanguageKeywords(agl_scanner_symbol_table_t *table) {
-    agl_scanner_symbol_table_push_keyword(table, tkProgram);
-    agl_scanner_symbol_table_push_keyword(table, tkChar);
-    agl_scanner_symbol_table_push_keyword(table, tkElse);
-    agl_scanner_symbol_table_push_keyword(table, tkEnum);
-    agl_scanner_symbol_table_push_keyword(table, tkIf);
-    agl_scanner_symbol_table_push_keyword(table, tkInt);
-    agl_scanner_symbol_table_push_keyword(table, tkReturn);
-    agl_scanner_symbol_table_push_keyword(table, tkSizeOf);
-    agl_scanner_symbol_table_push_keyword(table, tkWhile);
-    agl_scanner_symbol_table_push_keyword(table, tkVoid);
-    agl_scanner_symbol_table_push_keyword(table, tkVoid);
-    agl_scanner_symbol_table_push_keyword(table, tkInterface);
-    agl_scanner_symbol_table_push_keyword(table, tkImplementation);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkProgram);
+    agl_scanner_symbol_table_push_keyword(table, scType, tkChar);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkElse);
+    agl_scanner_symbol_table_push_keyword(table, scType, tkEnum);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkIf);
+    agl_scanner_symbol_table_push_keyword(table, scType, tkInt);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkReturn);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkSizeOf);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkWhile);
+    agl_scanner_symbol_table_push_keyword(table, scType, tkVoid);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkInterface);
+    agl_scanner_symbol_table_push_keyword(table, scKeyword, tkImplementation);
 }
 
 agl_scanner_symbol_table_t *agl_scanner_symbol_table_create() {

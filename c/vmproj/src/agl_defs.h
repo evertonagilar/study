@@ -55,7 +55,8 @@ static char *agl_token_text[] = {
 
 typedef enum agl_symbol_class_t {
     scIdentifier,
-    scKeyword
+    scKeyword,
+    scType
 } agl_symbol_class_t;
 
 typedef enum{

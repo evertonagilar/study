@@ -38,7 +38,7 @@ agl_list_t *agl_list_create(int initialCapacity);
 int agl_list_add(agl_list_t *list, void *value);
 void *agl_list_get(agl_list_t *list, int idxElement);
 int agl_list_count(agl_list_t *list);
-agl_list_iterator_t *agl_list_iterator(const agl_list_t *list);
+agl_list_iterator_t *agl_list_iterator(agl_list_t *list);
 bool agl_list_iterator_has_next(agl_list_iterator_t  *iterator);
 void *agl_list_iterator_next(agl_list_iterator_t  *iterator);
 void *agl_list_iterator_current(agl_list_iterator_t *iterator);
