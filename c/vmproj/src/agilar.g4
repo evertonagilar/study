@@ -37,6 +37,8 @@ VOID : 'void' ;
 
 INT : 'int' ;
 
+CHAR : 'char' ;
+
 OPEN_P : '(' ;
 
 CLOSE_P : ')' ;
@@ -63,5 +65,5 @@ implementation_decl : 'implementation' ;
 
 func_list_decl : func_type_decl IDENTIFIER OPEN_P CLOSE_P END?;
 
-func_type_decl : VOID | INT ;
+func_type_decl : VOID | INT | CHAR ;
 

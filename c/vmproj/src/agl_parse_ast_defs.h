@@ -20,7 +20,7 @@ typedef struct {
 
 
 typedef struct {
-    agl_func_type_t type;
+    agl_token_type_t type;
     agl_identifier_ast_t *identifier;
 } agl_func_ast_t;
 

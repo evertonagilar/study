@@ -75,9 +75,15 @@ agl_token_t * agl_scanner_next_token(agl_scanner_t *scanner) {
             token->type = tkMul;
             break;
         }else if (ch == '{'){
-            token->type = tkOpenP;
+            token->type = tkOpenK;
             break;
         }else if (ch == '}'){
+            token->type = tkCloseK;
+            break;
+        }else if (ch == '('){
+            token->type = tkOpenP;
+            break;
+        }else if (ch == ')'){
             token->type = tkCloseP;
             break;
         }else if (ch == '='){

@@ -1,0 +1,110 @@
+module agenda;
+
+import agilar.lang;
+
+public class Endereco {
+    import agilar.io;
+
+    private String cidade;
+    private String logradouro;
+
+    public String getCidade() ->
+        this.cidade.
+
+    public String getLogradouro() ->
+        this.logradouro;
+
+    public void setCidade(String cidade) ->
+        this.cidade = cidade.
+
+    public void setLogradouro(String logradouro) ->
+        this.logradouro = logradouro.
+}
+
+
+public class Pessoa{
+    private String nome;
+    private Endereco endereco;
+
+    constructor init() ->
+        this.
+
+    public void getNome() ->
+        this.nome.
+
+    public void setNome(String nome) ->
+        this.nome = nome.
+
+    public Endereco getEndereco() ->
+        this.endereco.
+}
+
+public class Contato extends Pessoa {
+    import agilar.io;
+
+    private String telefone;
+
+    constructor init() ->
+        this.
+
+    public void getTelefone() ->
+        this.telefone.
+
+    public void setTelefone(String telefone) ->
+        this.telefone = telefone.
+
+    public void imprimeContato() ->
+        io:format("Dados do contato");
+        io:println("Nome: this.nome");
+        io:println("Endereco: this.endereco.logradouro");
+        io:println("Telefone: this.telefone");
+
+}
+
+
+class ContatoRepository{
+    import agilar.io;
+
+    -spec lista -> [Contato];
+    let lista -> [];
+
+    type id_t -> 1..9999999;
+
+    -spec constructor() -> ContatoRepository;
+    constructor() ->
+        this.lista = new List<Contato>();
+        this.
+
+    -spec novoContato() -> Contato;
+    novoContato() ->
+        let novo = Contato{nome = "Everton de Vargas Agilar",
+                            endereco = Endereco{cidade = "Santa Maria",
+                                                logradouro = "Casemiro Abreu"},
+                            telefone = "55 999999-99999"};
+        novo.
+
+    -spec findById(id : id_t) -> Contato;
+    findById(null) -> null;
+    findById(id) > findByIdTail(id, this.lista).
+
+    -spec findByIdTail(id : int, lista : [%Contato]) ->
+    findByIdTail(_, []) -> null;
+    findByIdTail(id, [contato|contatoTail]) when id == contato.id -> contato;
+    findByIdTail(id, [_|contatoTail]) -> findById_(id, contatoTail).
+
+    -spec insert(contato : Contato) -> {ok, success} | {error, elimite_agenda_atingido | econtato_duplicado};
+    insert(_) when this.lista.length > 100 -> {error, elimite_agenda_atingido};
+    insert(%Contato{id = Id}) when this.findById(Id) != null -> {error, econtato_duplicado};
+    insert(contato) ->
+        this.lista = [ this.lista | contato];
+        {ok, success}.
+
+    -spec remove(contato : Contato) -> {ok, success};
+    remove(%Contato{id = Id}) ->
+        this.lista = [ c || c <- this.lista, c.id != Id ];
+        {ok, success}.
+
+
+
+}
+

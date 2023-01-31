@@ -100,24 +100,18 @@ bool is_func_type_decl(agl_parse_ast_context_t *context) {
     agl_token_t *token = get_current_token(context);
     switch (token->type) {
         case tkVoid :
-            return true;
         case tkInt :
+        case tkChar:
+        case tkEnum:
             return true;
         default:
             return false;
     }
 }
 
-agl_func_type_t func_type_decl(agl_parse_ast_context_t *context) {
-    agl_token_t *token = get_current_token(context);
-    switch (token->type) {
-        case tkVoid :
-            return ftVoid;
-        case tkInt :
-            return ftInt;
-        default:
-            parse_error("Type exptected");
-    }
+agl_token_type_t func_type_decl(agl_parse_ast_context_t *context) {
+    agl_token_t *token = get_token_and_next(context);
+    return token->type;
 }
 
 void func_list_decl_tail(agl_parse_ast_context_t *context, agl_list_t *list) {
@@ -126,6 +120,9 @@ void func_list_decl_tail(agl_parse_ast_context_t *context, agl_list_t *list) {
         agl_func_ast_t *func = malloc(sizeof(agl_func_ast_t));
         func->type = func_type_decl(context);
         func->identifier = identifier(context);
+        match_token(context, tkOpenP);
+        match_token(context, tkCloseP);
+        match_token(context, tkSemicolon);
         agl_list_add(list, func);
         goto tail_recursion;
     }
