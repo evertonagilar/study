@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(vmproj)
+project(lee)
 set(CMAKE_C_STANDARD 23)
 
 FIND_PACKAGE(PkgConfig REQUIRED)
