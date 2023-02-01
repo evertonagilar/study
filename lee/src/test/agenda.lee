@@ -125,7 +125,7 @@ public interface Utils {
 
 }
 
-public class Agenda{
+public interface Agenda{
 
     public success -> 0..1;
     const sucess = 1;

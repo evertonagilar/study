@@ -18,7 +18,7 @@
  * %CopyrightEnd%
  */
 
-grammar agilar;
+grammar lee_lang;
 
 /*
     Lexer rules
@@ -43,7 +43,23 @@ OPEN_P : '(' ;
 
 CLOSE_P : ')' ;
 
-IDENTIFIER : LETTER | ( DIGIT | LETTER )*;
+OPEN_K : '{' ;
+
+CLOSE_K : '}' ;
+
+PUBLIC : 'public';
+
+PRIVATE : 'private';
+
+CLASS : 'class';
+
+IMPORT : 'import';
+
+MODULE : 'module';
+
+INTERFACE : 'interface';
+
+IDENTIFIER : LETTER ( DIGIT | LETTER | '_' )*;
 
 NL : ( '\r'? '\n' | '\r') ? -> skip;
 
@@ -53,17 +69,21 @@ END : ';' ;
     Parse rules
 */
 
-program: program_id program_body  ;
+module: module_id module_body  ;
 
-program_id : 'program' IDENTIFIER END? ;
+module_id : MODULE IDENTIFIER END? ;
 
-program_body : interface_decl implementation_decl ;
+module_body : ( import_decl | class_decl | interface_decl )* ;
 
-interface_decl : 'interface' func_list_decl*;
+import_decl : IMPORT IDENTIFIER END? ;
 
-implementation_decl : 'implementation' ;
+class_decl : visibility_decl CLASS IDENTIFIER OPEN_K CLOSE_K END? ;
 
-func_list_decl : func_type_decl IDENTIFIER OPEN_P CLOSE_P END?;
+interface_decl : visibility_decl INTERFACE IDENTIFIER OPEN_K CLOSE_K END? ;
+
+visibility_decl : ( PUBLIC | PRIVATE )? ;
+
+func_list_decl : func_type_decl IDENTIFIER OPEN_P CLOSE_P END? ;
 
 func_type_decl : VOID | INT | CHAR ;
 
