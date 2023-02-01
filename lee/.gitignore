@@ -1,0 +1,5 @@
+**/target
+*.log
+cmake-build-debug
+*.class
+*.bin

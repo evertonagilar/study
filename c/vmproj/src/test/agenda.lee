@@ -1,0 +1,150 @@
+module agenda;
+
+import agilar.lang;
+
+public class Endereco {
+    import agilar.io;
+
+    public cidade -> string;
+    let cidade = "".
+
+    public logradouro -> string;
+    let logradouro = "".
+
+    public init() -> Endereco;
+    init() -> %Endereco{}.
+}
+
+public class Pessoa{
+    public nome -> string;
+    let nome = "".
+
+    public id -> int;
+    let id = null;
+
+    public endereco -> Endereco;
+    let endereco = %Endereco{}.
+
+    public init() -> Pessoa;
+    init() -> %Pessoa{}.
+}
+
+
+public class Contato extends Pessoa {
+    import agilar.io;
+
+    public telefone -> string;
+    let telefone = "";
+
+    init() -> Pessoa;
+    init() -> %Contato{endereco = %Endereco{}}.
+
+    public imprimeContato() -> void;
+    imprimeContato() ->
+        io:format("Dados do contato");
+        io:println("Nome: this.nome");
+        io:println("Endereco: this.endereco.logradouro");
+        io:println("Telefone: this.telefone").
+
+}
+
+
+public class ContatoRepository{
+    import agilar.io;
+
+    private lista -> [Contato];
+    let lista = [];
+
+    public init() -> ContatoRepository;
+    init() -> %ContatoRepository{}.
+
+    public findById(id : int) -> Contato;
+    findById(null) -> null;
+    findById(id) > findByIdTail(id, this.lista).
+
+    private findByIdTail(id : int, lista : [Contato]) -> [Contato];
+    findByIdTail(_, []) -> null;
+    findByIdTail(id, [contato|contatoTail]) when id == contato.id -> contato;
+    findByIdTail(id, [_|contatoTail]) -> findByIdTail(id, contatoTail).
+
+    public insert(contato : Contato) -> {ok, success} | {error, elimite_agenda_atingido | econtato_duplicado};
+    insert(_) when this.lista.length > 100 -> {error, elimite_agenda_atingido};
+    insert(%Contato{id = Id}) when this.findById(Id) != null -> {error, econtato_duplicado};
+    insert(contato) ->
+        let this.lista = [this.lista | contato];
+        {ok, success}.
+
+    public remove(contato : Contato) -> {ok, success};
+    remove(%Contato{id = Id}) ->
+        let this.lista = [ c || c <- this.lista, c.id != Id ];
+        {ok, success}.
+}
+
+
+public interface Utils {
+
+    /* is_number */
+    
+    is_number(str : string) -> bool;
+    is_number("") -> false;
+    is_number(str) -> [ch || ch <- str, ch < 0 or ch > 9] == [].
+    
+    
+    /* get home dir */
+    
+    public get_home_dir() -> string;
+    get_home_dir() ->
+        case application.get_environment("home") of
+            {ok, Path} -> Path;
+            _ -> ""
+        end.
+    
+    
+    /* read_file_all */
+    
+    public readFileAll(fileName : string) -> {ok, string} | {error, einvalid_file};
+    readFileAll(fileName) ->
+        case file.readFileAll(fileName) of
+            {ok, content} -> {ok, content};
+            {error, _} -> {error, einvalid_file}
+        end.
+    
+    /* to_upper_case */
+    
+    public to_upper_case(s : string) -> string;
+    to_upper_case(s) -> to_upper_case_tail(s, []);
+    
+    private to_upper_case_tail(s : string, result : string) -> string;
+    to_upper_case_tail([], result) -> result;
+    to_upper_case_tail([h|t], result) -> to_upper_case_tail(t, [result | to_upper(h)]).
+
+    public getNovoId() -> int;
+    getNovoId() ->
+        static let contador -> 0;
+        contador++.
+
+}
+
+public class Agenda{
+
+    public success -> 0..1;
+    const sucess = 1;
+
+    public main() -> int;
+    main() ->
+        let agendaRepository = %ContatoRepository{};
+        let contato = this.novoContato();
+        agendaRepository.insert(contato);
+        success.
+
+    public novoContato() -> Contato;
+    novoContato() ->
+        let novo -> %Contato{id = Utils.getNovoId(),
+                             nome = "Everton de Vargas Agilar",
+                             endereco = Endereco{cidade = "Santa Maria",
+                                                logradouro = "Casemiro Abreu"},
+                             telefone = "55 999999-99999"};
+        novo.
+
+
+}
