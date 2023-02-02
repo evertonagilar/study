@@ -19,14 +19,14 @@
  */
 
 
-#ifndef VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
-#define VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
+#ifndef LEE_SYMBOL_TABLE_H
+#define LEE_SYMBOL_TABLE_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 
-lee_scanner_symbol_table_t *lee_scanner_symbol_table_create();
-void lee_scanner_symbol_table_free(lee_scanner_symbol_table_t *table);
-lee_symbol_t *lee_scanner_symbol_table_get_or_push(lee_scanner_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
-lee_symbol_t *lee_scanner_symbol_table_push(lee_scanner_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
+lee_symbol_table_t *lee_symbol_table_create();
+void lee_symbol_table_free(lee_symbol_table_t *table);
+lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
+lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
 
-#endif //VMPROJ_AGL_SCANNER_SYMBOL_TABLE_H
+#endif //LEE_SYMBOL_TABLE_H

@@ -18,17 +18,16 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_PROGRAM_H
-#define VMPROJ_AGL_PROGRAM_H
+#ifndef LEE_PROGRAM_H
+#define LEE_PROGRAM_H
 
-#include <glib.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "lee_global.h"
+#include "lee_defs.h"
 
 
 lee_program_t *lee_program_load(char *programFileName);
 void *lee_program_free(lee_program_t *program);
 
 
-#endif //VMPROJ_AGL_PROGRAM_H
+#endif //LEE_PROGRAM_H

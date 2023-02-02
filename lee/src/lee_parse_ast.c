@@ -19,6 +19,31 @@
  */
 
 #include "lee_parse_ast.h"
+#include "lee_lexer.h"
+#include "lee_symbol_table.h"
+
+
+/*
+ * %CopyrightBegin%
+ *
+ * Copyright Everton de Vargas Agilar 2022. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * %CopyrightEnd%
+ */
+
+#include <stdio.h>
 
 ////////////////////////////////////////// Function support///////////////////////////////////////////////////////////
 
@@ -90,7 +115,7 @@ lee_identifier_ast_t *identifier(lee_parse_ast_context_t *context) {
 
 
 lee_program_id_ast_t *program_id(lee_parse_ast_context_t *context, lee_program_ast_t *programAST) {
-    match_token(context, tkProgram);
+    match_token(context, tkModule);
     lee_program_id_ast_t *programId = malloc(sizeof(lee_program_id_ast_t));
     programId->programName = identifier(context);
     return programId;
@@ -120,8 +145,8 @@ void func_list_decl_tail(lee_parse_ast_context_t *context, lee_list_t *list) {
         lee_func_ast_t *func = malloc(sizeof(lee_func_ast_t));
         func->type = func_type_decl(context);
         func->identifier = identifier(context);
-        match_token(context, tkOpenP);
-        match_token(context, tkCloseP);
+        match_token(context, tkLParen);
+        match_token(context, tkRParen);
         match_token(context, tkSemicolon);
         lee_list_add(list, func);
         goto tail_recursion;
@@ -143,7 +168,7 @@ lee_interface_decl_ast_t *interface_decl(lee_parse_ast_context_t *context) {
 }
 
 lee_implementation_decl_ast_t *implementation_decl(lee_parse_ast_context_t *context) {
-    lee_token_t *token = match_token(context, tkImplementation);
+    lee_token_t *token = match_token(context, tkInterface);
     lee_implementation_decl_ast_t *implementationDeclAST = malloc(sizeof(lee_implementation_decl_ast_t));
     implementationDeclAST->token = token;
     return implementationDeclAST;
@@ -156,22 +181,24 @@ lee_program_body_ast_t *program_body(lee_parse_ast_context_t *context, lee_progr
     return programBodyAST;
 }
 
+
 /*
- * Início do AST em program
+ * Entry point
  *
  */
-lee_program_ast_t *program(lee_parse_ast_context_t *context) {
+lee_program_ast_t *lee_program_ast_entry(lee_parse_ast_context_t *context) {
     lee_program_ast_t *programAST = malloc(sizeof(lee_program_ast_t));
     programAST->programId = program_id(context, programAST);
     programAST->programBody = program_body(context, programAST);
     return programAST;
 }
 
-/////////////////////////////////////////////// AST ///////////////////////////////////////////////////////////////////
+///////////////////////////////////
 
 lee_parse_ast_context_t *lee_parse_ast_create_context(lee_source_file_t *sourceFile) {
     lee_parse_ast_context_t *context = malloc(sizeof(lee_parse_ast_context_t));
-    context->lexer = lee_lexer_create(sourceFile);
+    context->symbolTable = lee_symbol_table_create();
+    context->lexer = lee_lexer_create(sourceFile, context->symbolTable);
     context->tokenIterator = lee_lexer_iterator_create(context->lexer);
     return context;
 }
@@ -179,18 +206,19 @@ lee_parse_ast_context_t *lee_parse_ast_create_context(lee_source_file_t *sourceF
 void lee_parse_ast_free_context(lee_parse_ast_context_t *context) {
     lee_lexer_free(context->lexer);
     lee_lexer_iterator_free(context->tokenIterator);
+    lee_symbol_table_free(context->symbolTable);
     free(context);
 }
 
 lee_parse_ast_t *lee_parse_ast_create(lee_source_file_t *sourceFile) {
-    lee_parse_ast_context_t *context = lee_parse_ast_create_context(sourceFile);
     lee_parse_ast_t *parseAST = malloc(sizeof(lee_parse_ast_t));
-    parseAST->ast = program(context);
-    lee_parse_ast_free_context(context);
+    parseAST->context = lee_parse_ast_create_context(sourceFile);
+    parseAST->ast = lee_program_ast_entry(parseAST->context);
     return parseAST;
 }
 
 void lee_parse_ast_free(lee_parse_ast_t *parseAST) {
+    lee_parse_ast_free_context(parseAST->context);
     free(parseAST);
 }
 

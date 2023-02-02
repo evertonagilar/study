@@ -19,12 +19,12 @@
  */
 
 
-#ifndef VMPROJ_AGL_PARSE_AST_H
-#define VMPROJ_AGL_PARSE_AST_H
+#ifndef LEE_PARSE_AST_H
+#define LEE_PARSE_AST_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 
 lee_parse_ast_t *lee_parse_ast_create(lee_source_file_t *sourceFile);
 void lee_parse_ast_free(lee_parse_ast_t *parseAST);
 
-#endif //VMPROJ_AGL_PARSE_AST_H
+#endif //LEE_PARSE_AST_H

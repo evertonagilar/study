@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include "lee_program.h"
+#include "lee_module.h"
 
 lee_program_t *lee_program_load(char *programFileName) {
     lee_program_t *program = malloc(sizeof(lee_program_t));

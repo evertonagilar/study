@@ -19,8 +19,9 @@
  */
 
 
-#include "lee_global.h"
 #include <stdio.h>
+#include "lee_lexer.h"
+#include "lee_scanner.h"
 
 lee_lexer_node_t *lee_lexer_node_create(lee_token_t *token){
     lee_lexer_node_t *node = malloc(sizeof(lee_lexer_node_t));
@@ -43,9 +44,9 @@ void lee_lexer_node_visit(lee_lexer_node_t *node, lee_lexer_node_callback_visito
     }
 }
 
-lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile){
+lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile, lee_symbol_table_t *symbolTable){
     lee_lexer_t *lexer = malloc(sizeof(lee_lexer_t));
-    lexer->scanner = lee_scanner_create(sourceFile);
+    lexer->scanner = lee_scanner_create(sourceFile, symbolTable);
     lexer->root = NULL;
     lexer->childCount = 0;
     lee_lexer_node_t *node, *currentNode;

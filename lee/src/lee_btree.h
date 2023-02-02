@@ -18,8 +18,8 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_AGL_BTREE_H
-#define VMPROJ_AGL_BTREE_H
+#ifndef LEE_BTREE_H
+#define LEE_BTREE_H
 
 #include <stdbool.h>
 
@@ -54,4 +54,4 @@ lee_btree_t *btree_new();
 bool btree_insert(lee_btree_t *btree, int key);
 
 
-#endif //VMPROJ_AGL_BTREE_H
+#endif //LEE_BTREE_H

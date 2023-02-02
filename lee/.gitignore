@@ -3,3 +3,5 @@
 cmake-build-debug
 *.class
 *.bin
+src/antlr
+src/output

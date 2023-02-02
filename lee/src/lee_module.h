@@ -19,12 +19,11 @@
  */
 
 
-#ifndef VMPROJ_AGL_MODULE_H
-#define VMPROJ_AGL_MODULE_H
+#ifndef LEE_MODULE_H
+#define LEE_MODULE_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 #include <stddef.h>
-#include <glib.h>
 #include <stdbool.h>
 
 
@@ -32,4 +31,4 @@ lee_module_t *lee_module_load(char *fileName);
 void lee_module_free(lee_module_t *module);
 
 
-#endif //VMPROJ_AGL_MODULE_H
+#endif //LEE_MODULE_H

@@ -25,8 +25,8 @@ grammar lee_lang;
 */
 
 fragment Letter
-            :   [a-zA-Z]
-            ;
+    :   [a-zA-Z]
+    ;
 
 fragment Digit
             :   [0-9]
@@ -104,23 +104,27 @@ UNDER_SCORE : '_';
 // Identifiers
 
 Identifier
-    :   Letter Digit*
+    :   Letter (Letter | Digit)*
     ;
 
 //
 // Whitespace and comments
 //
 
-WS  :  [ \t\r\]+ -> skip
-    ;
+//NL : ( '\r'? '\n' | '\r') + -> skip;
 
-COMMENT
-    :   '/*' .*? '*/' -> skip
-    ;
+WS:                 [ \t\r\n\u000C]+ -> skip;
 
-LINE_COMMENT
-    :   '//' ~[\r\n]* -> skip
-    ;
+//WS  :  [ \t\r\n]+ -> skip
+//    ;
+
+//COMMENT
+//    :   '/*' .*? '*/' -> skip
+//    ;
+//
+//LINE_COMMENT
+//    :   '//' ~[\r\n]* -> skip
+//    ;
 
 
 // Null Literal
@@ -143,25 +147,63 @@ COMMA : ',';
 DOT : '.';
 
 
+// Operators
+ASSIGN:             '=';
+GT:                 '>';
+LT:                 '<';
+BANG:               '!';
+TILDE:              '~';
+QUESTION:           '?';
+COLON:              ':';
+EQUAL:              '==';
+LE:                 '<=';
+GE:                 '>=';
+NOTEQUAL:           '!=';
+AND:                '&&';
+OR:                 '||';
+INC:                '++';
+DEC:                '--';
+ADD:                '+';
+SUB:                '-';
+MUL:                '*';
+DIV:                '/';
+MOD:                '%';
+
+
 /*
     Parse rules
 */
 
-module: module_id module_body  ;
+module
+    : moduleId moduleBody
+    ;
 
-module_id : MODULE IDENTIFIER END? ;
+moduleId
+    : MODULE qualifiedName ';'
+    ;
 
-module_body : ( import_decl | class_decl | interface_decl )* ;
+moduleBody
+    : ( importDecl | classDecl | interfaceDecl )*
+    ;
 
-import_decl : IMPORT IDENTIFIER END? ;
+importDecl
+    : IMPORT qualifiedName ';'
+    ;
 
-class_decl : visibility_decl CLASS IDENTIFIER OPEN_K CLOSE_K END? ;
+qualifiedName
+    :   Identifier ( '.' Identifier)*
+    ;
 
-interface_decl : visibility_decl INTERFACE IDENTIFIER OPEN_K CLOSE_K END? ;
+classDecl
+    : visibilityDecl CLASS Identifier '{' '}'
+    ;
 
-visibility_decl : ( PUBLIC | PRIVATE )? ;
+interfaceDecl
+    : visibilityDecl INTERFACE Identifier '{' '}'
+    ;
 
-func_list_decl : func_type_decl IDENTIFIER OPEN_P CLOSE_P END? ;
+visibilityDecl
+    : ( PUBLIC | PRIVATE )?
+    ;
 
-func_type_decl : VOID | INT | CHAR ;
 

@@ -20,20 +20,19 @@
 
 
 #include "lee_module.h"
-#include <glib/glist.h>
+#include "lee_parse_ast.h"
+#include "lee_source_file.h"
 
 lee_module_t *lee_module_load(char *fileName) {
     lee_module_t *module = (lee_module_t *) malloc(sizeof(lee_module_t));
     module->sourceFile = lee_source_file_create(fileName);
     //mainModule->text = malloc(mainModule->count);
     module->compiled = false;
-    module->imports = g_list_alloc();
     module->parseAST = lee_parse_ast_create(module->sourceFile);
     return module;
 }
 
 void lee_module_free(lee_module_t *module){
-    g_list_free(module->imports);
     lee_parse_ast_free(module->parseAST);
     lee_source_file_free(module->sourceFile);
     free(module);

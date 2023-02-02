@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "lee_vm.h"
+#include "lee_program.h"
 
 const int STACK_MAX_SIZE = 1000 * sizeof(long);
 

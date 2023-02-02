@@ -22,7 +22,7 @@
 #ifndef VMPROJ_AGL_TOKEN_H
 #define VMPROJ_AGL_TOKEN_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 
 lee_token_t *lee_token_new();
 void lee_token_free(lee_token_t *token);

@@ -18,8 +18,8 @@
  * %CopyrightEnd%
  */
 
-#ifndef VMPROJ_lee_list_t_H
-#define VMPROJ_lee_list_t_H
+#ifndef LEE_LIST_H
+#define LEE_LIST_H
 
 #include <stdbool.h>
 
@@ -43,4 +43,4 @@ bool lee_list_iterator_has_next(lee_list_iterator_t  *iterator);
 void *lee_list_iterator_next(lee_list_iterator_t  *iterator);
 void *lee_list_iterator_current(lee_list_iterator_t *iterator);
 
-#endif //VMPROJ_lee_list_t_H
+#endif //LEE_LIST_H

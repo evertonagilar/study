@@ -19,22 +19,22 @@
  */
 
 
-#include <string.h>
 #include <ctype.h>
 #include "lee_scanner.h"
+#include "lee_symbol_table.h"
+#include "lee_token.h"
 
 
-lee_scanner_t *lee_scanner_create(lee_source_file_t *sourceFile) {
+lee_scanner_t *lee_scanner_create(lee_source_file_t *sourceFile, lee_symbol_table_t *symbolTable) {
     lee_scanner_t *scanner = malloc(sizeof(lee_scanner_t));
     scanner->src = sourceFile->stream;
     scanner->lookahead = scanner->src;
     scanner->line = 1;
-    scanner->symbolTable = lee_scanner_symbol_table_create();
+    scanner->symbolTable = symbolTable;
     return scanner;
 }
 
 void lee_scanner_free(lee_scanner_t *scanner) {
-    lee_scanner_symbol_table_free(scanner->symbolTable);
     free(scanner);
 }
 
@@ -49,7 +49,7 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
                 hash = hash * 100 + *scanner->lookahead;
                 scanner->lookahead++;
             }
-            token->symbol = lee_scanner_symbol_table_get_or_push(scanner->symbolTable, last_lookahead,
+            token->symbol = lee_symbol_table_get_or_push(scanner->symbolTable, last_lookahead,
                                                                  scanner->lookahead - last_lookahead, scIdentifier, tkIdentifier);
             token->type = token->symbol->tokenType;
             break;
@@ -66,25 +66,25 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
             token->type = tkSemicolon;
             break;
         }else if (ch == '+'){
-            token->type = tkPlus;
+            token->type = tkAdd;
             break;
         }else if (ch == '-'){
-            token->type = tkPlus;
+            token->type = tkSub;
             break;
         }else if (ch == '*'){
             token->type = tkMul;
             break;
         }else if (ch == '{'){
-            token->type = tkOpenK;
+            token->type = tkLBrace;
             break;
         }else if (ch == '}'){
-            token->type = tkCloseK;
+            token->type = tkRBrace;
             break;
         }else if (ch == '('){
-            token->type = tkOpenP;
+            token->type = tkLParen;
             break;
         }else if (ch == ')'){
-            token->type = tkCloseP;
+            token->type = tkRParen;
             break;
         }else if (ch == '='){
             if (*scanner->lookahead == '='){

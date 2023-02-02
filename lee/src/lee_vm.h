@@ -22,8 +22,8 @@
 #ifndef VMPROJ_AGL_VM_H
 #define VMPROJ_AGL_VM_H
 
-#include "lee_global.h"
 #include <stdbool.h>
+#include "lee_defs.h"
 
 lee_vm_t *lee_vm_create(char *filename, bool debug);
 int lee_vm_start(lee_vm_t *vm);

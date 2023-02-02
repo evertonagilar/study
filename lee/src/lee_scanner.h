@@ -19,14 +19,14 @@
  */
 
 
-#ifndef VMPROJ_AGL_SCANNER_H
-#define VMPROJ_AGL_SCANNER_H
+#ifndef LEE_SCANNER_H
+#define LEE_SCANNER_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 
-lee_scanner_t *lee_scanner_create(lee_source_file_t *sourceFile);
+lee_scanner_t *lee_scanner_create(lee_source_file_t *sourceFile, lee_symbol_table_t *symbolTable);
 void lee_scanner_free(lee_scanner_t *scanner);
 lee_token_t *lee_scanner_next_token(lee_scanner_t *scanner);
 
 
-#endif //VMPROJ_AGL_SCANNER_H
+#endif //LEE_SCANNER_H

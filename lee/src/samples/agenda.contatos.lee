@@ -1,9 +1,6 @@
-module agenda;
-
-import agilar.lang;
+module agenda.contatos;
 
 public class Endereco {
-    import agilar.io;
 
     public cidade -> string;
     let cidade = "".
@@ -80,71 +77,3 @@ public class ContatoRepository{
         {ok, success}.
 }
 
-
-public interface Utils {
-
-    /* is_number */
-    
-    is_number(str : string) -> bool;
-    is_number("") -> false;
-    is_number(str) -> [ch || ch <- str, ch < 0 or ch > 9] == [].
-    
-    
-    /* get home dir */
-    
-    public get_home_dir() -> string;
-    get_home_dir() ->
-        case application.get_environment("home") of
-            {ok, Path} -> Path;
-            _ -> ""
-        end.
-    
-    
-    /* read_file_all */
-    
-    public readFileAll(fileName : string) -> {ok, string} | {error, einvalid_file};
-    readFileAll(fileName) ->
-        case file.readFileAll(fileName) of
-            {ok, content} -> {ok, content};
-            {error, _} -> {error, einvalid_file}
-        end.
-    
-    /* to_upper_case */
-    
-    public to_upper_case(s : string) -> string;
-    to_upper_case(s) -> to_upper_case_tail(s, []);
-    
-    private to_upper_case_tail(s : string, result : string) -> string;
-    to_upper_case_tail([], result) -> result;
-    to_upper_case_tail([h|t], result) -> to_upper_case_tail(t, [result | to_upper(h)]).
-
-    public getNovoId() -> int;
-    getNovoId() ->
-        static let contador -> 0;
-        contador++.
-
-}
-
-public interface Agenda{
-
-    public success -> 0..1;
-    const sucess = 1;
-
-    public main() -> int;
-    main() ->
-        let agendaRepository = %ContatoRepository{};
-        let contato = this.novoContato();
-        agendaRepository.insert(contato);
-        success.
-
-    public novoContato() -> Contato;
-    novoContato() ->
-        let novo -> %Contato{id = Utils.getNovoId(),
-                             nome = "Everton de Vargas Agilar",
-                             endereco = Endereco{cidade = "Santa Maria",
-                                                logradouro = "Casemiro Abreu"},
-                             telefone = "55 999999-99999"};
-        novo.
-
-
-}

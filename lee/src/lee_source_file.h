@@ -19,13 +19,12 @@
  */
 
 
-#ifndef VMPROJ_AGL_SOURCE_FILE_H
-#define VMPROJ_AGL_SOURCE_FILE_H
+#ifndef LEE_SOURCE_FILE_H
+#define LEE_SOURCE_FILE_H
 
-#include "lee_global.h"
-#include <stddef.h>
+#include "lee_defs.h"
 
 lee_source_file_t *lee_source_file_create(const char *filename);
 void lee_source_file_free(lee_source_file_t *sourceFile);
 
-#endif //VMPROJ_AGL_SOURCE_FILE_H
+#endif //LEE_SOURCE_FILE_H

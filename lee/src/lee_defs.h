@@ -3,7 +3,7 @@
  *
  * Copyright Everton de Vargas Agilar 2022. All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License",
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -19,72 +19,213 @@
  */
 
 
-#ifndef VMPROJ_AGL_DEFS_H
-#define VMPROJ_AGL_DEFS_H
+#ifndef LEE_DEFS_H
+#define LEE_DEFS_H
 
 #include <stddef.h>
 #include <glib.h>
 #include <stdbool.h>
+#include "lee_list.h"
 
 static char *lee_token_text[] = {
-        "program",
+        // Keywords and types
+        "abstract",
+        "assert",
+        "boolean",
+        "break",
+        "byte",
+        "case",
+        "catch",
         "char",
+        "class",
+        "const",
+        "continue",
+        "default",
+        "do",
+        "double",
         "else",
         "enum",
+        "exports",
+        "extends",
+        "final",
+        "finally",
+        "float",
+        "for",
         "if",
+        "goto",
+        "implements",
+        "import",
+        "instanceof",
         "int",
-        "return",
-        "sizeof",
-        "while",
-        "void",
-        "identifier",
         "interface",
-        "implementation",
+        "long",
+        "module",
+        "native",
+        "new",
+        "package",
+        "private",
+        "protected",
+        "public",
+        "return",
+        "short",
+        "static",
+        "super",
+        "switch",
+        "synchronized",
+        "this",
+        "throw",
+        "throws",
+        "to",
+        "try",
+        "void",
+        "while",
+        "with",
+        "_",
+
+        // Identifier
+        "",
+
+        // Null Literal
+        "null",
+
+        // Separators
+        "(",
+        ")",
+        "{",
+        "}",
+        "[",
+        "]",
+        ",",
+        ",",
         ".",
+
+        // Operators
+        "=",
+        ">",
+        "<",
+        "!",
+        "~",
+        "?",
+        ":",
+        "==",
+        "<=",
+        ">=",
+        "!=",
+        "&&",
+        "||",
+        "++",
+        "--",
         "+",
         "-",
         "*",
         "/",
-        "==",
-        "=",
-        "(",
-        ")",
-        ";",
-        "\n"
+        "%",
+
+        // Eof
+        "\0"
 };
 
 typedef enum lee_symbol_class_t {
     scIdentifier,
+    scLiteral,
     scKeyword,
-    scType
+    scType,
+    scSeparator,
+    scOperator
 } lee_symbol_class_t;
 
 typedef enum{
-    tkProgram,
+    // Keywords and types
+    tkAbstract,
+    tkAssert,
+    tkBoolean,
+    tkBreak,
+    tkByte,
+    tkCase,
+    tkCatch,
     tkChar,
+    tkClass,
+    tkConst,
+    tkContinue,
+    tkDefault,
+    tkDo,
+    tkDouble,
     tkElse,
     tkEnum,
+    tkExports,
+    tkExtends,
+    tkFinal,
+    tkFinally,
+    tkFloat,
+    tkFor,
     tkIf,
+    tkGoto,
+    tkImplements,
+    tkImport,
+    tkInstanceOf,
     tkInt,
-    tkReturn,
-    tkSizeOf,
-    tkWhile,
-    tkVoid,
-    tkIdentifier,
     tkInterface,
-    tkImplementation,
+    tkLong,
+    tkModule,
+    tkNative,
+    tkNew,
+    tkPrivate,
+    tkProtected,
+    tkPublic,
+    tkReturn,
+    tkShort,
+    tkStatic,
+    tkSuper,
+    tkSwitch,
+    tkSynchronized,
+    tkThis,
+    tkThrow,
+    tkThrows,
+    tkTo,
+    tkTry,
+    tkVoid,
+    tkWhile,
+    tkWith,
+    tkUnderscore,
+
+    tkIdentifier,
+
+    // Literal
+    tkNull,
+
+    // Separators
+    tkLParen,
+    tkRParen,
+    tkLBrace,
+    tkRBrace,
+    tkLBrack,
+    tkRBrack,
+    tkSemicolon,
+    tkComma,
     tkDot,
-    tkPlus,
-    tkMinus,
+
+    // Operators
+    tkAssign,
+    tkGT,
+    tkLT,
+    tkBang,
+    tkTilde,
+    tkQuestion,
+    tkColon,
+    tkEqual,
+    tkLE,
+    tkGE,
+    tkNotEqual,
+    tkAnd,
+    tkOr,
+    tkInc,
+    tkDec,
+    tkAdd,
+    tkSub,
     tkMul,
     tkDiv,
-    tkEqual,
-    tkAssign,
-    tkOpenP,
-    tkCloseP,
-    tkOpenK,
-    tkCloseK,
-    tkSemicolon,
+    tkMod,
+
     tkEof
 } lee_token_type_t;
 
@@ -93,6 +234,7 @@ typedef struct {
     lee_token_type_t tokenType;
     int hash;
     char *name;
+    int name_sz;
 } lee_symbol_t;
 
 typedef struct {
@@ -105,13 +247,13 @@ typedef struct {
 typedef struct {
     int count;
     lee_symbol_t *itens;
-} lee_scanner_symbol_table_t;
+} lee_symbol_table_t;
 
 typedef struct {
     char *src;              // pointer to source code string
     char *lookahead;        // pointer to next symbol
     int line;               // currentNode line of scanner
-    lee_scanner_symbol_table_t *symbolTable;
+    lee_symbol_table_t *symbolTable;    // pointer to scanner
 } lee_scanner_t;
 
 typedef struct lee_lexer_node_t {
@@ -131,34 +273,79 @@ typedef struct {
     lee_lexer_node_t *priorNode;
 } lee_lexer_iterator_t;
 
-#include "lee_parse_ast_defs.h"
-
-/*
- * lee_parse_ast_context_t é um objeto de contexto passado durante a construção do parse
- * para dar acesso ao analisador léxico.
- *
- */
-typedef struct {
-    lee_lexer_t *lexer;
-    lee_lexer_iterator_t *tokenIterator;
-    lee_program_ast_t *ast;
-} lee_parse_ast_context_t;
-
-typedef struct {
-    lee_program_ast_t *ast;
-} lee_parse_ast_t;
-
 typedef struct {
     char *filename;                 // source filename
     size_t size;                    // count of file
     char *stream;                   // stream of file
 } lee_source_file_t;
 
+
+/*
+ * Parse AST structs
+ *
+ */
+
+
+typedef struct {
+    lee_token_t *token;
+} lee_identifier_ast_t;
+
+typedef struct {
+    lee_identifier_ast_t *programName;
+} lee_program_id_ast_t;
+
+
+typedef struct {
+    lee_token_type_t type;
+    lee_identifier_ast_t *identifier;
+} lee_func_ast_t;
+
+typedef struct {
+    lee_token_t *token;
+    lee_list_t *funcListDecl;
+} lee_interface_decl_ast_t;
+
+typedef struct {
+    lee_token_t *token;
+    lee_list_t funcListDecl;
+} lee_implementation_decl_ast_t;
+
+typedef struct {
+    lee_interface_decl_ast_t *interfaceDecl;
+    lee_implementation_decl_ast_t *implementationDecl;
+} lee_program_body_ast_t;
+
+typedef struct {
+    lee_program_id_ast_t *programId;
+    lee_program_body_ast_t *programBody;
+} lee_program_ast_t;
+
+/*
+ * lee_parse_ast_context_t é um objeto de contexto utilizado durante a construção da árvore sintática
+ *
+ */
+typedef struct {
+    lee_lexer_t *lexer;
+    lee_lexer_iterator_t *tokenIterator;
+    lee_program_ast_t *ast;
+    lee_symbol_table_t *symbolTable;
+} lee_parse_ast_context_t;
+
+typedef struct {
+    lee_parse_ast_context_t *context;
+    lee_program_ast_t *ast;
+} lee_parse_ast_t;
+
+
+/*
+ * Loader
+ *
+ */
+
 typedef struct {
     lee_source_file_t *sourceFile;      // source file of mainModule
     long *text;                         // text segment
     bool compiled;
-    GList *imports;
     lee_parse_ast_t *parseAST;
 } lee_module_t;
 
@@ -178,4 +365,4 @@ typedef struct {
     bool debug;
 } lee_vm_t;
 
-#endif //VMPROJ_AGL_DEFS_H
+#endif //LEE_DEFS_H

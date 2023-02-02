@@ -19,7 +19,8 @@
  */
 
 #include <stdio.h>
-#include "lee_global.h"
+#include "lee_vm.h"
+#include "lee_defs.h"
 
 int main(int argc, char **argv) {
     printf("Lee -> The Samurai Programing Language\n");

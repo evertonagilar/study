@@ -19,15 +19,15 @@
  */
 
 
-#ifndef VMPROJ_AGL_LEXER_H
-#define VMPROJ_AGL_LEXER_H
+#ifndef LEE_LEXER_H
+#define LEE_LEXER_H
 
-#include "lee_global.h"
+#include "lee_defs.h"
 
 
 /* lexer */
 
-lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile);
+lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile, lee_symbol_table_t *symbolTable);
 void lee_lexer_free(lee_lexer_t *lexer);
 
 /* visitor */
@@ -49,4 +49,4 @@ lee_token_t *lee_lexer_next_token(lee_lexer_iterator_t *iterator);
 lee_token_t *lee_lexer_prior_token(lee_lexer_iterator_t *iterator);
 void *lee_lexer_iterator_free(lee_lexer_iterator_t *iterator);
 
-#endif //VMPROJ_AGL_LEXER_H
+#endif //LEE_LEXER_H

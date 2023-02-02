@@ -19,8 +19,8 @@
  */
 
 
-#ifndef VMPROJ_AGL_FILE_UTILS_H
-#define VMPROJ_AGL_FILE_UTILS_H
+#ifndef LEE_FILE_UTILS_H
+#define LEE_FILE_UTILS_H
 
 #include <stdio.h>
 
@@ -33,4 +33,4 @@ size_t lee_readFileAll(const char *filename, void *buf, size_t size);
 
 
 
-#endif //VMPROJ_AGL_FILE_UTILS_H
+#endif //LEE_FILE_UTILS_H
