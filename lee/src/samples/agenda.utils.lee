@@ -3,14 +3,12 @@ module agenda.utils;
 public interface utils {
 
     /* is_number */
-    
     is_number(str : string) -> bool;
     is_number("") -> false;
     is_number(str) -> [ch || ch <- str, ch < 0 or ch > 9] == [].
     
     
     /* get home dir */
-    
     public get_home_dir() -> string;
     get_home_dir() ->
         case application.get_environment("home") of
@@ -20,7 +18,6 @@ public interface utils {
     
     
     /* read_file_all */
-    
     public readFileAll(fileName : string) -> {ok, string} | {error, einvalid_file};
     readFileAll(fileName) ->
         case file.readFileAll(fileName) of
@@ -29,7 +26,6 @@ public interface utils {
         end.
     
     /* to_upper_case */
-    
     public to_upper_case(s : string) -> string;
     to_upper_case(s) -> to_upper_case_tail(s, []);
     
@@ -39,7 +35,7 @@ public interface utils {
 
     public getNovoId() -> int;
     getNovoId() ->
-        static let contador -> 0;
+        static let contador = 0;
         contador++.
 
 }

@@ -1,12 +1,11 @@
-module agenda;
+package agenda;
 
 import agenda.contatos;
 import agenda.utils;
 
 public interface Agenda{
 
-    public success -> bool;
-    const sucess = 1;
+    public const success : int = 1;
 
     public main() -> int;
     main() ->
@@ -17,7 +16,7 @@ public interface Agenda{
 
     public novoContato() -> Contato;
     novoContato() ->
-        let novo -> %Contato{id = utils.getNovoId(),
+        let novo = %Contato{id = utils.getNovoId(),
                              nome = "Everton de Vargas Agilar",
                              endereco = Endereco{cidade = "Santa Maria",
                                                 logradouro = "Casemiro Abreu"},

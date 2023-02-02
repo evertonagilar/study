@@ -1,26 +1,17 @@
 module agenda.contatos;
 
 public class Endereco {
-
-    public cidade -> string;
-    let cidade = "".
-
-    public logradouro -> string;
-    let logradouro = "".
+    public cidade : string = "";
+    public logradouro : string = "";
 
     public init() -> Endereco;
     init() -> %Endereco{}.
 }
 
 public class Pessoa{
-    public nome -> string;
-    let nome = "".
-
-    public id -> int;
-    let id = null;
-
-    public endereco -> Endereco;
-    let endereco = %Endereco{}.
+    public nome : string = "";
+    public id : string = null;
+    public endereco : Endereco = %Endereco{};
 
     public init() -> Pessoa;
     init() -> %Pessoa{}.
@@ -30,10 +21,9 @@ public class Pessoa{
 public class Contato extends Pessoa {
     import agilar.io;
 
-    public telefone -> string;
-    let telefone = "";
+    public telefone : string = "";
 
-    init() -> Pessoa;
+    public init() -> Pessoa;
     init() -> %Contato{endereco = %Endereco{}}.
 
     public imprimeContato() -> void;
@@ -49,8 +39,7 @@ public class Contato extends Pessoa {
 public class ContatoRepository{
     import agilar.io;
 
-    private lista -> [Contato];
-    let lista = [];
+    private lista : [Contato] = [];
 
     public init() -> ContatoRepository;
     init() -> %ContatoRepository{}.
