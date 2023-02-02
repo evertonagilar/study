@@ -24,46 +24,124 @@ grammar lee_lang;
     Lexer rules
 */
 
-fragment LOWERCASE_LETTER    : [a-zá-ú] ;
-fragment UPPERCASE_LETTER    : [A-ZÁ-Ú] ;
-fragment LETTER              : ( LOWERCASE_LETTER | UPPERCASE_LETTER ) ;
-fragment DIGIT              : [0-9] ;
-fragment DIGIT_GT_0         : [1-9] ;
-fragment SIGN               : [ + | - ] ;
+fragment Letter
+            :   [a-zA-Z]
+            ;
 
-WHITESPACE : (' ' | '\t') -> skip;
+fragment Digit
+            :   [0-9]
+            ;
 
-VOID : 'void' ;
+fragment NonZeroDigit
+            :   [1-9]
+            ;
 
-INT : 'int' ;
 
-CHAR : 'char' ;
+// Keywords
 
-OPEN_P : '(' ;
-
-CLOSE_P : ')' ;
-
-OPEN_K : '{' ;
-
-CLOSE_K : '}' ;
-
-PUBLIC : 'public';
-
-PRIVATE : 'private';
-
+ABSTRACT : 'abstract';
+ASSERT : 'assert';
+BOOLEAN : 'boolean';
+BREAK : 'break';
+BYTE : 'byte';
+CASE : 'case';
+CATCH : 'catch';
+CHAR : 'char';
 CLASS : 'class';
-
+CONST : 'const';
+CONTINUE : 'continue';
+DEFAULT : 'default';
+DO : 'do';
+DOUBLE : 'double';
+ELSE : 'else';
+ENUM : 'enum';
+EXPORTS : 'exports';
+EXTENDS : 'extends';
+FINAL : 'final';
+FINALLY : 'finally';
+FLOAT : 'float';
+FOR : 'for';
+IF : 'if';
+GOTO : 'goto';
+IMPLEMENTS : 'implements';
 IMPORT : 'import';
-
-MODULE : 'module';
-
+INSTANCEOF : 'instanceof';
+INT : 'int';
 INTERFACE : 'interface';
+LONG : 'long';
+MODULE : 'module';
+NATIVE : 'native';
+NEW : 'new';
+OPEN : 'open';
+OPERNS : 'opens';
+PACKAGE : 'package';
+PRIVATE : 'private';
+PROTECTED : 'protected';
+PROVIDES : 'provides';
+PUBLIC : 'public';
+REQUIRES : 'requires';
+RETURN : 'return';
+SHORT : 'short';
+STATIC : 'static';
+STRICTFP : 'strictfp';
+SUPER : 'super';
+SWITCH : 'switch';
+SYNCHRONIZED : 'synchronized';
+THIS : 'this';
+THROW : 'throw';
+THROWS : 'throws';
+TO : 'to';
+TRANSIENT : 'transient';
+TRANSITIVE : 'transitive';
+TRY : 'try';
+USES : 'uses';
+VOID : 'void';
+VOLATILE : 'volatile';
+WHILE : 'while';
+WITH : 'with';
+UNDER_SCORE : '_';
 
-IDENTIFIER : LETTER ( DIGIT | LETTER | '_' )*;
+// Identifiers
 
-NL : ( '\r'? '\n' | '\r') ? -> skip;
+Identifier
+    :   Letter Digit*
+    ;
 
-END : ';' ;
+//
+// Whitespace and comments
+//
+
+WS  :  [ \t\r\]+ -> skip
+    ;
+
+COMMENT
+    :   '/*' .*? '*/' -> skip
+    ;
+
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip
+    ;
+
+
+// Null Literal
+
+NullLiteral
+	:	'null'
+	;
+
+
+// Separators
+
+LPAREN : '(';
+RPAREN : ')';
+LBRACE : '{';
+RBRACE : '}';
+LBRACK : '[';
+RBRACK : ']';
+SEMI : ';';
+COMMA : ',';
+DOT : '.';
+
 
 /*
     Parse rules
