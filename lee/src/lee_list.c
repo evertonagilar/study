@@ -23,7 +23,7 @@
 
 #define LIST_DEFAULT_CAPACITY 100
 
-/* list */
+/* pList */
 
 lee_list_t *lee_list_create(int initialCapacity){
     lee_list_t *list = malloc(sizeof(lee_list_t));
@@ -36,6 +36,11 @@ lee_list_t *lee_list_create(int initialCapacity){
     }
     list->count = 0;
     return list;
+}
+
+void lee_list_free(lee_list_t *list){
+    free(list->pData);
+    free(list);
 }
 
 int lee_list_add(lee_list_t *list, void *pData){
@@ -61,29 +66,33 @@ int lee_list_count(lee_list_t *list){
 
 /* iterator */
 
-lee_list_iterator_t *lee_list_iterator(lee_list_t *list){
+lee_list_iterator_t *lee_list_iterator_create(lee_list_t *list){
     lee_list_iterator_t *iterator = malloc(sizeof(lee_list_iterator_t));
-    iterator->list = list;
+    iterator->pList = list;
     iterator->index = 0;
     return iterator;
 }
 
+void lee_list_iterator_free(lee_list_iterator_t *iterator){
+    free(iterator);
+}
+
 bool lee_list_iterator_has_next(lee_list_iterator_t  *iterator){
-    return iterator->index != iterator->list->count;
+    return iterator->index != iterator->pList->count;
 }
 
 void *lee_list_iterator_next(lee_list_iterator_t *iterator){
-    if (iterator->index == iterator->list->count){
+    if (iterator->index == iterator->pList->count){
         return NULL;
     }else {
-        return iterator->list->pData[iterator->index++];
+        return iterator->pList->pData[iterator->index++];
     }
 }
 
 void *lee_list_iterator_current(lee_list_iterator_t *iterator){
-    if (iterator->index == iterator->list->count){
+    if (iterator->index == iterator->pList->count){
         return NULL;
     }else {
-        return iterator->list->pData[iterator->index];
+        return iterator->pList->pData[iterator->index];
     }
 }

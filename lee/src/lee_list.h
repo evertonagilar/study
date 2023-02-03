@@ -19,7 +19,7 @@
  */
 
 /*
- * A simple list implemented with an array
+ * A simple pList index-based
  *
  */
 
@@ -35,19 +35,21 @@ typedef struct {
 } lee_list_t;
 
 typedef struct {
-    lee_list_t *list;
+    lee_list_t *pList;
     int index;
 } lee_list_iterator_t;
 
 
-/* list */
+/* pList */
 lee_list_t *lee_list_create(int initialCapacity);
 int lee_list_add(lee_list_t *list, void *pData);
 void *lee_list_get(lee_list_t *list, int idxElement);
 int lee_list_count(lee_list_t *list);
+void lee_list_free(lee_list_t *list);
 
 /* iterator */
-lee_list_iterator_t *lee_list_iterator(lee_list_t *list);
+lee_list_iterator_t *lee_list_iterator_create(lee_list_t *list);
+void lee_list_iterator_free(lee_list_iterator_t *iterator);
 bool lee_list_iterator_has_next(lee_list_iterator_t  *iterator);
 void *lee_list_iterator_next(lee_list_iterator_t  *iterator);
 void *lee_list_iterator_current(lee_list_iterator_t *iterator);

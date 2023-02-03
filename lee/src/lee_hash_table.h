@@ -20,7 +20,7 @@
 
 /*
  *
- * Purpose: A simple hash table that does not accept collisions
+ * Purpose: A simple hash table that does not validate duplicates
  *
  */
 

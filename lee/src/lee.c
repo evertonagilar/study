@@ -54,10 +54,54 @@ int main(int argc, char **argv) {
     lee_hash_table_push(table, "implements", strlen("implements"), "implements");
     lee_hash_table_push(table, "import", strlen("import"), "import");
     lee_hash_table_push(table, "instanceof", strlen("instanceof"), "instanceof");
+    lee_hash_table_push(table, "int", strlen("int"), "int");
+    lee_hash_table_push(table, "interface", strlen("interface"), "interface");
+    lee_hash_table_push(table, "long", strlen("long"), "long");
+    lee_hash_table_push(table, "module", strlen("module"), "module");
+    lee_hash_table_push(table, "native", strlen("native"), "native");
+    lee_hash_table_push(table, "new", strlen("new"), "new");
+    lee_hash_table_push(table, "package", strlen("package"), "package");
+    lee_hash_table_push(table, "private", strlen("private"), "private");
+    lee_hash_table_push(table, "protected", strlen("protected"), "protected");
+    lee_hash_table_push(table, "provides", strlen("provides"), "provides");
+    lee_hash_table_push(table, "public", strlen("public"), "public");
+    lee_hash_table_push(table, "short", strlen("short"), "short");
+    lee_hash_table_push(table, "static", strlen("static"), "static");
+    lee_hash_table_push(table, "super", strlen("super"), "super");
+    lee_hash_table_push(table, "switch", strlen("switch"), "switch");  // colide com assert
+    lee_hash_table_push(table, "synchronized", strlen("synchronized"), "synchronized");
+    lee_hash_table_push(table, "this", strlen("this"), "this");
+    lee_hash_table_push(table, "throw", strlen("throw"), "throw");
+    lee_hash_table_push(table, "throws", strlen("throws"), "throws");
+    lee_hash_table_push(table, "to", strlen("to"), "to");
+    lee_hash_table_push(table, "try", strlen("try"), "try");
+    lee_hash_table_push(table, "void", strlen("void"), "void");
+    lee_hash_table_push(table, "while", strlen("while"), "while");
+    lee_hash_table_push(table, "with", strlen("with"), "with");
+
     lee_hash_table_push(table, "(", strlen("("), "(");
     lee_hash_table_push(table, ")", strlen(")"), ")");
     lee_hash_table_push(table, "{", strlen("{"), "{");
     lee_hash_table_push(table, "}", strlen("}"), "}");
+
+    lee_hash_table_push(table, "=", strlen("="), "=");
+    lee_hash_table_push(table, ">", strlen(">"), ">");
+    lee_hash_table_push(table, "<", strlen("<"), "<");
+
+
+    char *token = lee_hash_table_get(table, "this", strlen("this"));
+    token = lee_hash_table_get(table, "float", strlen("float"));
+    token = lee_hash_table_get(table, "class", strlen("class"));
+    token = lee_hash_table_get(table, "assert", strlen("assert"));
+    token = lee_hash_table_get(table, "=", strlen("="));
+    token = lee_hash_table_get(table, "<", strlen("<"));
+    token = lee_hash_table_get(table, "}", strlen("}"));
+    token = lee_hash_table_get(table, "public", strlen("public"));
+
+    printf("número de chaves: %d\n", table->count);
+    printf("número de colisões: %d\n", table->colisionCount);
+
+    lee_hash_table_free(table);
 
     exit(1);
 
