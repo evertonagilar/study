@@ -27,7 +27,7 @@ static const int INITIAL_CAPACITY = 1000;
 
 
 /*
- * Get a symbol from symbol table or insert it if doesn't exist and return
+ * Get a symbol from symbol itens or insert it if doesn't exist and return
  *
  */
 lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
@@ -58,7 +58,7 @@ void lee_symbol_table_push_keyword(lee_symbol_table_t *table, lee_symbol_class_t
 }
 
 /*
- * Load symbol table with language keywords
+ * Load symbol itens with language keywords
  *
  */
 void loadLanguageKeywords(lee_symbol_table_t *table) {

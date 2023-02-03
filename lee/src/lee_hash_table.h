@@ -18,16 +18,36 @@
  * %CopyrightEnd%
  */
 
+/*
+ *
+ * Purpose: A simple hash table that does not accept collisions
+ *
+ */
 
-#ifndef LEE_SYMBOL_TABLE_H
-#define LEE_SYMBOL_TABLE_H
+#ifndef LEE_HASH_H
+#define LEE_HASH_H
 
-#include "lee_defs.h"
+#include <stdbool.h>
 
-lee_symbol_table_t *lee_symbol_table_create();
-void lee_symbol_table_free(lee_symbol_table_t *table);
-lee_symbol_t *lee_symbol_table_get(lee_symbol_table_t *table, int hash);
-lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
-lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
+typedef struct {
+    void *pDataOrList;
+    char *key;
+    int key_sz;
+    int hash;
+    bool hasColision;
+} lee_hash_entry_t;
 
-#endif //LEE_SYMBOL_TABLE_H
+
+typedef struct{
+    lee_hash_entry_t **itens;
+    int count;
+    int capacity;
+    int colisionCount;
+} lee_hash_table_t;
+
+lee_hash_table_t *lee_hash_table_create(int capacity);
+void *lee_hash_table_get(lee_hash_table_t *table, char *key, int key_sz);
+void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *pData);
+void lee_hash_table_free(lee_hash_table_t *table);
+
+#endif //LEE_LEE_HASH_H

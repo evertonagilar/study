@@ -23,32 +23,34 @@
 
 #define LIST_DEFAULT_CAPACITY 100
 
+/* list */
+
 lee_list_t *lee_list_create(int initialCapacity){
     lee_list_t *list = malloc(sizeof(lee_list_t));
     if (initialCapacity > 0 && initialCapacity < 9999){
-        list->data = malloc(sizeof(void*) * initialCapacity);
+        list->pData = malloc(sizeof(void*) * initialCapacity);
         list->size = initialCapacity;
     }else{
-        list->data = malloc(sizeof(void*) * LIST_DEFAULT_CAPACITY);
+        list->pData = malloc(sizeof(void*) * LIST_DEFAULT_CAPACITY);
         list->size = LIST_DEFAULT_CAPACITY;
     }
     list->count = 0;
     return list;
 }
 
-int lee_list_add(lee_list_t *list, void *value){
+int lee_list_add(lee_list_t *list, void *pData){
     if (list->count == list->size){
-        list->data = realloc(list->data, list->size + LIST_DEFAULT_CAPACITY);
+        list->pData = realloc(list->pData, list->size + LIST_DEFAULT_CAPACITY);
         list->size += LIST_DEFAULT_CAPACITY;
     }
     int idxElement = list->count++;
-    list->data[idxElement] = value;
+    list->pData[idxElement] = pData;
     return idxElement;
 }
 
 void *lee_list_get(lee_list_t *list, int idxElement){
     if (idxElement > 0 && idxElement < list->size){
-        return list->data[idxElement];
+        return list->pData[idxElement];
     }
     return NULL;
 }
@@ -56,6 +58,8 @@ void *lee_list_get(lee_list_t *list, int idxElement){
 int lee_list_count(lee_list_t *list){
     return list->count;
 }
+
+/* iterator */
 
 lee_list_iterator_t *lee_list_iterator(lee_list_t *list){
     lee_list_iterator_t *iterator = malloc(sizeof(lee_list_iterator_t));
@@ -72,7 +76,7 @@ void *lee_list_iterator_next(lee_list_iterator_t *iterator){
     if (iterator->index == iterator->list->count){
         return NULL;
     }else {
-        return iterator->list->data[iterator->index++];
+        return iterator->list->pData[iterator->index++];
     }
 }
 
@@ -80,6 +84,6 @@ void *lee_list_iterator_current(lee_list_iterator_t *iterator){
     if (iterator->index == iterator->list->count){
         return NULL;
     }else {
-        return iterator->list->data[iterator->index];
+        return iterator->list->pData[iterator->index];
     }
 }

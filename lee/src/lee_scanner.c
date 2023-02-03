@@ -59,12 +59,8 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
             }
         }else if (ch == '\r'){
             ++scanner->line;
-        }else if (ch == '.'){
-            token->type = tkDot;
-            break;
-        }else if (ch == ';'){
-            token->type = tkSemicolon;
-            break;
+
+
         }else if (ch == '+'){
             token->type = tkAdd;
             break;
@@ -74,18 +70,33 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
         }else if (ch == '*'){
             token->type = tkMul;
             break;
-        }else if (ch == '{'){
-            token->type = tkLBrace;
-            break;
-        }else if (ch == '}'){
-            token->type = tkRBrace;
-            break;
+
+        // Separators
         }else if (ch == '('){
             token->type = tkLParen;
             break;
         }else if (ch == ')'){
             token->type = tkRParen;
             break;
+        }else if (ch == '{'){
+            token->type = tkLBrace;
+            break;
+        }else if (ch == '}'){
+            token->type = tkRBrace;
+            break;
+        }else if (ch == '['){
+            token->type = tkLBrace;
+            break;
+        }else if (ch == ']'){
+            token->type = tkRBrace;
+            break;
+        }else if (ch == ';'){
+            token->type = tkSemicolon;
+            break;
+        }else if (ch == '.'){
+            token->type = tkDot;
+            break;
+
         }else if (ch == '='){
             if (*scanner->lookahead == '='){
                 token->type = tkAssign;

@@ -18,13 +18,18 @@
  * %CopyrightEnd%
  */
 
+/*
+ * A simple list implemented with an array
+ *
+ */
+
 #ifndef LEE_LIST_H
 #define LEE_LIST_H
 
 #include <stdbool.h>
 
 typedef struct {
-    void **data;
+    void **pData;
     int size;
     int count;
 } lee_list_t;
@@ -34,10 +39,14 @@ typedef struct {
     int index;
 } lee_list_iterator_t;
 
+
+/* list */
 lee_list_t *lee_list_create(int initialCapacity);
-int lee_list_add(lee_list_t *list, void *value);
+int lee_list_add(lee_list_t *list, void *pData);
 void *lee_list_get(lee_list_t *list, int idxElement);
 int lee_list_count(lee_list_t *list);
+
+/* iterator */
 lee_list_iterator_t *lee_list_iterator(lee_list_t *list);
 bool lee_list_iterator_has_next(lee_list_iterator_t  *iterator);
 void *lee_list_iterator_next(lee_list_iterator_t  *iterator);

@@ -50,8 +50,8 @@ int lee_vm_start(lee_vm_t *vm) {
     long *old_text;                     // for dump text segment
     long op;
     long *stack;                        // stack
-    char *data;                         // data segment
-    //data = calloc(vm->program->mainModule->sourceFile->count, 1);
+    char *data;                         // pData segment
+    //pData = calloc(vm->program->mainModule->sourceFile->count, 1);
     stack = calloc(STACK_MAX_SIZE, 1);
     pc = text = vm->program->mainModule->text;
     bp = sp = stack + STACK_MAX_SIZE;     // sp sempre aponta para topo da pilha
