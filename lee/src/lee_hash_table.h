@@ -49,5 +49,6 @@ lee_hash_table_t *lee_hash_table_create(int capacity);
 void *lee_hash_table_get(lee_hash_table_t *table, char *key, int key_sz);
 void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *pData);
 void lee_hash_table_free(lee_hash_table_t *table);
+void lee_hash_table_test();
 
 #endif //LEE_LEE_HASH_H

@@ -32,16 +32,16 @@ typedef struct {
 
 
 typedef struct {
-    int m;                                       // número de filhos da página
+    int childrenCount;                           // número de filhos da página
     bool is_leaf;                                // indica se a página é uma folha
-    lee_btree_key_entry_t *keys[ORDER];                // array de keys entries
+    lee_btree_key_entry_t *keys[ORDER];          // array de keys entries
     struct btree_page_t *children[ORDER-1];
 } lee_btree_page_t;
 
 typedef struct {
-    int n;                              // quantos elementos estão na btree
-    int height;                         // altura da btree
-    lee_btree_page_t *root;                 // root da btree
+    int count;                                  // quantos elementos estão na btree
+    int height;                                 // altura da btree
+    lee_btree_page_t *root;                     // root da btree
 } lee_btree_t;
 
 typedef struct {
@@ -50,8 +50,10 @@ typedef struct {
     lee_btree_key_entry_t *key_do_meio;
 } btree_page_split_t;
 
-lee_btree_t *btree_new();
-bool btree_insert(lee_btree_t *btree, int key);
+lee_btree_t *lee_btree_new();
+bool lee_btree_insert(lee_btree_t *btree, int key);
+void lee_btree_test();
+
 
 
 #endif //LEE_BTREE_H

@@ -103,11 +103,11 @@ Identifier
 // Whitespace and comments
 //
 
-//NL : ( '\r'? '\n' | '\r') + -> skip;
+//NL : ( '\r'? '\count' | '\r') + -> skip;
 
-WS:                 [ \t\r\n\u000C]+ -> skip;
+WS:                 [ \t\r\count\u000C]+ -> skip;
 
-//WS  :  [ \t\r\n]+ -> skip
+//WS  :  [ \t\r\count]+ -> skip
 //    ;
 
 //COMMENT
@@ -115,7 +115,7 @@ WS:                 [ \t\r\n\u000C]+ -> skip;
 //    ;
 //
 //LINE_COMMENT
-//    :   '//' ~[\r\n]* -> skip
+//    :   '//' ~[\r\count]* -> skip
 //    ;
 
 
