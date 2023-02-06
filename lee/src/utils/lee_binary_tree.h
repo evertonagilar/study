@@ -18,29 +18,33 @@
  * %CopyrightEnd%
  */
 
+#ifndef LEE_BINARY_TREE_H
+#define LEE_BINARY_TREE_H
+
 #include <stdio.h>
-#include "lee_vm.h"
-#include "lee_defs.h"
-#include "lee_hash_table.h"
-#include "lee_btree.h"
-#include "utils/lee_binary_tree.h"
+#include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char **argv) {
-    printf("Lee -> The Samurai Programing Language\n");
+typedef char DATA;
 
-    test_binary_tree();
-    //lee_btree_test();
+struct node {
+    DATA d;
+    struct node *left;
+    struct node *right;
+};
 
-    exit(1);
 
-    if (argc < 2) {
-        printf("Usage: lee <file.lee>\n");
-        return -1;
-    }
+typedef struct node NODE;
+typedef NODE *BTREE;
 
-    char *programFileName = argv[1];
-    lee_vm_t *vm = lee_vm_create(programFileName, true);
-    lee_vm_free(vm);
+BTREE newnode(void);
+BTREE init_node(DATA d, BTREE pLeft, BTREE pRight);
+BTREE create_tree(DATA a[], int i, int size);
+void preorder(BTREE root);
+void inorder(BTREE root);
+void postorder(BTREE root);
 
-    return 0;
-}
+void test_binary_tree();
+
+
+#endif //LEE_BINARY_TREE_H
