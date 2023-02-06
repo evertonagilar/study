@@ -25,24 +25,20 @@
 #include <stdlib.h>
 #include <assert.h>
 
-typedef char DATA;
+typedef struct lee_binary_tree_node_t {
+    int key;
+    struct lee_binary_tree_node_t *left;
+    struct lee_binary_tree_node_t *right;
+} lee_binary_tree_node_t;
 
-struct node {
-    DATA d;
-    struct node *left;
-    struct node *right;
-};
+typedef struct {
+    lee_binary_tree_node_t *root;
+} lee_binary_tree_t;
 
 
-typedef struct node NODE;
-typedef NODE *BTREE;
-
-BTREE newnode(void);
-BTREE init_node(DATA d, BTREE pLeft, BTREE pRight);
-BTREE create_tree(DATA a[], int i, int size);
-void preorder(BTREE root);
-void inorder(BTREE root);
-void postorder(BTREE root);
+lee_binary_tree_t *lee_binary_tree_create();
+void lee_binary_tree_push(lee_binary_tree_t *tree, int key);
+lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key);
 
 void test_binary_tree();
 

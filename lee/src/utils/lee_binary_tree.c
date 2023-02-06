@@ -20,90 +20,77 @@
 
 
 #include "lee_binary_tree.h"
+#include <stdbool.h>
 
-
-BTREE new_node() {
-    BTREE node = malloc(sizeof(NODE));
-    node->left = NULL;
-
-    return node;
-}
-
-
-BTREE init_node(DATA d1, BTREE pLeft, BTREE pRight) {
-    BTREE t;
-    t = new_node();
-    t->d = d1;
-
-    if (pLeft != NULL && pRight != NULL){
-        if (pLeft->d < )
-    }else {
-        t->left = pLeft;
-        t->right = pRight;
-    }
+lee_binary_tree_t *lee_binary_tree_create(){
+    lee_binary_tree_t *t = malloc(sizeof(lee_binary_tree_t));
+    t->root = NULL;
     return t;
 }
 
 
-/* create a linked binary tree from an array */
+lee_binary_tree_node_t *lee_binary_tree_create_node(int key){
+    lee_binary_tree_node_t *node = malloc(sizeof(lee_binary_tree_node_t));
+    node->key = key;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
 
-BTREE create_tree(DATA a[], int i, int size) {
-    if (i >= size)
+void lee_binary_tree_push(lee_binary_tree_t *tree, int key) {
+    lee_binary_tree_node_t *node = lee_binary_tree_create_node(key);
+    if (tree->root == NULL) {
+        tree->root = node;
+        return;
+    }
+    lee_binary_tree_node_t *current = tree->root;
+    while (true) {
+        lee_binary_tree_node_t *root = current;
+        if (key < current->key) {
+            current = current->left;
+            if (current == NULL){
+                root->left = node;
+                return;
+            }
+        } else if (key > current->key) {
+            current = current->right;
+            if (current == NULL){
+                root->right = node;
+                return;
+            }
+        }
+    }
+}
+
+lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key){
+    if (tree->root == NULL){
         return NULL;
-    else
-        return (init_node(a[i],
-                          create_tree(a, 2 * i + 1, size),
-                          create_tree(a, 2 * i + 2, size)));
-}
-
-
-/* preorder traversal */
-
-void preorder(BTREE root) {
-    if (root != NULL) {
-        printf("%c ", root->d);
-        preorder(root->left);
-        preorder(root->right);
     }
-}
-
-
-/* Inorder traversal */
-
-void inorder(BTREE root) {
-    if (root != NULL) {
-        inorder(root->left);
-        printf("%c ", root->d);
-        inorder(root->right);
+    lee_binary_tree_node_t *root = tree->root;
+    while (root != NULL){
+        if (key < root->key){
+            root = root->left;
+        }else if (key > root->key){
+            root = root->right;
+        }else{
+            return root;
+        }
     }
+    return NULL;
 }
-
-
-/* postorder binary tree traversal */
-
-void postorder(BTREE root) {
-    if (root != NULL) {
-        postorder(root->left);
-        postorder(root->right);
-        printf("%c ", root->d);
-    }
-}
-
 
 void test_binary_tree() {
-    char lista[] = {'6', '4', '2', '8'};
-    BTREE root;
-    root = create_tree(lista, 0, sizeof(lista));
-    assert(root != NULL);
-    printf("PREORDER\n");
-    preorder(root);
-    printf("\n");
-    printf("INORDER\n");
-    inorder(root);
-    printf("\n");
-    printf("POSTORDER\n");
-    postorder(root);
-    printf("\n");
+    lee_binary_tree_t *tree = lee_binary_tree_create();
+    lee_binary_tree_push(tree, 10);
+    lee_binary_tree_push(tree, 7);
+    lee_binary_tree_push(tree, 14);
+    lee_binary_tree_push(tree, 3);
+
+    lee_binary_tree_find(tree, 7);
+    lee_binary_tree_find(tree, 14);
+    lee_binary_tree_find(tree, 25);
+    lee_binary_tree_find(tree, 3);
+
 }
 
 #include "lee_binary_tree.h"

@@ -87,7 +87,7 @@ void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *p
     // pItem já está ocupado, vai haver um colisão?
     if (*pItem != NULL){
         lee_list_t *dataList;
-        // Como pItem já ocupado, hasColision pode ser true caso (*pItem)->pDataOrList for lista (já vou colisão anteriormente para essa hash).
+        // Como pItem já ocupado, hasColision pode ser true caso (*pItem)->pDataOrList seja lista
         // Se hasColision é false, temos que:
         //      - criar uma lista (vai ocorrer colisão agora),
         //      - migrar pData atual para a lista
