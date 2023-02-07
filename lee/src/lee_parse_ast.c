@@ -117,7 +117,7 @@ lee_token_type_t func_type_decl(lee_parse_ast_context_t *context) {
     return token->type;
 }
 
-void func_list_decl_tail(lee_parse_ast_context_t *context, lee_list_t *list) {
+void func_list_decl_tail(lee_parse_ast_context_t *context, lee_array_list_t *list) {
     tail_recursion:
     if (is_func_type_decl(context)) {
         lee_func_ast_t *func = malloc(sizeof(lee_func_ast_t));
@@ -126,13 +126,13 @@ void func_list_decl_tail(lee_parse_ast_context_t *context, lee_list_t *list) {
         match_token(context, tkLParen);
         match_token(context, tkRParen);
         match_token(context, tkSemicolon);
-        lee_list_add(list, func);
+        lee_array_list_add(list, func);
         goto tail_recursion;
     }
 }
 
-lee_list_t *func_list_decl(lee_parse_ast_context_t *context) {
-    lee_list_t *list = lee_list_create(30);
+lee_array_list_t *func_list_decl(lee_parse_ast_context_t *context) {
+    lee_array_list_t *list = lee_array_list_create(30);
     func_list_decl_tail(context, list);
     return list;
 }

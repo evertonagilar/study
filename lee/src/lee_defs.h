@@ -25,7 +25,7 @@
 #include <stddef.h>
 #include <glib.h>
 #include <stdbool.h>
-#include "lee_list.h"
+#include "utils/lee_array_list.h"
 
 static char *lee_token_text[] = {
         // Keywords and types
@@ -302,12 +302,12 @@ typedef struct {
 
 typedef struct {
     lee_token_t *token;
-    lee_list_t *funcListDecl;
+    lee_array_list_t *funcListDecl;
 } lee_interface_decl_ast_t;
 
 typedef struct {
     lee_token_t *token;
-    lee_list_t funcListDecl;
+    lee_array_list_t funcListDecl;
 } lee_implementation_decl_ast_t;
 
 typedef struct {

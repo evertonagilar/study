@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lee_source_file.h"
-#include "lee_file_utils.h"
+#include "utils/lee_file_utils.h"
 
 lee_source_file_t *lee_source_file_create(const char *filename) {
     lee_source_file_t *sourceFile = malloc(sizeof(lee_source_file_t));

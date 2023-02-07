@@ -21,15 +21,19 @@
 #include <stdio.h>
 #include "lee_vm.h"
 #include "lee_defs.h"
-#include "lee_hash_table.h"
-#include "lee_btree.h"
+#include "utils/lee_hash_table.h"
+#include "utils/lee_btree.h"
 #include "utils/lee_binary_tree.h"
+#include "utils/lee_linked_list.h"
 
 int main(int argc, char **argv) {
     printf("Lee -> The Samurai Programing Language\n");
 
-    test_binary_tree();
+    //test_binary_tree();
     //lee_btree_test();
+    //lee_hash_table_test();
+    lee_linked_list_test();
+
 
     exit(1);
 

@@ -23,9 +23,9 @@
 #include <stdbool.h>
 
 lee_binary_tree_t *lee_binary_tree_create(){
-    lee_binary_tree_t *t = malloc(sizeof(lee_binary_tree_t));
-    t->root = NULL;
-    return t;
+    lee_binary_tree_t *tree = malloc(sizeof(lee_binary_tree_t));
+    tree->root = NULL;
+    return tree;
 }
 
 
@@ -45,17 +45,17 @@ void lee_binary_tree_push(lee_binary_tree_t *tree, int key) {
     }
     lee_binary_tree_node_t *current = tree->root;
     while (true) {
-        lee_binary_tree_node_t *root = current;
+        lee_binary_tree_node_t *parent = current;
         if (key < current->key) {
             current = current->left;
             if (current == NULL){
-                root->left = node;
+                parent->left = node;
                 return;
             }
         } else if (key > current->key) {
             current = current->right;
             if (current == NULL){
-                root->right = node;
+                parent->right = node;
                 return;
             }
         }
@@ -66,14 +66,14 @@ lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key){
     if (tree->root == NULL){
         return NULL;
     }
-    lee_binary_tree_node_t *root = tree->root;
-    while (root != NULL){
-        if (key < root->key){
-            root = root->left;
-        }else if (key > root->key){
-            root = root->right;
+    lee_binary_tree_node_t *node = tree->root;
+    while (node != NULL){
+        if (key < node->key){
+            node = node->left;
+        }else if (key > node->key){
+            node = node->right;
         }else{
-            return root;
+            return node;
         }
     }
     return NULL;

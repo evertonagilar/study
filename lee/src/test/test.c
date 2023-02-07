@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "../lee_file_utils.h"
+#include "../utils/lee_file_utils.h"
 
 void geraByteCodeValorNaPilhaTest(const char *filename) {
     long src[4];
