@@ -38,6 +38,7 @@ typedef struct {
 typedef void lee_binary_tree_traversal_callback_t(lee_binary_tree_node_t *node);
 
 lee_binary_tree_t *lee_binary_tree_create();
+void lee_binary_tree_free(lee_binary_tree_t *tree);
 void lee_binary_tree_push(lee_binary_tree_t *tree, int key);
 lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key);
 void lee_binary_tree_traversal_inorder(lee_binary_tree_t *tree, lee_binary_tree_traversal_callback_t *func);

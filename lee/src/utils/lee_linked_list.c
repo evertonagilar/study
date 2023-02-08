@@ -45,13 +45,16 @@ int lee_linked_list_count(lee_linked_list_t *list){
 }
 
 void lee_linked_list_add(lee_linked_list_t *list, void *pData){
-    lee_linked_list_node_t *node = malloc(sizeof(lee_linked_list_node_t));
-    node->prior = list->tail;
-    node->pData = pData;
-    node->next = NULL;
-    list->tail = node;
+    lee_linked_list_node_t *newNode = malloc(sizeof(lee_linked_list_node_t));
+    newNode->prior = list->tail;
+    newNode->pData = pData;
+    newNode->next = NULL;
+    if (list->tail != NULL){
+        list->tail->next = newNode;
+    }
+    list->tail = newNode;
     if (list->head == NULL){
-        list->head = node;
+        list->head = newNode;
     }
     list->count++;
 }
@@ -110,24 +113,23 @@ bool lee_linked_list_iterator_has_next(lee_linked_list_iterator_t  *iterator){
     return iterator->current != NULL ? iterator->current->next != NULL : false;
 }
 
-void *lee_linked_list_iterator_next(lee_linked_list_iterator_t *iterator){
-    if (iterator->current != NULL) {
-        void *pData = iterator->current->pData;
-        iterator->current = iterator->current->next;
-        return pData;
-    }else{
-        return NULL;
-    }
-}
-
 lee_linked_list_node_t *lee_linked_list_iterator_next_node(lee_linked_list_iterator_t *iterator){
     if (iterator->current != NULL){
         lee_linked_list_node_t *pNode = iterator->current;
-        iterator->current = iterator->current->next;
+        if (iterator->reverseMode){
+            iterator->current = iterator->current->prior;
+        }else{
+            iterator->current = iterator->current->next;
+        }
         return pNode;
     }else{
         return NULL;
     };
+}
+
+void *lee_linked_list_iterator_next(lee_linked_list_iterator_t *iterator){
+    lee_linked_list_node_t *pNode = lee_linked_list_iterator_next_node(iterator);
+    return pNode != NULL ? pNode->pData : NULL;
 }
 
 void *lee_linked_list_iterator_current(lee_linked_list_iterator_t *iterator){
