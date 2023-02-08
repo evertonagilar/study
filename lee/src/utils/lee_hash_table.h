@@ -20,7 +20,7 @@
 
 /*
  *
- * Purpose: A simple hash_tbl table
+ * Purpose: A simple hash table
  *
  */
 
@@ -40,11 +40,11 @@ typedef struct {
 
 
 typedef struct{
-    lee_hash_entry_t **hash_tbl;    // tabela hash em vector
+    lee_hash_entry_t **hash_tbl;    // tabela hash de ponteiros
     lee_linked_list_t *list;        // uma lista encadeada de cada elemento adicionado utilizado para free e iterators
     int count;
     int capacity;
-    int colisionCount;              // quantas colisões existem na tabela hash_tbl
+    int colisionCount;              // quantas colisões existem na tabela
 } lee_hash_table_t;
 
 
