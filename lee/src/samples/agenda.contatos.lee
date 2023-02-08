@@ -1,4 +1,4 @@
-module agenda.contatos;
+package agenda.contatos;
 
 public class Endereco {
     public cidade : string = "";

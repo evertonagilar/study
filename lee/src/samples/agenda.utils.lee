@@ -1,4 +1,4 @@
-module agenda.utils;
+package agenda.utils;
 
 public interface utils {
 
