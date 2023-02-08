@@ -24,16 +24,20 @@
 #include <string.h>
 #include <stdio.h>
 
+
+/* lee_hash_table */
+
 lee_hash_table_t *lee_hash_table_create(int capacity){
-    lee_hash_table_t *table = malloc(sizeof(lee_hash_table_t*));
-    table->itens = calloc(capacity, sizeof(lee_hash_table_t*));
+    lee_hash_table_t *table = malloc(sizeof(lee_hash_table_t));
+    table->hash_tbl = calloc(capacity, sizeof(lee_hash_table_t*));
+    table->list = lee_linked_list_create();
     table->capacity = capacity;
     table->count = 0;
     table->colisionCount = 0;
     return table;
 }
 
-int lee_hash_compute_hash(lee_hash_table_t *table, char *key, int key_sz){
+int lee_hash_compute_hash_code(lee_hash_table_t *table, char *key, int key_sz){
     int i = 0;
     for (int j = 0; j < key_sz; j++){
         i += key[j];
@@ -42,7 +46,7 @@ int lee_hash_compute_hash(lee_hash_table_t *table, char *key, int key_sz){
     return hash;
 }
 
-lee_hash_entry_t *lee_hash_create_entry(int hash, char *key, int key_sz, void *pData){
+lee_hash_entry_t *lee_hash_table_create_entry(int hash, char *key, int key_sz, void *pData){
     lee_hash_entry_t *item = malloc(sizeof(lee_hash_entry_t));
     item->key = key;
     item->key_sz = key_sz;
@@ -50,19 +54,20 @@ lee_hash_entry_t *lee_hash_create_entry(int hash, char *key, int key_sz, void *p
     item->pDataOrList = pData;
 }
 
-void lee_hash_free_entry(lee_hash_entry_t *pItem ) {
+void lee_hash_table_free_entry(lee_hash_entry_t *pItem ) {
     free(pItem);
 }
 
 void *lee_hash_table_get_pentry(lee_hash_table_t *table, int hash){
-    lee_hash_entry_t **item = table->itens + hash;
+    lee_hash_entry_t **item = table->hash_tbl + hash;
     return item;
 }
 
 void *lee_hash_table_get(lee_hash_table_t *table, char *key, int key_sz){
-    int hash = lee_hash_compute_hash(table, key, key_sz);
-    lee_hash_entry_t **pItem = table->itens + hash;
+    int hashCode = lee_hash_compute_hash_code(table, key, key_sz);
+    lee_hash_entry_t **pItem = table->hash_tbl + hashCode;
     if (*pItem != NULL) {
+        // Se tem colisão, tem que procurar na lista encadeada em (*pItem)->pDataOrList
         if ((*pItem)->hasColision){
             lee_array_list_iterator_t *it = lee_array_list_iterator_create((*pItem)->pDataOrList);
             lee_hash_entry_t *pItemTmp;
@@ -81,11 +86,11 @@ void *lee_hash_table_get(lee_hash_table_t *table, char *key, int key_sz){
 }
 
 void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *pData){
-    int hash = lee_hash_compute_hash(table, key, key_sz);
-    lee_hash_entry_t **pItem = lee_hash_table_get_pentry(table, hash);
+    int hashCode = lee_hash_compute_hash_code(table, key, key_sz);
+    lee_hash_entry_t *newEntry = lee_hash_table_create_entry(hashCode, key, key_sz, pData);
+    lee_hash_entry_t **pItem = lee_hash_table_get_pentry(table, hashCode);
     table->count++;
-    // Houve colisão e mais de um dado vai ser armazenado na mesma chave
-    // Os dados são armazenados como uma lista em (*pItem)->pDataOrList
+    // Houve colisão e mais de um dado vai ser armazenado nesta entrada por meio de uma lista encadeada
     if (*pItem != NULL){
         lee_array_list_t *dataList;
         // Se hasColision é false, temos que:
@@ -93,44 +98,84 @@ void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *p
         //      - migrar pData atual para a lista
         //      -  e também adicionar o novo pData na lista.
         //      - Por fim, (*pItem)->pDataOrList passa apontar para essa nova lista.
-        // Obs.: Push subsequentes com o mesmo hash só vão adicionando itens na lista.
+        // Obs.: Push subsequentes com o mesmo hashCode só vão adicionando hash_table na lista.
         if ((*pItem)->hasColision){
             dataList = (*pItem)->pDataOrList;
         }else {
             dataList = lee_array_list_create(10);
+            // migra o primeiro elemento desta hashCode para a lista da entrada
             lee_array_list_add(dataList,
-                               lee_hash_create_entry(hash, (*pItem)->key, (*pItem)->key_sz, (*pItem)->pDataOrList)); // migra o primeiro elemento desta hash na lista
+                               lee_hash_table_create_entry(hashCode, (*pItem)->key, (*pItem)->key_sz,
+                                                           (*pItem)->pDataOrList));
             (*pItem)->pDataOrList = dataList;   // agora (*pItem)->pDataOrList é uma lista
             (*pItem)->hasColision = true;       // sinaliza que houve colisão
         }
-        lee_array_list_add(dataList, lee_hash_create_entry(hash, key, key_sz, pData)); // Add pData que colidiu como um novo lee_hash_entry_t*
+        lee_array_list_add(dataList, newEntry); // Add pData que colidiu como um novo lee_hash_entry_t*
         table->colisionCount++;
     }else {
-        *pItem = lee_hash_create_entry(hash, key, key_sz, pData);
+        *pItem = newEntry;
     }
+    lee_linked_list_add(table->list, newEntry);
+}
+
+int lee_hash_table_count(lee_hash_table_t *table){
+    return table->count;
 }
 
 void lee_hash_table_free(lee_hash_table_t *table){
     if (table->count > 0) {
-        for (int i = 0; i < table->capacity; i++) {
-            lee_hash_entry_t **pItem = table->itens + i;
-            if (*pItem != NULL) {
-                // Quando há colisão, temos que liberar a ista que está em (*pItem)->pDataOrList
-                if ((*pItem)->hasColision){
-                    lee_array_list_iterator_t *it = lee_array_list_iterator_create((*pItem)->pDataOrList);
-                    lee_hash_entry_t *pItemTmp;
-                    while (pItemTmp = lee_array_list_iterator_next(it)){
-                        lee_hash_free_entry(pItemTmp);
-                    }
-                    lee_array_list_free((*pItem)->pDataOrList);
-                    lee_array_list_iterator_free(it);
-                }else{ // senão basta liberar o lee_hash_entry_t
-                    lee_hash_free_entry(*pItem);
+        lee_hash_table_iterator_t *it = lee_hash_table_reverse_iterator_create(table);
+        lee_hash_entry_t *item;
+        while (item = lee_hash_table_iterator_next(it)) {
+            // Se houve colisão vamos ter que liberar a lista encadeada dos elementos do item
+            if (item->hasColision) {
+                lee_array_list_iterator_t *iteratorItem = lee_array_list_iterator_create(item->pDataOrList);
+                lee_hash_entry_t *pItemTmp;
+                while (pItemTmp = lee_array_list_iterator_next(iteratorItem)) {
+                    lee_hash_table_free_entry(pItemTmp);
                 }
+                lee_array_list_free(item->pDataOrList);
+                lee_array_list_iterator_free(iteratorItem);
+            } else { // senão basta liberar o lee_hash_entry_t
+                lee_hash_table_free_entry(item);
             }
         }
     }
+    free(table->hash_tbl);
+    lee_linked_list_free(table->list);
     free(table);
+}
+
+
+/* iterator */
+
+lee_hash_table_iterator_t *lee_hash_table_iterator_create(lee_hash_table_t *table){
+    lee_hash_table_iterator_t *it = malloc(sizeof(lee_hash_table_iterator_t));
+    it->iterator = lee_linked_list_iterator_create(table->list);
+    return it;
+}
+
+lee_hash_table_iterator_t *lee_hash_table_reverse_iterator_create(lee_hash_table_t *table){
+    lee_hash_table_iterator_t *it = malloc(sizeof(lee_hash_table_iterator_t));
+    it->iterator = lee_linked_list_reverse_iterator_create(table->list);
+    return it;
+}
+
+void lee_hash_table_iterator_free(lee_hash_table_iterator_t *iterator){
+    lee_linked_list_iterator_free(iterator->iterator);
+    free(iterator);
+}
+
+bool lee_hash_table_iterator_has_next(lee_hash_table_iterator_t *iterator){
+    return lee_linked_list_iterator_has_next(iterator->iterator);
+}
+
+void *lee_hash_table_iterator_next(lee_hash_table_iterator_t  *iterator){
+    return lee_linked_list_iterator_next(iterator->iterator);
+}
+
+void *lee_hash_table_iterator_current(lee_hash_table_iterator_t *iterator){
+    return lee_linked_list_iterator_current(iterator->iterator);
 }
 
 void lee_hash_table_test() {

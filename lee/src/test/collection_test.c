@@ -18,30 +18,12 @@
  * %CopyrightEnd%
  */
 
-#include <stdio.h>
-#include "lee_vm.h"
-#include "lee_defs.h"
-#include "utils/lee_hash_table.h"
-#include "utils/lee_btree.h"
-#include "utils/lee_binary_tree.h"
-#include "utils/lee_linked_list.h"
-#include "test/collection_test.h"
 
-int main(int argc, char **argv) {
-    printf("Lee -> The Samurai Programing Language\n");
+#include "collection_test.h"
 
-    collection_test();
-
-    exit(1);
-
-    if (argc < 2) {
-        printf("Usage: lee <file.lee>\n");
-        return -1;
-    }
-
-    char *programFileName = argv[1];
-    lee_vm_t *vm = lee_vm_create(programFileName, true);
-    lee_vm_free(vm);
-
-    return 0;
+void collection_test(){
+    test_binary_tree();
+    lee_btree_test();
+    lee_hash_table_test();
+    lee_linked_list_test();
 }

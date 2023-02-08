@@ -57,7 +57,7 @@ void lee_linked_list_free(lee_linked_list_t *list);
 lee_linked_list_iterator_t *lee_linked_list_iterator_create(lee_linked_list_t *list);
 lee_linked_list_iterator_t *lee_linked_list_reverse_iterator_create(lee_linked_list_t *list);
 void lee_linked_list_iterator_free(lee_linked_list_iterator_t *iterator);
-bool lee_linked_iterator_has_next(lee_linked_list_iterator_t *iterator);
+bool lee_linked_list_iterator_has_next(lee_linked_list_iterator_t *iterator);
 void *lee_linked_list_iterator_next(lee_linked_list_iterator_t  *iterator);
 void *lee_linked_list_iterator_current(lee_linked_list_iterator_t *iterator);
 

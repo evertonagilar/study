@@ -27,28 +27,24 @@ static const int INITIAL_CAPACITY = 1000;
 
 
 /*
- * Get a symbol from symbol itens or insert it if doesn't exist and return
+ * Get a symbol from symbol hash_table or insert it if doesn't exist and return
  *
  */
 lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
-    lee_symbol_t *id;
-    for (int i = 0; i < table->count; i++){
-        id = table->itens + i;
-        if (id->name_sz == identifier_sz && strncmp(id->name, identifier, identifier_sz) == 0){
-            return id;
-        }
+    lee_symbol_t *id = lee_hash_table_get(table->hash_table, identifier, identifier_sz);
+    if (id == NULL){
+        id = lee_symbol_table_push(table, identifier, identifier_sz, symbolClass, tokenType);
     }
-    id = lee_symbol_table_push(table, identifier, identifier_sz, symbolClass, tokenType);
     return id;
 }
 
 lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
-    lee_symbol_t *symbol = table->itens + table->count;
+    lee_symbol_t *symbol = malloc(sizeof(lee_symbol_t));
     symbol->name = identifier;
     symbol->name_sz = identifier_sz;
-    symbol->hash = table->count++;
     symbol->symbolClass = symbolClass;
     symbol->tokenType = tokenType;
+    lee_hash_table_push(table->hash_table, identifier, identifier_sz, symbol);
     return symbol;
 }
 
@@ -58,7 +54,7 @@ void lee_symbol_table_push_keyword(lee_symbol_table_t *table, lee_symbol_class_t
 }
 
 /*
- * Load symbol itens with language keywords
+ * Load symbol hash_table with language keywords
  *
  */
 void loadLanguageKeywords(lee_symbol_table_t *table) {
@@ -153,19 +149,17 @@ void loadLanguageKeywords(lee_symbol_table_t *table) {
 
 lee_symbol_table_t *lee_symbol_table_create() {
     lee_symbol_table_t *table = malloc(sizeof(lee_symbol_table_t));
-    table->count = 0;
-    table->itens = malloc(sizeof(lee_symbol_t*) * INITIAL_CAPACITY);
+    table->hash_table = lee_hash_table_create(INITIAL_CAPACITY);
     loadLanguageKeywords(table);
     return table;
 }
 
 void lee_symbol_table_free(lee_symbol_table_t *table) {
-    for (int i = 0; i < table->count; i++){
-        lee_symbol_t *id = table->itens + i;
-        if (id->tokenType == tkIdentifier) {
-            free(id->name);
-        }
+    lee_hash_table_iterator_t *it = lee_hash_table_reverse_iterator_create(table->hash_table);
+    lee_symbol_t *symbol;
+    while (symbol = lee_hash_table_iterator_next(it)){
+        free(symbol);
     }
-    free(table->itens);
+    lee_hash_table_free(table->hash_table);
     free(table);
 }

@@ -26,6 +26,7 @@
 #include <glib.h>
 #include <stdbool.h>
 #include "utils/lee_array_list.h"
+#include "utils/lee_hash_table.h"
 
 static char *lee_token_text[] = {
         // Keywords and types
@@ -232,7 +233,6 @@ typedef enum{
 typedef struct {
     lee_symbol_class_t symbolClass;
     lee_token_type_t tokenType;
-    int hash;
     char *name;
     int name_sz;
 } lee_symbol_t;
@@ -245,8 +245,7 @@ typedef struct {
 } lee_token_t;
 
 typedef struct {
-    int count;
-    lee_symbol_t *itens;
+    lee_hash_table_t *hash_table;
 } lee_symbol_table_t;
 
 typedef struct {

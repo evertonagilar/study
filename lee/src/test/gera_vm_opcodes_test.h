@@ -18,30 +18,13 @@
  * %CopyrightEnd%
  */
 
-#include <stdio.h>
-#include "lee_vm.h"
-#include "lee_defs.h"
-#include "utils/lee_hash_table.h"
-#include "utils/lee_btree.h"
-#include "utils/lee_binary_tree.h"
-#include "utils/lee_linked_list.h"
-#include "test/collection_test.h"
+#ifndef GERA_VM_OPCODES_TEST_H
+#define GERA_VM_OPCODES_TEST_H
 
-int main(int argc, char **argv) {
-    printf("Lee -> The Samurai Programing Language\n");
+void geraByteCodeValorNaPilhaTest(const char *filename);
+void geraByteCodeSomaTest(const char *filename);
+void geraByteCodeIfTest(const char *filename);
+void geraByteCodeIfElseTest(const char *filename);
+void criaByteCodeDeExemplo(const char *filename);
 
-    collection_test();
-
-    exit(1);
-
-    if (argc < 2) {
-        printf("Usage: lee <file.lee>\n");
-        return -1;
-    }
-
-    char *programFileName = argv[1];
-    lee_vm_t *vm = lee_vm_create(programFileName, true);
-    lee_vm_free(vm);
-
-    return 0;
-}
+#endif //GERA_VM_OPCODES_TEST_H
