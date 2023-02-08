@@ -22,6 +22,8 @@
 #include "lee_binary_tree.h"
 #include <stdbool.h>
 
+/* lee_binary_tree */
+
 lee_binary_tree_t *lee_binary_tree_create(){
     lee_binary_tree_t *tree = malloc(sizeof(lee_binary_tree_t));
     tree->root = NULL;
@@ -78,6 +80,24 @@ lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key){
     }
     return NULL;
 }
+
+/* traversal */
+
+void lee_binary_tree_traversal_node_inorder(lee_binary_tree_node_t *node, lee_binary_tree_traversal_callback_t *func){
+    if (node == NULL){
+        return;
+    }
+    lee_binary_tree_traversal_node_inorder(node->left, func);
+    func(node);
+    lee_binary_tree_traversal_node_inorder(node->right, func);
+}
+
+void lee_binary_tree_traversal_inorder(lee_binary_tree_t *tree, lee_binary_tree_traversal_callback_t *func){
+    lee_binary_tree_traversal_node_inorder(tree->root, func);
+}
+
+
+/* tests */
 
 void test_binary_tree() {
     lee_binary_tree_t *tree = lee_binary_tree_create();
