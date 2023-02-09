@@ -137,6 +137,8 @@ void *lee_linked_list_iterator_current(lee_linked_list_iterator_t *iterator){
 /* tests */
 
 void lee_linked_list_test(){
+
+    printf("\nTeste lista encadeada:");
     lee_linked_list_t *list = lee_linked_list_create();
     lee_linked_list_add(list, "10");
     lee_linked_list_add(list, "9");
@@ -144,11 +146,22 @@ void lee_linked_list_test(){
     lee_linked_list_add(list, "7");
     lee_linked_list_add(list, "5");
 
+    printf("\nlista:");
     lee_linked_list_iterator_t *it = lee_linked_list_iterator_create(list);
     char *pStr;
     while (pStr = lee_linked_list_iterator_next(it)){
         printf("Str: %s\n", pStr);
     }
+    lee_linked_list_iterator_free(it);
+
+
+    printf("\nlista reversa:");
+    lee_linked_list_iterator_t *it2 = lee_linked_list_reverse_iterator_create(list);
+    char *pStr2;
+    while (pStr2 = lee_linked_list_iterator_next(it2)){
+        printf("Str: %s\n", pStr2);
+    }
+    lee_linked_list_iterator_free(it2);
 
     lee_linked_list_free(list);
 

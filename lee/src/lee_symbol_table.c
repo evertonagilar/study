@@ -23,7 +23,7 @@
 #include <string.h>
 #include "lee_symbol_table.h"
 
-static const int INITIAL_CAPACITY = 1000;
+#define INITIAL_CAPACITY 1000
 
 
 /*

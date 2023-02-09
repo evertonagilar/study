@@ -23,11 +23,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
 
 
 /* lee_hash_table */
 
 lee_hash_table_t *lee_hash_table_create(int capacity){
+    assert(capacity > 0);
     lee_hash_table_t *table = malloc(sizeof(lee_hash_table_t));
     table->hash_tbl = calloc(capacity, sizeof(lee_hash_table_t*));
     table->list = lee_linked_list_create();

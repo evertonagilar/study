@@ -28,7 +28,7 @@
 
 lee_array_list_t *lee_array_list_create(int initialCapacity){
     lee_array_list_t *list = malloc(sizeof(lee_array_list_t));
-    assert(initialCapacity > 0 && initialCapacity < 9999);
+    assert(initialCapacity > 0);
     list->pData = malloc(sizeof(void*) * initialCapacity);
     list->size = initialCapacity;
     list->count = 0;

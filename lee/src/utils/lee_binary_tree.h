@@ -35,13 +35,14 @@ typedef struct {
     lee_binary_tree_node_t *root;
 } lee_binary_tree_t;
 
-typedef void lee_binary_tree_traversal_callback_t(lee_binary_tree_node_t *node);
+typedef void lee_binary_tree_traversal_callback_t(lee_binary_tree_node_t *node, va_list *ap);
+typedef enum {preorder, inorder, posorder} lee_binary_tree_traversal_type_t;
 
 lee_binary_tree_t *lee_binary_tree_create();
 void lee_binary_tree_push(lee_binary_tree_t *tree, int key);
 lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key);
-void lee_binary_tree_traversal_inorder(lee_binary_tree_t *tree, lee_binary_tree_traversal_callback_t *func);
-
+void lee_binary_tree_traversal(lee_binary_tree_t *tree, lee_binary_tree_traversal_type_t traversalType, lee_binary_tree_traversal_callback_t *func, ...);
+lee_binary_tree_t *lee_binary_tree_sort(lee_binary_tree_t *tree);
 
 void test_binary_tree();
 
