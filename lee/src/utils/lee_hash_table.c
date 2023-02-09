@@ -181,6 +181,8 @@ void *lee_hash_table_iterator_current(lee_hash_table_iterator_t *iterator){
 }
 
 void lee_hash_table_test() {
+    printf("\n\nTeste hash table\n");
+
     lee_hash_table_t *table = lee_hash_table_create(1000);
 
     lee_hash_table_push(table, "abstract", strlen("abstract"), "abstract");
@@ -253,8 +255,16 @@ void lee_hash_table_test() {
     token = lee_hash_table_get(table, "}", strlen("}"));
     token = lee_hash_table_get(table, "public", strlen("public"));
 
-    printf("número de chaves: %d\n", table->count);
+    printf("\nnúmero de chaves: %d\n", table->count);
     printf("número de colisões: %d\n", table->colisionCount);
+
+    printf("Imprime tokens:\n");
+    lee_hash_table_iterator_t *it = lee_hash_table_iterator_create(table);
+    char *str;
+    while (str = lee_hash_table_iterator_next(it)){
+        printf("Token: %s\n", str);
+    }
+    lee_hash_table_iterator_free(it);
 
     lee_hash_table_free(table);
 }

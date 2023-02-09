@@ -102,9 +102,9 @@ void lee_binary_tree_traversal_node_inorder(lee_binary_tree_node_t *node, lee_bi
     }
     va_list args;
     va_copy(args, *ap);
-    lee_binary_tree_traversal_node_inorder(node->left, func, args);
-    func(node, args);
-    lee_binary_tree_traversal_node_inorder(node->right, func, args);
+    lee_binary_tree_traversal_node_inorder(node->left, func, &args);
+    func(node, &args);
+    lee_binary_tree_traversal_node_inorder(node->right, func, &args);
     va_end(args);
 }
 
@@ -114,9 +114,9 @@ void lee_binary_tree_traversal_node_preorder(lee_binary_tree_node_t *node, lee_b
     }
     va_list args;
     va_copy(args, *ap);
-    func(node, args);
-    lee_binary_tree_traversal_node_preorder(node->left, func, args);
-    lee_binary_tree_traversal_node_preorder(node->right, func, args);
+    func(node, &args);
+    lee_binary_tree_traversal_node_preorder(node->left, func, &args);
+    lee_binary_tree_traversal_node_preorder(node->right, func, &args);
     va_end(args);
 }
 
@@ -126,9 +126,9 @@ void lee_binary_tree_traversal_node_posorder(lee_binary_tree_node_t *node, lee_b
     }
     va_list args;
     va_copy(args, *ap);
-    lee_binary_tree_traversal_node_posorder(node->left, func, args);
-    lee_binary_tree_traversal_node_posorder(node->right, func, args);
-    func(node, args);
+    lee_binary_tree_traversal_node_posorder(node->left, func, &args);
+    lee_binary_tree_traversal_node_posorder(node->right, func, &args);
+    func(node, &args);
     va_end(args);
 }
 
