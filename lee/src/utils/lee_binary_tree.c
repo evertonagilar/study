@@ -23,7 +23,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-/* lee_binary_tree */
+/* lee_binary_tree_node */
 
 lee_binary_tree_node_t *lee_binary_tree_node_create(int key){
     lee_binary_tree_node_t *node = malloc(sizeof(lee_binary_tree_node_t));
@@ -41,6 +41,9 @@ void lee_binary_tree_node_free(lee_binary_tree_node_t *node){
     }
 }
 
+
+/* lee_binary_tree */
+
 lee_binary_tree_t *lee_binary_tree_create(){
     lee_binary_tree_t *tree = malloc(sizeof(lee_binary_tree_t));
     tree->root = NULL;
@@ -52,11 +55,11 @@ void lee_binary_tree_free(lee_binary_tree_t *tree){
     free(tree);
 }
 
-void lee_binary_tree_push(lee_binary_tree_t *tree, int key) {
+bool lee_binary_tree_push(lee_binary_tree_t *tree, int key) {
     lee_binary_tree_node_t *node = lee_binary_tree_node_create(key);
     if (tree->root == NULL) {
         tree->root = node;
-        return;
+        return true;
     }
     lee_binary_tree_node_t *current = tree->root;
     while (current != NULL) {
@@ -65,30 +68,132 @@ void lee_binary_tree_push(lee_binary_tree_t *tree, int key) {
             current = current->left;
             if (current == NULL){
                 parent->left = node;
-                return;
+                return true;
             }
         } else if (key > current->key) {
             current = current->right;
             if (current == NULL){
                 parent->right = node;
-                return;
+                return true;
             }
+        }else{
+            return false;
         }
     }
 }
 
-lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key){
-    if (tree->root == NULL){
-        return NULL;
+/*
+ * Encontra o sucessor de um node
+ *
+ * Retorna o sucessor e também parentSucessor será retornado o pai do sucessor
+ *
+ * Algoritmo: vai um node a direita e depois sempre para a esquerda até chegar ao node
+ */
+lee_binary_tree_node_t *lee_binary_tree_node_find_sucessor(lee_binary_tree_node_t *node, lee_binary_tree_node_t **parentSucessor){
+    *parentSucessor = node;
+    lee_binary_tree_node_t *current = node->right;
+    while (current->left != NULL){
+        *parentSucessor = current;
+        current = current->left;
     }
+    return current;
+}
+
+
+/*
+ * Remoção tem 3 casos:
+ *  caso 1: Nó não tem filhos: ajusta o ponteiro para o pai não apontar mais para o nó removido
+ *  caso 2: Nó tem apenas 1 filho a esquerda ou a direita: o pai deve apontar para um dos filhos do nó removido
+ *  caso 3: Nó tem 2 filhos: escolhe o filho da direita sucessor do nó para ser o que vai ocupar a posição dele
+ */
+bool lee_binary_tree_remove(lee_binary_tree_t *tree, int key){
+    // encontrar o nó a ser movido sempre anotando a direção percorrida
     lee_binary_tree_node_t *node = tree->root;
+    lee_binary_tree_node_t *parent = NULL;
+    bool walked_to_left;
     while (node != NULL){
         if (key < node->key){
+            parent = node;
             node = node->left;
+            walked_to_left = true;
         }else if (key > node->key){
+            parent = node;
             node = node->right;
+            walked_to_left = false;
         }else{
-            return node;
+            /* encontramos o node que deve ser removido */
+
+            // caso 1: não tem filhos: ajusta o ponteiro para o pai não apontar mais para o nó removido
+            if (node->left == NULL && node->right == NULL) {
+                if (parent != NULL) {
+                    if (walked_to_left) {
+                        parent->left = NULL;
+                    } else {
+                        parent->right = NULL;
+                    }
+                }else{
+                    tree->root = NULL;
+                }
+            }else if (node->left != NULL && node->right != NULL){
+                // caso 3: Nó tem 2 filhos: escolhe o filho da direita sucessor do nó para ser o que vai ocupar a posição dele
+                lee_binary_tree_node_t *parentSucessor = NULL;
+                lee_binary_tree_node_t *sucessor = lee_binary_tree_node_find_sucessor(node, &parentSucessor);
+                if (parent != NULL) {
+                    if (walked_to_left) {
+                        parent->left = sucessor;
+                    } else {
+                        parent->right = sucessor;
+                    }
+                }else{
+                    tree->root = sucessor;
+                }
+                sucessor->left = node->left;
+                if (parentSucessor != node) {
+                    sucessor->right = node->right;
+                    parentSucessor->left = NULL;
+                }
+            }else{
+                // caso 2: tem apenas 1 filho a esquerda ou a direita: o pai deve apontar para um dos filhos do nó removido
+                if (node->left != NULL){    // tem filho da esquerda
+                    if (parent != NULL) {
+                        if (walked_to_left) {
+                            parent->left = node->left;
+                        } else {
+                            parent->right = node->left;
+                        }
+                    }else{
+                        tree->root = node->left;
+                    }
+                }else{ // tem filho da direita
+                    if (parent != NULL) {
+                        if (walked_to_left) {
+                            parent->left = node->right;
+                        } else {
+                            parent->right = node->right;
+                        }
+                    }else{
+                        tree->root = node->right;
+                    }
+                }
+            }
+
+            // finalmente, podemos liberar o node
+            free(node);
+            return true;
+        }
+    }
+    return false;
+}
+
+lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key){
+    lee_binary_tree_node_t *current = tree->root;
+    while (current != NULL){
+        if (key < current->key){
+            current = current->left;
+        }else if (key > current->key){
+            current = current->right;
+        }else{
+            return current;
         }
     }
     return NULL;
@@ -172,17 +277,29 @@ void imprimeNoCallback(struct lee_binary_tree_node_t *node, va_list *ap){
 }
 
 void test_binary_tree() {
+    printf("\n\nTeste binary tree\n");
+
     lee_binary_tree_t *tree = lee_binary_tree_create();
     lee_binary_tree_push(tree, 10);
     lee_binary_tree_push(tree, 7);
     lee_binary_tree_push(tree, 14);
     lee_binary_tree_push(tree, 3);
+    lee_binary_tree_push(tree, 21);
+    lee_binary_tree_push(tree, 12);
+    lee_binary_tree_push(tree, 8);
+    lee_binary_tree_push(tree, 2);
 
+    // pesquisas
     lee_binary_tree_find(tree, 7);
     lee_binary_tree_find(tree, 14);
     lee_binary_tree_find(tree, 25);
     lee_binary_tree_find(tree, 3);
 
+    // remoções
+    lee_binary_tree_remove(tree, 7);
+    lee_binary_tree_remove(tree, 10);
+
+    // sort
     lee_binary_tree_t *sortTree = lee_binary_tree_sort(tree);
 
     puts("\nPre ordem:");

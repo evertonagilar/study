@@ -258,7 +258,7 @@ void lee_hash_table_test() {
     printf("\nnúmero de chaves: %d\n", table->count);
     printf("número de colisões: %d\n", table->colisionCount);
 
-    printf("Imprime tokens:\n");
+    printf("\nImprime tokens:\n");
     lee_hash_table_iterator_t *it = lee_hash_table_iterator_create(table);
     char *str;
     while (str = lee_hash_table_iterator_next(it)){

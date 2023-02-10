@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdbool.h>
 
 typedef struct lee_binary_tree_node_t {
     int key;
@@ -40,7 +41,8 @@ typedef enum {preorder, inorder, posorder} lee_binary_tree_traversal_type_t;
 
 lee_binary_tree_t *lee_binary_tree_create();
 void lee_binary_tree_free(lee_binary_tree_t *tree);
-void lee_binary_tree_push(lee_binary_tree_t *tree, int key);
+bool lee_binary_tree_push(lee_binary_tree_t *tree, int key);
+bool lee_binary_tree_remove(lee_binary_tree_t *tree, int key);
 lee_binary_tree_node_t *lee_binary_tree_find(lee_binary_tree_t *tree, int key);
 void lee_binary_tree_traversal(lee_binary_tree_t *tree, lee_binary_tree_traversal_type_t traversalType, lee_binary_tree_traversal_callback_t *func, ...);
 lee_binary_tree_t *lee_binary_tree_sort(lee_binary_tree_t *tree);

@@ -137,7 +137,7 @@ bool lee_btree_insert(lee_btree_t *btree, int key){
 }
 
 void lee_btree_test() {
-    puts("Programa teste btree\n");
+    puts("\n\nPrograma teste btree\n");
 
     lee_btree_t *btree = lee_btree_new();
     bool inseriu;
