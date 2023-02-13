@@ -30,10 +30,6 @@
 int main(int argc, char **argv) {
     printf("Lee -> The Samurai Programing Language\n");
 
-    collection_test();
-
-    exit(1);
-
     if (argc < 2) {
         printf("Usage: lee <file.lee>\n");
         return -1;

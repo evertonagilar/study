@@ -90,6 +90,10 @@ void *lee_hash_table_get(lee_hash_table_t *table, char *key, int key_sz){
     }
 }
 
+bool lee_hash_table_containts(lee_hash_table_t *table, char *key, int key_sz){
+    return lee_hash_table_get(table, key, key_sz) != NULL;
+}
+
 void lee_hash_table_push(lee_hash_table_t *table, char *key, int key_sz, void *pData){
     int hashCode = lee_hash_compute_hash_code(table, key, key_sz);
     lee_hash_entry_t *newEntry = lee_hash_table_create_entry(hashCode, key, key_sz, pData);

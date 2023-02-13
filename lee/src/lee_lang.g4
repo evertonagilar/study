@@ -105,7 +105,7 @@ Identifier
 
 //NL : ( '\r'? '\count' | '\r') + -> skip;
 
-WS:                 [ \t\r\count\u000C]+ -> skip;
+WS:                 [ \t\r\u000C]+ -> skip;
 
 //WS  :  [ \t\r\count]+ -> skip
 //    ;
@@ -171,7 +171,7 @@ module
     ;
 
 moduleId
-    : MODULE qualifiedName ';'
+    : (MODULE | PACKAGE) qualifiedName ';'
     ;
 
 moduleBody

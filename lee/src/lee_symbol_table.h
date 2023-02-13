@@ -26,7 +26,7 @@
 
 lee_symbol_table_t *lee_symbol_table_create();
 void lee_symbol_table_free(lee_symbol_table_t *table);
-lee_symbol_t *lee_symbol_table_get(lee_symbol_table_t *table, int hash);
+lee_symbol_t *lee_symbol_table_get(lee_symbol_table_t *table, char *identifier, int identifier_sz);
 lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
 lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType);
 

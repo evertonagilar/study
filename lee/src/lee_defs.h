@@ -84,7 +84,7 @@ static char *lee_token_text[] = {
         "_",
 
         // Identifier
-        "",
+        "identifier",
 
         // Null Literal
         "null",
@@ -96,7 +96,7 @@ static char *lee_token_text[] = {
         "}",
         "[",
         "]",
-        ",",
+        ";",
         ",",
         ".",
 
@@ -170,6 +170,7 @@ typedef enum{
     tkModule,
     tkNative,
     tkNew,
+    tkPackage,
     tkPrivate,
     tkProtected,
     tkPublic,
@@ -238,7 +239,6 @@ typedef struct {
 } lee_symbol_t;
 
 typedef struct {
-    int hash;
     lee_symbol_t *symbol;
     lee_token_type_t type;
     int line;
@@ -290,7 +290,12 @@ typedef struct {
 } lee_identifier_ast_t;
 
 typedef struct {
-    lee_identifier_ast_t *programName;
+    lee_linked_list_t *identifiers;
+}lee_qualified_name_ast_t;
+
+typedef struct {
+    lee_token_t *token;  // tkModule or tkPackage
+    lee_qualified_name_ast_t *qualifiedName;
 } lee_program_id_ast_t;
 
 

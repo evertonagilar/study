@@ -46,7 +46,6 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
         hash = ch;
         if (isalnum(ch)) {
             while (isalnum(*scanner->lookahead)) {
-                hash = hash * 100 + *scanner->lookahead;
                 scanner->lookahead++;
             }
             token->symbol = lee_symbol_table_get_or_push(scanner->symbolTable, last_lookahead,
@@ -116,7 +115,6 @@ lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
         }
     }
     token->line = scanner->line;
-    token->hash = hash;
     return token;
 }
 

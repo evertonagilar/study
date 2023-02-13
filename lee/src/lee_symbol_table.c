@@ -21,24 +21,31 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <assert.h>
 #include "lee_symbol_table.h"
 
 #define INITIAL_CAPACITY 1000
 
+lee_symbol_t *lee_symbol_table_get(lee_symbol_table_t *table, char *identifier, int identifier_sz){
+    lee_symbol_t *symbol = lee_hash_table_get(table->hash_table, identifier, identifier_sz);
+    return symbol;
+}
 
 /*
  * Get a symbol from symbol hash_table or insert it if doesn't exist and return
  *
  */
 lee_symbol_t *lee_symbol_table_get_or_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
-    lee_symbol_t *id = lee_hash_table_get(table->hash_table, identifier, identifier_sz);
-    if (id == NULL){
-        id = lee_symbol_table_push(table, identifier, identifier_sz, symbolClass, tokenType);
+    lee_symbol_t *symbol = lee_symbol_table_get(table, identifier, identifier_sz);
+    if (symbol == NULL){
+        symbol = lee_symbol_table_push(table, identifier, identifier_sz, symbolClass, tokenType);
     }
-    return id;
+    return symbol;
 }
 
 lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier, int identifier_sz, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
+    assert(identifier != NULL && identifier_sz > 0);
     lee_symbol_t *symbol = malloc(sizeof(lee_symbol_t));
     symbol->name = identifier;
     symbol->name_sz = identifier_sz;
@@ -50,7 +57,7 @@ lee_symbol_t *lee_symbol_table_push(lee_symbol_table_t *table, char *identifier,
 
 void lee_symbol_table_push_keyword(lee_symbol_table_t *table, lee_symbol_class_t symbolClass, lee_token_type_t tokenType) {
     char *identifier = lee_token_text[tokenType];
-    lee_symbol_table_push(table, identifier, 0, symbolClass, tokenType);
+    lee_symbol_table_push(table, identifier, strlen(identifier), symbolClass, tokenType);
 }
 
 /*
@@ -92,6 +99,7 @@ void loadLanguageKeywords(lee_symbol_table_t *table) {
     lee_symbol_table_push_keyword(table, scKeyword, tkModule);
     lee_symbol_table_push_keyword(table, scKeyword, tkNative);
     lee_symbol_table_push_keyword(table, scKeyword, tkNew);
+    lee_symbol_table_push_keyword(table, scKeyword, tkPackage);
     lee_symbol_table_push_keyword(table, scKeyword, tkPrivate);
     lee_symbol_table_push_keyword(table, scKeyword, tkProtected);
     lee_symbol_table_push_keyword(table, scKeyword, tkPublic);
@@ -145,6 +153,18 @@ void loadLanguageKeywords(lee_symbol_table_t *table) {
     lee_symbol_table_push_keyword(table, scOperator, tkSub);
     lee_symbol_table_push_keyword(table, scOperator, tkMul);
     lee_symbol_table_push_keyword(table, scOperator, tkMod);
+
+    #ifndef NDEBUG
+    // Faz uma validação para ver se as keywords declaradas na enum estão todas cadastrados na tabela hash
+    for (lee_token_type_t tokenType = tkAbstract; tokenType < tkEof && tokenType != tkIdentifier; tokenType++){
+        char *tokenText = lee_token_text[tokenType];
+        if (lee_symbol_table_get(table, tokenText, strlen(tokenText)) == NULL){
+            printf("Símbolo referente a enum %d ( lee_token_text = '%s' ) não cadastrado na tabela de símbolo!\n", tokenType, tokenText);
+            exit(1);
+        }
+    }
+    #endif
+
 }
 
 lee_symbol_table_t *lee_symbol_table_create() {

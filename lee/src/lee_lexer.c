@@ -53,7 +53,7 @@ lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile, lee_symbol_table_t
     lee_token_t *token;
     do {
         token = lee_scanner_next_token(lexer->scanner);
-        printf("get_current_token is: %d\n", token->type);
+        printf("get_current_token is: %s\n", lee_token_text[token->type]);
         node = lee_lexer_node_create(token);
         if (lexer->root == NULL){
             lexer->root = node;

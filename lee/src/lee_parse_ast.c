@@ -41,48 +41,36 @@ lee_token_t *get_current_token(lee_parse_ast_context_t *context) {
     return token;
 }
 
-bool is_token_type(lee_token_t *token, lee_token_type_t type) {
+bool is_token_type_of(lee_token_t *token, lee_token_type_t type) {
+    return token != NULL && token->type == type;
+}
+
+bool is_current_token_type_of(lee_parse_ast_context_t *context, lee_token_type_t type) {
+    lee_token_t *token = get_current_token(context);
     return token != NULL && token->type == type;
 }
 
 lee_token_t *match_token(lee_parse_ast_context_t *context, lee_token_type_t type) {
     lee_token_t *token = get_token_and_next(context);
-    if (!is_token_type(token, type)) {
+    if (!is_token_type_of(token, type)) {
         printf("Error: Sintáxe inválida, token esperado: %s mas encontrado %s\n", lee_token_text[type],
                lee_token_text[token->type]);
     }
     return token;
 }
 
+lee_token_t *match_token2(lee_parse_ast_context_t *context, lee_token_type_t type, lee_token_type_t type2) {
+    lee_token_t *token = get_token_and_next(context);
+    if (!(is_token_type_of(token, type) || is_token_type_of(token, type))) {
+        printf("Error: Sintáxe inválida, token esperado: %s ou %s mas encontrado %s\n",
+               lee_token_text[type],
+               lee_token_text[type2],
+               lee_token_text[token->type]);
+    }
+    return token;
+}
 
 /////////////////////////////////////////////// AST ///////////////////////////////////////////////////////////////////
-
-void emitVarDecls(lee_parse_ast_context_t *context) {
-
-}
-
-void emitFuncDecls(lee_parse_ast_context_t *context) {
-
-}
-
-void emitDecls(lee_parse_ast_context_t *context) {
-//    match_token(context, tkIdentifier);
-//    if (context->currentNode->next->next->get_current_token->type == tkOpenP){
-//        emitFuncDecls(context);
-//    }else{
-//        emitVarDecls(context);
-//    }
-    return;
-}
-
-bool doStatement(lee_parse_ast_context_t *context) {
-//    switch (context->currentNode->get_current_token->type){
-//        case tkIdentifier:
-//            emitDecls(context);
-//            break;
-//    }
-    return true;
-}
 
 lee_identifier_ast_t *identifier(lee_parse_ast_context_t *context) {
     lee_token_t *token = match_token(context, tkIdentifier);
@@ -91,11 +79,22 @@ lee_identifier_ast_t *identifier(lee_parse_ast_context_t *context) {
     return identifierAST;
 }
 
+lee_qualified_name_ast_t *qualifiedName(lee_parse_ast_context_t *context) {
+    lee_qualified_name_ast_t  *qualifiedNameAST = malloc(sizeof(lee_identifier_ast_t));
+    lee_identifier_ast_t *identifierAST;
+    do{
+        identifierAST = identifier(context);
+        lee_linked_list_add(qualifiedNameAST->identifiers, identifierAST);
+    } while (is_current_token_type_of(context, tkDot));
+    match_token(context, tkSemicolon);
+    return qualifiedNameAST;
+}
 
 lee_program_id_ast_t *program_id(lee_parse_ast_context_t *context, lee_program_ast_t *programAST) {
-    match_token(context, tkModule);
+    lee_token_t *token = match_token2(context, tkModule, tkPackage);
     lee_program_id_ast_t *programId = malloc(sizeof(lee_program_id_ast_t));
-    programId->programName = identifier(context);
+    programId->qualifiedName = qualifiedName(context);
+    programId->token = token;
     return programId;
 }
 
