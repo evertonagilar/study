@@ -41,6 +41,11 @@ lee_token_t *get_current_token(lee_parse_ast_context_t *context) {
     return token;
 }
 
+bool is_eof_token(lee_parse_ast_context_t *context) {
+    lee_token_t *token = get_current_token(context);
+    return token->type != tkEof;
+}
+
 bool is_token_type_of(lee_token_t *token, lee_token_type_t type) {
     return token != NULL && token->type == type;
 }
@@ -61,7 +66,7 @@ lee_token_t *match_token(lee_parse_ast_context_t *context, lee_token_type_t type
 
 lee_token_t *match_token2(lee_parse_ast_context_t *context, lee_token_type_t type, lee_token_type_t type2) {
     lee_token_t *token = get_token_and_next(context);
-    if (!(is_token_type_of(token, type) || is_token_type_of(token, type))) {
+    if (!(is_token_type_of(token, type) || is_token_type_of(token, type2))) {
         printf("Error: Sintáxe inválida, token esperado: %s ou %s mas encontrado %s\n",
                lee_token_text[type],
                lee_token_text[type2],
@@ -81,11 +86,17 @@ lee_identifier_ast_t *identifier(lee_parse_ast_context_t *context) {
 
 lee_qualified_name_ast_t *qualifiedName(lee_parse_ast_context_t *context) {
     lee_qualified_name_ast_t  *qualifiedNameAST = malloc(sizeof(lee_identifier_ast_t));
+    qualifiedNameAST->identifiers = lee_linked_list_create();
     lee_identifier_ast_t *identifierAST;
     do{
         identifierAST = identifier(context);
         lee_linked_list_add(qualifiedNameAST->identifiers, identifierAST);
-    } while (is_current_token_type_of(context, tkDot));
+        if (is_current_token_type_of(context, tkDot)){
+            match_token(context, tkDot);
+        }else{
+            break;
+        }
+    } while (true);
     match_token(context, tkSemicolon);
     return qualifiedNameAST;
 }

@@ -5,15 +5,6 @@ import agenda.utils;
 
 public interface Agenda{
 
-    public const success : int = 1;
-
-    public main() -> int;
-    main() ->
-        let agendaRepository = %ContatoRepository{};
-        let contato = this.novoContato();
-        agendaRepository.insert(contato);
-        success.
-
     public novoContato() -> Contato;
     novoContato() ->
         let novo = %Contato{id = utils.getNovoId(),
