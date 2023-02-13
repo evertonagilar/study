@@ -40,11 +40,12 @@ typedef struct {
 
 
 typedef struct{
-    lee_hash_entry_t **hash_tbl;    // tabela hash de ponteiros
-    lee_linked_list_t *list;        // uma lista encadeada de cada elemento adicionado utilizado para free e iterators
+    lee_hash_entry_t **hash_tbl;            // tabela hash dos elementos adicionados
+    lee_linked_list_t *list;                // lista dos elementos adicionados para poder usar iterators
+    lee_linked_list_t *collisionNodes;      // lista de lee_hash_entry_t alocados em hash_tbl quando há colisão
     int count;
     int capacity;
-    int colisionCount;              // quantas colisões existem na tabela
+    int colisionCount;                      // quantas colisões existem na tabela
 } lee_hash_table_t;
 
 
