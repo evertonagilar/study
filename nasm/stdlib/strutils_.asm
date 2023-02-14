@@ -64,10 +64,11 @@ lee_print:
 ; Params: rdi -> buffer destino
 ;         rsi -> buffer origem    
 ; Retorno: ponteiro para buffer destino
+; char* lee_strcpy(char *destination, char *source);
 lee_strcpy:
 .copy_char:
-    mov ax, word[rsi]       ; move char para rax
-    mov word[rdi], ax      ; e para [rdi]
+    mov al, byte[esi]       ; move char para rax
+    mov [rdi], eax      ; e para [rdi]
     cmp eax, NULL           ; chegou no null
     je .end_copy            ; se sim, termino
     inc rsi                 ; senão incrementa rsi e rdi
