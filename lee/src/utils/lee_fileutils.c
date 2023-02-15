@@ -18,11 +18,11 @@
  * %CopyrightEnd%
  */
 
-
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
+#include "lee_fileutils.h"
 
 FILE *lee_openFileName(const char *filename, const char *modes){
     FILE *fd = fopen(filename, modes);

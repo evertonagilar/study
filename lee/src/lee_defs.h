@@ -250,7 +250,7 @@ typedef struct {
 
 typedef struct {
     char *src;              // pointer to source code string
-    char *lookahead;        // pointer to next symbol
+    char *lookahead;        // pointer to _next symbol
     int line;               // currentNode line of scanner
     lee_symbol_table_t *symbolTable;    // pointer to scanner
 } lee_scanner_t;

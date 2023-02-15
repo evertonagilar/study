@@ -1,0 +1,4 @@
+/home/evertonagilar/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8617.54/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/evertonagilar/study/lee -B /home/evertonagilar/study/lee/cmake-build-debug-lldb
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/evertonagilar/study/lee/cmake-build-debug-lldb

@@ -196,3 +196,4 @@ void lee_vm_free(lee_vm_t *vm) {
     lee_program_free(vm->program);
     free(vm);
 }
+

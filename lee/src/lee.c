@@ -26,6 +26,7 @@
 #include "utils/lee_binary_tree.h"
 #include "utils/lee_linked_list.h"
 #include "test/collection_test.h"
+#include "utils/lee_strutils.h"
 
 int main(int argc, char **argv) {
     printf("Lee -> The Samurai Programing Language\n");
@@ -34,6 +35,11 @@ int main(int argc, char **argv) {
         printf("Usage: lee <file.lee>\n");
         return -1;
     }
+
+
+    lee_string_t *nomePramama = lee_string_ref(argv[1]);
+    printf("Nome do programa: %s\n", lee_string_cstr(nomePramama));
+
 
     char *programFileName = argv[1];
     lee_vm_t *vm = lee_vm_create(programFileName, true);

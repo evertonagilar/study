@@ -3,9 +3,9 @@ package agenda.utils;
 public interface utils {
 
     /* is_number */
-    is_number(str : string) -> bool;
+    is_number(cstr : string) -> bool;
     is_number("") -> false;
-    is_number(str) -> [ch || ch <- str, ch < 0 or ch > 9] == [].
+    is_number(cstr) -> [ch || ch <- cstr, ch < 0 or ch > 9] == [].
     
     
     /* get home dir */

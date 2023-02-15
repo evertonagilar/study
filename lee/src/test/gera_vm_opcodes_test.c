@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include "gera_vm_opcodes_test.h"
 #include "../lee_defs.h"
-#include "../utils/lee_file_utils.h"
+#include "../utils/lee_fileutils.h"
 
 void geraByteCodeValorNaPilhaTest(const char *filename) {
     long src[4];
