@@ -6,6 +6,18 @@ segment .data
     tam     equ $ - msg
 
 
+;Prólogo e epílogo:
+;    push %rbp
+;    mov %rsp, %rbp
+;    sub $16, %rsp
+;
+;    # etc...
+;
+;    mov %rbp, %rsp
+;    pop %rbp
+;    ret
+
+
 section .text
     global lee_strlen
     global lee_println
@@ -34,12 +46,12 @@ lee_test:
 ;
 lee_strlen:
     mov rax, rdi
-.next_char:    
-    cmp word[eax], 0    ; funciona porque word é um char (16 bits)
+.next_char:
+    cmp word[eax], NULL    ; funciona porque word é um char (16 bits)
     je .end_str
     inc rax
     jmp .next_char
-.end_str:    
+.end_str:
     sub rax, rdi
     ret
 
@@ -67,9 +79,9 @@ lee_print:
 ; char* lee_strcpy(char *destination, char *source);
 lee_strcpy:
 .copy_char:
-    mov al, byte[esi]       ; move char para rax
-    mov [rdi], eax      ; e para [rdi]
-    cmp eax, NULL           ; chegou no null
+    mov ax, word[rsi]       ; move char para rax
+    mov word [rdi], ax            ; e para [rdi]
+    cmp ax, NULL           ; chegou no null
     je .end_copy            ; se sim, termino
     inc rsi                 ; senão incrementa rsi e rdi
     inc rdi

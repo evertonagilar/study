@@ -1,5 +1,5 @@
 
-NULL        equ     0x0
+NULL        equ     0xD
 LF          equ     0xA
 
 
