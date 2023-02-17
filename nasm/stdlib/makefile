@@ -12,3 +12,9 @@ all:
 	#gcc -s -nostdlib -e lee_start -no-pie strutils.c strutils_.o -o strutils
 
 	
+hello: hello.o
+	ld -g -o hello hello.o
+	rm -f hello.o
+
+hello.o: hello.asm
+	nasm -g -f elf64 hello.asm

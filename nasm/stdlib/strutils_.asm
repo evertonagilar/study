@@ -1,8 +1,8 @@
 %include "strutils.inc"
 
 
-segment .data
-    msg     db "teste", 0xA, 0
+section .data
+    msg     db "teste", 0xA, NULL
     tam     equ $ - msg
 
 
@@ -26,6 +26,7 @@ section .text
     global lee_test
     global lee_start
     global lee_strcpy
+    global strcpy_asm_x64
 
     extern main
 
@@ -47,13 +48,31 @@ lee_test:
 lee_strlen:
     mov rax, rdi
 .next_char:
-    cmp word[eax], NULL    ; funciona porque word é um char (16 bits)
+    cmp byte[eax], NULL
     je .end_str
     inc rax
     jmp .next_char
 .end_str:
     sub rax, rdi
     ret
+
+
+strcpy_asm_x64:
+	mov  r8b, BYTE[rdx] ; rdx = source
+	test r8b, r8b
+	mov  rax, rcx ; rax = destination
+	je   label2
+label1:
+	mov  BYTE[rax], r8b
+	mov  r8b, BYTE[rdx+1]
+	inc  rax
+	inc  rdx
+	test r8b, r8b
+	jne  label1
+label2:
+	mov  BYTE[rax], 0
+	; could set rax to rcx if wanting to return the destination pointer instead of a pointer to the end of destination
+	ret  0
 
 ; 
 ; Função: lee_print

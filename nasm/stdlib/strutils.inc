@@ -1,6 +1,9 @@
+segment .data
 
-NULL        equ     0xD
-LF          equ     0xA
+NULL            equ     0x0
+CR              equ     0xD
+LF              equ     0xA
+EXIT_SUCCESS    equ     0x0
 
 
 ; IO
@@ -12,5 +15,7 @@ STD_ERR     equ     2
 
 ; Kernel syscalls
 
+SYS_READ    equ     0x0
 SYS_WRITE   equ     0x1
 SYS_EXIT    equ     0x3c
+
