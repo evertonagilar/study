@@ -1,29 +1,79 @@
 bits 64
 
-segment .data
-NULL            equ     0x0
-CR              equ     0xD
-LF              equ     0xA
-EXIT_SUCCESS    equ     0x0
-STD_IN      equ     0
-STD_OUT     equ     1
-STD_ERR     equ     2
-SYS_READ    equ     0x0
-SYS_WRITE   equ     0x1
-SYS_EXIT    equ     0x3c
+%include "strutils.inc"
+
+;Prólogo e epílogo:
+;    push %rbp
+;    mov %rsp, %rbp
+;    sub $16, %rsp
+;
+;    # etc...
+;
+;    mov %rbp, %rsp
+;    pop %rbp
+;    ret
 
 section .data
-    titulo          db  "Feliz Carnaval Gurizada!!!", NULL
+    titulo          db  "Agenda de Contatos ( Versão 1.0.0 )", NULL
+    nome_label      db  "Nome: ", NULL
+    sep             db  "--------------------------------------------------------------------------", NULL
+    seu_nome        db  "Seu nome: ", NULL
+    BUFFER_LEN  equ 100
+    param_label     db "Parâmetros: ", NULL
     str_newline     db LF
+
+
+
+
+section .bss
+    buffer: resb BUFFER_LEN
+    argc            resq 1
+    argv            resq 1
+
 section .text
     global _start
+
 _start:
+    ; Salva argc e argv
+    mov [argc], rsp
+    mov rax, [rsp + 8]
+    mov [argv], rax
+
     ; imprime título
     mov rdi, titulo
     call println
+
     call newline
+
+    mov rdi, param_label
+    call println
+
+    ; Imprime parâmetros
+    mov rdi, [argv]
+    call println
+
+    call newline
+    call newline
+
+    mov rdi, nome_label
+    call print
+
+    mov rdi, buffer
+    mov rsi, BUFFER_LEN
+    call readln
+
+    mov rdi, sep
+    call println
+
+    mov rdi, seu_nome
+    call print
+
+    mov rdi, buffer
+    call println
+
     call finaliza
     ret
+
 
 lenstr:
     mov rax, rdi            ; copia endereco msg para rax
@@ -35,6 +85,7 @@ lenstr:
 .exitLen:
     sub rax, rdi
     ret
+
 ;
 ; println
 ; rdi -> mensagem

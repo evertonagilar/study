@@ -18,3 +18,11 @@ hello: hello.o
 
 hello.o: hello.asm
 	nasm -g -f elf64 hello.asm
+
+
+agenda: agenda.o
+	ld -g -o agenda agenda.o
+	rm -f agenda.o
+
+agenda.o: agenda.asm
+	nasm -g -f elf64 agenda.asm
