@@ -6,6 +6,7 @@
 #include <stdarg.h>
 
 static int SIGINT_count = 0;
+pid_t meupid;
 
 void signalHandler(int signal){
     switch (signal){
@@ -47,7 +48,8 @@ void registraSignals(int argc, ...){
 }
 
 int main() {
-    printf("Programa signals!\n");
+    meupid = getpid();
+    printf("Programa signals  < PID: %d >\n", meupid);
     registraSignals(5, SIGINT, SIGQUIT, SIGTERM, SIGTSTP, SIGCONT);
     while (true){
         puts("Working!!!");
