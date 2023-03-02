@@ -18,6 +18,7 @@
  * %CopyrightEnd%
  */
 
+
 #include <stdio.h>
 #include "lee_vm.h"
 #include "lee_defs.h"
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 
 
     lee_string_t *nomePramama = lee_string_ref(argv[1]);
-    printf("Nome do programa: %s\n", lee_string_cstr(nomePramama));
+    printf("Loading program file: %s\n", lee_string_cstr(nomePramama));
 
 
     char *programFileName = argv[1];

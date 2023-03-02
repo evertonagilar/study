@@ -18,10 +18,13 @@
  * %CopyrightEnd%
  */
 
-
+#include <stdlib.h>
+#include <stddef.h>
+#include <string.h>
 #include <stdio.h>
 #include "lee_lexer.h"
 #include "lee_scanner.h"
+#include "utils/lee_strutils.h"
 
 lee_lexer_node_t *lee_lexer_node_create(lee_token_t *token){
     lee_lexer_node_t *node = malloc(sizeof(lee_lexer_node_t));
@@ -53,7 +56,9 @@ lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile, lee_symbol_table_t
     lee_token_t *token;
     do {
         token = lee_scanner_next_token(lexer->scanner);
-        printf("get_current_token is: %s\n", lee_token_text[token->type]);
+#ifdef DEBUG
+        printf("LEXER: Token: %d  Line: %d  text: %.*s\n", token->symbol->tokenType, token->line, token->symbol->name_sz, token->symbol->name);
+#endif
         node = lee_lexer_node_create(token);
         if (lexer->root == NULL){
             lexer->root = node;
@@ -63,7 +68,7 @@ lee_lexer_t *lee_lexer_create(lee_source_file_t  *sourceFile, lee_symbol_table_t
             currentNode = node;
         }
         ++lexer->childCount;
-    } while (token->type != tkEof);
+    } while (token->symbol->tokenType != tkEof);
     return lexer;
 }
 
@@ -86,8 +91,10 @@ lee_lexer_iterator_t *lee_lexer_iterator_create(lee_lexer_t *lexer){
 }
 
 lee_token_t *lee_lexer_next_token(lee_lexer_iterator_t *iterator){
-    iterator->priorNode = iterator->currentNode;
-    iterator->currentNode = iterator->currentNode->next;
+    if (iterator->currentNode->token->symbol->tokenType != tkEof) {
+        iterator->priorNode = iterator->currentNode;
+        iterator->currentNode = iterator->currentNode->next;
+    }
     return iterator->currentNode->token;
 }
 

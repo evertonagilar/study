@@ -22,6 +22,10 @@
 #ifndef LEE_DEFS_H
 #define LEE_DEFS_H
 
+#ifndef NDEBUG
+#define DEBUG
+#endif
+
 #include <stddef.h>
 #include <glib.h>
 #include <stdbool.h>
@@ -83,11 +87,10 @@ static char *lee_token_text[] = {
         "with",
         "_",
 
-        // Identifier
+        // Identifier, literal and numbers
         "identifier",
-
-        // Null Literal
         "null",
+        "number",
 
         // Separators
         "(",
@@ -123,12 +126,13 @@ static char *lee_token_text[] = {
         "%",
 
         // Eof
-        "\0"
+        "EOF"
 };
 
 typedef enum lee_symbol_class_t {
     scIdentifier,
     scLiteral,
+    scNumber,
     scKeyword,
     scType,
     scSeparator,
@@ -190,10 +194,10 @@ typedef enum{
     tkWith,
     tkUnderscore,
 
+    // Identifier, literal and numbers
     tkIdentifier,
-
-    // Literal
     tkNull,
+    tkNumber,
 
     // Separators
     tkLParen,
@@ -240,8 +244,8 @@ typedef struct {
 
 typedef struct {
     lee_symbol_t *symbol;
-    lee_token_type_t type;
     int line;
+    int value;
 } lee_token_t;
 
 typedef struct {

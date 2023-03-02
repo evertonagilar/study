@@ -38,80 +38,106 @@ void lee_scanner_free(lee_scanner_t *scanner) {
     free(scanner);
 }
 
-lee_token_t * lee_scanner_next_token(lee_scanner_t *scanner) {
-    int ch, hash;
+bool isBeginIdentifierChar(char ch) {
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z' || ch == '_');
+}
+
+bool isIdentifierChar(char ch) {
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9' || ch == '_');
+}
+
+
+lee_token_t *lee_scanner_next_token(lee_scanner_t *scanner) {
+    char *last_lookahead = scanner->lookahead;
     lee_token_t *token = lee_token_new();
+    int ch;
     while (ch = *scanner->lookahead) {
-        char *last_lookahead = scanner->lookahead++;
-        hash = ch;
-        if (isalnum(ch)) {
-            while (isalnum(*scanner->lookahead)) {
+        last_lookahead = scanner->lookahead++;
+        if (isBeginIdentifierChar(ch)) {
+            while (isIdentifierChar(*scanner->lookahead)) {
                 scanner->lookahead++;
             }
-            token->symbol = lee_symbol_table_get_or_push(scanner->symbolTable, last_lookahead,
-                                                                 scanner->lookahead - last_lookahead, scIdentifier, tkIdentifier);
-            token->type = token->symbol->tokenType;
+            token->symbol = lee_symbol_table_get_or_push(scanner->symbolTable,
+                                                         last_lookahead,
+                                                         scanner->lookahead - last_lookahead,
+                                                         scIdentifier,
+                                                         tkIdentifier);
             break;
-        }else if (isblank(ch)) {
-            while (isblank(*scanner->lookahead)) {
+        } else if (isdigit(ch)) {
+            token->value = 0;
+            while (isdigit(*scanner->lookahead)) {
+                token->value = (token->value * 10) + *scanner->lookahead - 0;
                 scanner->lookahead++;
             }
-        }else if (ch == '\r'){
+            token->symbol = lee_symbol_table_get_or_push(scanner->symbolTable,
+                                                         last_lookahead,
+                                                         scanner->lookahead - last_lookahead,
+                                                         scNumber,
+                                                         tkNumber);
+            break;
+        } else if (isblank(ch)) {
+            do {
+                scanner->lookahead++;
+            } while (isblank(*scanner->lookahead));
+            last_lookahead = scanner->lookahead;
+        } else if (ch == '\n') {
+            do{
+                scanner->lookahead++;
+            }while (*scanner->lookahead == '\n');
+            last_lookahead = scanner->lookahead;
+        } else if (ch == '\r') {
             ++scanner->line;
-
-
-        }else if (ch == '+'){
-            token->type = tkAdd;
+            last_lookahead = scanner->lookahead;
+        } else if (ch == '+') {
             break;
-        }else if (ch == '-'){
-            token->type = tkSub;
+        } else if (ch == '-') {
             break;
-        }else if (ch == '*'){
-            token->type = tkMul;
+        } else if (ch == '*') {
             break;
-
-        // Separators
-        }else if (ch == '('){
-            token->type = tkLParen;
+            // Separators
+        } else if (ch == '(') {
             break;
-        }else if (ch == ')'){
-            token->type = tkRParen;
+        } else if (ch == ')') {
             break;
-        }else if (ch == '{'){
-            token->type = tkLBrace;
+        } else if (ch == '{') {
             break;
-        }else if (ch == '}'){
-            token->type = tkRBrace;
+        } else if (ch == '}') {
             break;
-        }else if (ch == '['){
-            token->type = tkLBrace;
+        } else if (ch == '[') {
             break;
-        }else if (ch == ']'){
-            token->type = tkRBrace;
+        } else if (ch == ']') {
             break;
-        }else if (ch == ';'){
-            token->type = tkSemicolon;
+        } else if (ch == ';') {
             break;
-        }else if (ch == '.'){
-            token->type = tkDot;
+        } else if (ch == '.') {
             break;
-
-        }else if (ch == '='){
-            if (*scanner->lookahead == '='){
-                token->type = tkAssign;
-            }else{
-                token->type = tkEqual;
+        } else if (ch == '=') {
+            if (*scanner->lookahead == '=') {
+                scanner->lookahead++;
             }
             break;
-        }else if (ch == '/'){
-            if (*scanner->lookahead == '/'){
-                while (ch = scanner->lookahead && ch != '\n'){
+        } else if (ch == '/') {
+            if (*scanner->lookahead == '/') {
+                do {
                     scanner->lookahead++;
-                }
-            }else{
-                token->type = tkDiv;
+                } while (ch = *scanner->lookahead && ch != '\n');
+                last_lookahead = scanner->lookahead;
+            } else {
                 break;
             }
+        }
+    }
+    if (token->symbol == NULL) {
+        // Encontrou token?
+        if (scanner->lookahead != last_lookahead) {
+            token->symbol = lee_symbol_table_get(scanner->symbolTable,
+                                                 last_lookahead,
+                                                 scanner->lookahead - last_lookahead);
+        }else{
+            token->symbol = lee_symbol_table_get(scanner->symbolTable,
+                                                 "EOF",
+                                                 3);
+
         }
     }
     token->line = scanner->line;

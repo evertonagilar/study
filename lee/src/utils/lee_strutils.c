@@ -53,3 +53,10 @@ inline size_t lee_string_length(const lee_string_t *str){
 const char* lee_string_cstr(lee_string_t *str){
     return str->cstr;
 }
+
+char *strndupa(const char *str, size_t size) {
+    char *buffer = alloca(size+1);
+    strncpy(buffer, str, size);
+    buffer[size] = '\0';
+    return buffer;
+}

@@ -19,16 +19,11 @@
  */
 
 
-#include "lee_token.h"
-#include <stdlib.h>
+#ifndef LEE_LEE_MESSAGES_H
+#define LEE_LEE_MESSAGES_H
 
-lee_token_t *lee_token_new() {
-    lee_token_t *token = malloc(sizeof(lee_token_t));
-    token->symbol = NULL;
-    token->symbol = NULL;
-    return token;
-}
+extern const char *MSG_EXPECTED_TOKEN_FORMAT;
 
-void lee_token_free(lee_token_t *token){
-    free(token);
-}
+char *lee_format_message(const char *format, ...);
+
+#endif //LEE_LEE_MESSAGES_H

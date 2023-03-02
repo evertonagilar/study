@@ -121,6 +121,7 @@ void loadLanguageKeywords(lee_symbol_table_t *table) {
 
     // Literal
     lee_symbol_table_push_keyword(table, scLiteral, tkNull);
+    lee_symbol_table_push_keyword(table, scLiteral, tkEof);
 
     // Separators
     lee_symbol_table_push_keyword(table, scSeparator, tkLParen);

@@ -19,16 +19,17 @@
  */
 
 
-#include "lee_token.h"
-#include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include "lee_messages.h"
 
-lee_token_t *lee_token_new() {
-    lee_token_t *token = malloc(sizeof(lee_token_t));
-    token->symbol = NULL;
-    token->symbol = NULL;
-    return token;
-}
+const char *MSG_EXPECTED_TOKEN_FORMAT = "Token %.*s expected but %.*s found.";
+char lee_message_buf[250];
 
-void lee_token_free(lee_token_t *token){
-    free(token);
+char *lee_format_message(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    vsnprintf(lee_message_buf, sizeof(lee_message_buf), format, args);
+    va_end(args);
+    return lee_message_buf;
 }

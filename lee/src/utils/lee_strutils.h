@@ -49,6 +49,7 @@ lee_string_t *lee_string_ref(char *str);
 size_t lee_string_length(const lee_string_t *str);
 lee_string_t *lee_string_assign(lee_string_t *str);
 const char* lee_string_cstr(lee_string_t *str);
+char *strndupa(const char *str, size_t size);
 
 
 #endif //LEE_STRUTILS_H

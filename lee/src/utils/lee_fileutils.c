@@ -25,10 +25,12 @@
 #include "lee_fileutils.h"
 
 FILE *lee_openFileName(const char *filename, const char *modes){
+    char strErro[250];
     FILE *fd = fopen(filename, modes);
     if (!fd) {
-        printf("Não foi possível abrir arquivo %s. Code: %d", filename, errno);
-        exit(-1);
+        sprintf(strErro, "Não foi possível abrir arquivo %s.", filename);
+        perror(strErro);
+        exit(EXIT_FAILURE);
     }
     return fd;
 }

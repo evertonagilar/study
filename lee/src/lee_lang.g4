@@ -175,7 +175,8 @@ moduleId
     ;
 
 moduleBody
-    : ( importDecl | classDecl | interfaceDecl )*
+    : ( importDecl | classDecl | interfaceDecl )* ';'
+    | EOF
     ;
 
 importDecl

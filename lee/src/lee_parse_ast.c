@@ -18,14 +18,15 @@
  * %CopyrightEnd%
  */
 
+#include <stdio.h>
 #include "lee_parse_ast.h"
 #include "lee_lexer.h"
 #include "lee_symbol_table.h"
-#include <stdio.h>
+#include "lee_messages.h"
 
 ////////////////////////////////////////// Function support///////////////////////////////////////////////////////////
 
-void parse_error(char *msg) {
+void fatal(char *msg) {
     printf("Error: %s\n", msg);
     exit(EXIT_FAILURE);
 }
@@ -43,23 +44,27 @@ lee_token_t *get_current_token(lee_parse_ast_context_t *context) {
 
 bool is_eof_token(lee_parse_ast_context_t *context) {
     lee_token_t *token = get_current_token(context);
-    return token->type != tkEof;
+    return token->symbol->tokenType != tkEof;
 }
 
 bool is_token_type_of(lee_token_t *token, lee_token_type_t type) {
-    return token != NULL && token->type == type;
+    return token != NULL && token->symbol->tokenType == type;
 }
 
 bool is_current_token_type_of(lee_parse_ast_context_t *context, lee_token_type_t type) {
     lee_token_t *token = get_current_token(context);
-    return token != NULL && token->type == type;
+    return token != NULL && token->symbol->tokenType == type;
 }
+
 
 lee_token_t *match_token(lee_parse_ast_context_t *context, lee_token_type_t type) {
     lee_token_t *token = get_token_and_next(context);
     if (!is_token_type_of(token, type)) {
-        printf("Error: Sintáxe inválida, token esperado: %s mas encontrado %s\n", lee_token_text[type],
-               lee_token_text[token->type]);
+        char *expectedToken = lee_token_text[type];
+        char *msg = lee_format_message(MSG_EXPECTED_TOKEN_FORMAT,
+                                       strlen(expectedToken), expectedToken,
+                                       token->symbol->name_sz, token->symbol->name);
+        fatal(msg);
     }
     return token;
 }
@@ -70,7 +75,7 @@ lee_token_t *match_token2(lee_parse_ast_context_t *context, lee_token_type_t typ
         printf("Error: Sintáxe inválida, token esperado: %s ou %s mas encontrado %s\n",
                lee_token_text[type],
                lee_token_text[type2],
-               lee_token_text[token->type]);
+               lee_token_text[token->symbol->tokenType]);
     }
     return token;
 }
@@ -111,7 +116,7 @@ lee_program_id_ast_t *program_id(lee_parse_ast_context_t *context, lee_program_a
 
 bool is_func_type_decl(lee_parse_ast_context_t *context) {
     lee_token_t *token = get_current_token(context);
-    switch (token->type) {
+    switch (token->symbol->tokenType) {
         case tkVoid :
         case tkInt :
         case tkChar:
@@ -124,7 +129,7 @@ bool is_func_type_decl(lee_parse_ast_context_t *context) {
 
 lee_token_type_t func_type_decl(lee_parse_ast_context_t *context) {
     lee_token_t *token = get_token_and_next(context);
-    return token->type;
+    return token->symbol->tokenType;
 }
 
 void func_list_decl_tail(lee_parse_ast_context_t *context, lee_array_list_t *list) {
