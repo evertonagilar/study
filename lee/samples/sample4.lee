@@ -1,0 +1,53 @@
+class Person(name: string) {
+    greet() -> "Ola, my name is $name!";
+}
+
+interface IFoodConsumer {
+    eat() -> string;
+    pay(amount: int) -> string;
+}
+
+class RestaurantCustomer(name: string, _dish: string) : Person(name), FoodConsumer {
+    order() -> println("$dish, please!");
+    eat() -> println("*Eats $dish*");
+    Person::greet() -> println("It's me, $name.");
+}
+
+@Entity
+@Table(name = "post")
+class Post{
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    id: long;
+
+    @Column(name = "title")
+    title: string;
+
+    @ManyToMany
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = [JoinColumn(name = "post_id")],
+            inverseJoinColumns = [JoinColumn(name = "tag_id")]
+    )
+    tags: Set<Tag> = HashSet()
+
+    isEmpty : bool {
+        get() -> this.size == 0;
+        set(value) -> this = value;
+    }
+
+    constructor() {
+        id = 0;
+        title = "Sr.";
+    }
+
+}
+
+main() {
+    sam = RestaurantCustomer("Sam", "Mixed salad")
+    sam.greet() // An implementation of an abstract function
+    sam.order() // A member function
+    sam.eat()   // An implementation of an interface function
+    sam.pay(10) // A default implementation in an interface
+}

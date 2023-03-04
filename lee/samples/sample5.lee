@@ -1,0 +1,48 @@
+package agenda.utils;
+
+interface IUtils {
+    is_number(str : string) -> bool;
+    get_home_dir() -> string;
+    readFileAll(fileName : string) -> {ok, string} | {error, einvalid_file};
+    to_upper_case(str : string) -> string;
+    getNovoId() -> int;
+}
+
+class Utils : IUtils{
+
+    is_number(str : string) -> bool {
+        case str of
+            [] -> false;
+            str -> str.filter(ch -> ch < 0 || ch > 9] == [].
+        end;
+    }
+
+    get_home_dir() -> string {
+        case application.get_environment("home") of
+            {ok, Path} -> Path;
+            _ -> ""
+        end;
+    }
+
+    readFileAll(fileName : string) -> {ok, string} | {error, einvalid_file}{
+        case file.readFileAll(fileName) of
+            {ok, content} -> {ok, content};
+            {error, _} -> {error, einvalid_file}
+        end;
+    }
+
+    to_upper_case(str : string) -> to_upper_case_tail(str, []);
+
+    _to_upper_case_tail(s : string, result : string) -> string{
+        fn([], result) -> result;
+        fn([h|t], result) -> to_upper_case_tail(t, [result | to_upper(h)]).
+    }
+
+    getNovoId() -> int {
+        $contador = 0;
+        contador++;
+    }
+
+}
+
+

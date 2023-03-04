@@ -3,9 +3,9 @@ package agenda.utils;
 public interface utils {
 
     /* is_number */
-    is_number(cstr : string) -> bool;
-    is_number("") -> false;
-    is_number(cstr) -> [ch || ch <- cstr, ch < 0 or ch > 9] == [].
+    is_number(str : string) -> bool;
+    is_number([]) -> false;
+    is_number(str) -> str.filter(ch -> ch < 0 || ch > 9] == [].
     
     
     /* get home dir */
@@ -26,8 +26,8 @@ public interface utils {
         end.
     
     /* to_upper_case */
-    public to_upper_case(s : string) -> string;
-    to_upper_case(s) -> to_upper_case_tail(s, []);
+    public to_upper_case(str : string) -> string;
+    to_upper_case(str) -> to_upper_case_tail(str, []);
     
     private to_upper_case_tail(s : string, result : string) -> string;
     to_upper_case_tail([], result) -> result;

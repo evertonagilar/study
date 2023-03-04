@@ -2,3 +2,5 @@ package sample_1;
 
 import lee.io;
 
+public main(args : [string]) -> EXIT_SUCCESS | EXIT_FAILURE;
+main -> return EXIT_SUCCESS.
