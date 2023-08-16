@@ -1,0 +1,14 @@
+
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "index.js",
+            "program": "node",
+            "args": [ "index.js"],
+            "dependsOn": [],
+
+
+        },
+    ]
+}

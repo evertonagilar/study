@@ -1,9 +1,113 @@
-**/target
-*.log
-**/nodes_modules
-**/package-lock.json
-**/cmake-build-debug
+# Principais
+.svn/
+*.~
+*.tmp
 *.class
-**/target
+*.jasper
+dist/
+build/
+
+
+# Dependncias e mdulos do Node.js
+node_modules/
+**/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Arquivos de ambiente (geralmente configurados em .env)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Cache e arquivos temporrios
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+.cache/
+*.pnp.js
+*.pnp.cjs
+*.tmp
+
+# Dependncias especficas do desenvolvedor
+/.pnp
+/.pnp.js
+
+# Editor/IDE especfico
+.idea/
+*.iml
+/.classpath
+/.project
+/.settings/
+/nbproject/
+.vscode
+
+# Arquivos de build
 *.o
-peda-session**.txt
+*.ko
+*.tmp
+*.map
+*.min.js
+*.min.css
+*.d.ts
+*.d.ts.map
+*.js.map
+*.css.map
+**/cmake-build-debug
+
+# Arquivos de teste
+/coverage/
+/flow-typed/
+
+# Arquivos de compilao Webpack
+/web_modules/
+.pnp.js
+.pnp.cjs
+
+# Dependncias para o gerenciamento de pacotes
+/.yarn/*
+!.yarn/patches
+.yarn-integrity
+.yarn-metadata.json
+.yarnrc
+.yarnignore
+yarn.lock
+.yarnrc.yml
+.yarn/plugins
+.yarn/releases
+.yarn/sdks
+
+# Arquivos do Maven
+target/
+**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+build.properties
+
+# Arquivos da ferramenta BuildPortal
+.buildportal/
+**/.buildportal/
+deploy.sh
+build_portal.sh
+build_portal
+.dt_ult_build_success
+
+# Arquivos do container ufsm-payara
+docker-compose-profile-dev.yml
+docker-compose-profile-replica.yml
+start_profile_dev.sh
+start_profile_replica.sh
+ufsm-payara-profile-dev.env
+ufsm-payara-profile-replica.env
+
+
+
