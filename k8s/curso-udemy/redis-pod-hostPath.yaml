@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-pod
+  labels:
+    app: redis-pod
+spec:
+  containers:
+    - name: redis-pod
+      image: redis
+      volumeMounts:
+        - mountPath: "/my-data"
+          name: "cache-storage"
+
+  volumes:
+    - name: "cache-storage"
+      hostPath:
+        path: "/var/lib/2-persist"
+
+
