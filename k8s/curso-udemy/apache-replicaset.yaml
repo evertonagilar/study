@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: apache-rs
+  labels:
+    app: apache-rs
+spec:
+  template:
+    metadata:
+      name: pod-apache
+      labels:
+        apps: apache
+        tier: frontend
+    spec:
+      containers:
+        - name: http
+          image: httpd:latest
+  selector:
+    matchLabels:
+      apps: apache
+
+
+  

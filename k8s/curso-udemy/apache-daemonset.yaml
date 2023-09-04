@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: apache-ds
+  labels:
+    app: apache-ds
+spec:
+  template:
+    metadata:
+      name: pod-apache
+      labels:
+        apps: apache
+        tier: frontend
+    spec:
+      containers:
+        - name: http
+          image: httpd:latest
+      nodeSelector:
+        disktype: ssd
+  selector:
+    matchLabels:
+      apps: apache
+
+
+  
