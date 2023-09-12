@@ -1,0 +1,10 @@
+# Connection database
+database: "mongodb"
+database_uri: "mongodb://localhost:27017"
+database_env: "development"
+
+# User interface
+font.title: "Arial Bold"
+background-color: "blue"
+theme.1: "clean"
+theme.2: "dark"

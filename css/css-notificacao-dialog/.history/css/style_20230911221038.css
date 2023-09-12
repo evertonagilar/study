@@ -1,0 +1,203 @@
+
+.dashboard-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: stretch; /* Centraliza verticalmente */
+    justify-content: stretch;
+    margin: 15px;
+    @media screen and (max-width:34.999999em){
+        width: 94%;
+    }
+}
+
+.dashboard-container-favorito {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: stretch; /* Centraliza verticalmente */
+    justify-content: stretch;
+    margin: 15px;
+}
+
+.portal {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    --border-radius:.25rem;
+    --border-radius-top-left:.25rem;
+    --border-radius-top-right:.25rem;
+    --border-radius-bottom-right:.25rem;
+    --border-radius-bottom-left:.25rem;
+    --border-radius-top:.25rem;
+    --border-radius-left:.25rem;
+    --border-radius-right:.25rem;
+    --border-radius-bottom:.25rem;
+    border-radius:.25rem;
+    border:.065rem solid #ccc;
+    border-bottom:.065rem solid #c5c5c5;
+    border-right:.065rem solid #cacaca;
+    color:#0d0d0d;
+    text-shadow:0 .065em 0 #fff;
+    box-shadow:0 .065em 0 rgba(0,0,0,0.1),0 .065em .065em 0 rgba(255,255,255,0.3) inset;
+    background-image:linear-gradient(to bottom, #fff, #e6e6e6);
+    padding: 24px;
+    width: 210px;
+    height: 120px;
+    @media screen and (max-width:34.999999em){
+        width: 100%;
+    }
+}
+
+
+.portal:hover {
+    background:#e6e6e6;
+    transition: all .35s ease-in-out;
+    box-shadow: 0 .065rem 0 rgba(0,0,0,0.15);
+}
+  
+.portal:active {
+    background:none;
+    box-shadow:0 .065em 0 rgba(0,0,0,0.1),.08em .125em .25em rgba(0,0,0,0.3) inset;
+    background-color:#f3f3f3;
+    transition:none
+}
+
+.portal:focus {
+    box-shadow:0 0 .5em .25em rgba(205,205,205,0.85)
+}
+
+.portal-icon {
+    font-size: 3em;
+}
+
+.portal-label {
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.dashboard-container-favorito .portal {
+    padding: 8px;
+    height: 100px;
+    width: 120px;
+    @media screen and (max-width:798px) {
+        width: auto;
+    }
+    border-style: dotted;
+}
+
+.portal-mini-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    padding: 6px;
+    z-index: 100;
+    visibility: hidden;
+}
+
+.portal-mini-button:hover {
+    background-color:#f3f3f3;
+    border-radius:.25rem;
+    border:.065rem solid #ccc;
+    border-bottom:.065rem solid #c5c5c5;
+    border-right:.065rem solid #cacaca;
+    color:#0d0d0d;
+    color: brown;
+ }
+
+ .portal-mini-button:active {
+    background:none;
+    box-shadow:0 .065em 0 rgba(0,0,0,0.1),.08em .125em .25em rgba(0,0,0,0.3) inset;
+    background-color:#f3f3f3;
+    transition:none
+}
+
+.portal-mini-button:focus {
+    box-shadow:0 0 .5em .25em rgba(205,205,205,0.85)
+}
+
+/* Notificações */
+
+.dashboard-notificacoes-button {
+    cursor: pointer;
+}
+
+
+.dashboard-notificacoes {
+    width: 500px;
+    transition: .2s ease;
+}
+
+.dashboard-notificacoes-button sup {
+    color: #fff;
+    background-color: #a435f0;
+    padding: 2px;
+    font-weight: bold;
+    border-radius: 2px;    
+    font-size: .8em !important;
+}
+
+.notificacao-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.notificacao {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center; 
+    gap: 8px;
+    flex-wrap: wrap;
+
+}
+
+.notificacao-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: bold;
+}
+
+.notificacao-icon-type {
+    font-size: 64px;
+    width: 75px;
+    color: #135775;
+}
+
+.notificacao-message-text {
+    font-weight: 900;
+    width: 350px;
+}
+
+.notificacao-message-date {
+    font-weight: 300;
+    padding: 6px 4px;
+    color: #4c4c4c;
+}
+
+.notificao-lida-mark {
+    color: hsla(109, 90%, 27%, 0.565);
+}
+
+.notificacao-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: .065rem solid #135775;
+    margin-top: 12px;
+    padding: 8px;
+}
+
+.notificacao-marcar-todas {
+    font-weight: bold;
+    text-decoration: none;
+}

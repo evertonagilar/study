@@ -3,11 +3,15 @@ kind: CronJob
 metadata:
   name: my-cron-job
 spec:
+  suspend: false
   failedJobsHistoryLimit: 5
   successfulJobsHistoryLimit: 10
   schedule: "* * * * *"
   jobTemplate:
     spec:
+      completions: 10
+      completionMode: "Indexed"
+      parallelism: 5
       template:
         spec:
           containers:

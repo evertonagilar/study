@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-cm
+data:
+  # Connection database
+  database: "mariadb"
+  database_uri: "mariadb://localhost:3306"
+  database_env: "test"
+

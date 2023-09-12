@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula CSS GRID</title>
+    <link rel="stylesheet" href="css/cpd.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <span class="dashboard-notificacoes-button icon-bell">
+        <sup>5</sup>
+    </span>
+
+    <dialog class="dashboard-notificacoes">
+        <h2 class="h2 primary stroked-bottom text-shadowed margin-bottom">
+            Notificações
+        </h2>
+        <div class="notificacao-list">
+            <div class="notificacao" data-id="1">
+                <div class="notificacao-icon-type">
+                    <span aria-hidden="true" class="icon-info-sign"></span>
+                </div>
+                <div class="notificacao-message">
+                    <span class="message"></span>Avaliação geral prorrogada. Link <a href="#">Portal de Questionários</a>
+                    <div class="notificações-date">24 dias atrás</div>
+                </div>
+            </div>                
+            <div class="notificacao" data-id="1">
+                <div class="notificacao-icon-type">
+                    <span aria-hidden="true" class="icon-info-sign"></span>
+                </div>
+                <div class="notificacao-message">
+                    Geoparques Caçapava e Quarta Colônia recebem certificação da Unesco
+                    <div class="notificações-date">15 dias atrás</div>
+                </div>
+
+            </div>                
+            <div class="notificacao" data-id="1">
+                <div class="notificacao-icon-type">
+                    <span aria-hidden="true" class="icon-info-sign"></span>
+                </div>
+                <div class="notificacao-message">
+                    Programas de Residência em Área Profissional da Saúde da UFSM abrem inscrições
+                    <div class="notificações-date">2 dias atrás</div>
+                </div>
+            </div>                
+            <div class="notificacao" data-id="1">
+                <div class="notificacao-icon-type">
+                    <span aria-hidden="true" class="icon-info-sign"></span>
+                </div>
+                <div class="notificacao-message">
+                    Candidatos aptos às Vagas Complementares têm até domingo para enviar documentação
+                    <div class="notificações-date">Hoje</div>
+                </div>
+            </div>                
+        </div>
+    </dialog>
+
+    <h2 class="h2 primary stroked-bottom text-shadowed margin-bottom">
+        Módulos disponíveis
+    </h2>
+
+
+    <div class="dashboard-container-favorito">
+        <div class="portal">
+            <span class="portal-icon icon-book"></span>
+            <h3 class="portal-label">Estudante</h3>
+        </div>
+        <div class="portal">
+            <span class="portal-icon icon-key"></span>
+            <h3 class="portal-label">Documentos</h3>
+        </div>
+        <div class="portal">
+            <span class="portal-icon icon-envelope"></span>
+            <h3 class="portal-label">Caixa Postal</h3>
+        </div>
+        <div class="portal">
+            <span class="portal-icon icon-asterisk"></span>
+            <h3 class="portal-label">Planilhas</h3>
+        </div>
+        <div class="portal">
+            <span class="portal-icon icon-archive"></span>
+            <h3 class="portal-label">SGCA</h3>
+        </div>
+
+    </div>
+
+    <div class="dashboard-container">
+        <div class="portal">
+            <span class="portal-mini-button fa fa-chain"></span>
+            <span class="portal-icon icon-apple"></span>
+            <h3 class="portal-label">Professor</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-ambulance"></span>
+            <h3 class="portal-label">HUSM</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-user"></span>
+            <h3 class="portal-label">Usuario</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-calendar"></span>
+            <h3 class="portal-label">Agendamento</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-circle"></span>
+            <h3 class="portal-label">Academico</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-edit"></span>
+            <h3 class="portal-label">Dispensa</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-cog"></span>
+            <h3 class="portal-label">RH</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-code-fork"></span>
+            <h3 class="portal-label">Projetos</h3>
+        </div>
+
+        <div class="portal">
+            <span class="portal-icon icon-file-alt"></span>
+            <h3 class="portal-label">Biblioteca</h3>
+        </div>
+
+    </div>
+</body>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        /* Cards */
+        const botao = document.querySelectorAll('.portal');
+        botao.forEach(btn => {
+            const miniButton = btn.querySelector('.portal-mini-button');
+            
+            btn.addEventListener('click', () => {
+                alert('botao clicked');    
+            });
+
+            btn.addEventListener('mouseenter', () => {
+                if (miniButton){
+                    miniButton.style.visibility = 'visible';
+                }
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                if (miniButton){
+                    miniButton.style.visibility = 'hidden';
+                }
+            });
+
+        });
+
+        /* Mini Button */
+        const miniButtons = document.querySelectorAll('.portal-mini-button');
+        miniButtons.forEach(btn => {
+            const parentButton = btn.closest('.portal');
+
+            btn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                alert('mini-button clicked');
+            });
+
+            btn.addEventListener("mouseenter", (event) => {
+                // alert('mouse enter');
+                // parentButton.style.pointerEvents = 'none';
+                
+            });
+
+            btn.addEventListener("mouseleave", (event) => {
+                // alert('mouse leave');
+                // parentButton.style.pointerEvents = 'auto';
+            })
+
+        });
+
+
+        /* Notifications */
+        document.querySelector('.dashboard-notificacoes-button').addEventListener("click", (event) => {
+            const dialog = document.querySelector('.dashboard-notificacoes');
+            dialog.showModal();
+        });
+
+
+    });
+
+
+
+</script>
+
+
+
+</html>
