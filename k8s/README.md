@@ -146,6 +146,58 @@ echo YWRtaW4= | base64 --decode
 admin
 ```
 
+# Verificar se o serviço está rodando com nc
+
+```bash
+nc -v um_ip 6443
+```
+
+# Instalar o docker via script
+
+```bash
+curl -fsSL https://get.docker.com | sh
+```
+
+<pre>
+opções:
+  -L -> se tiver redirect, segue
+  -S -> exibe o erro
+  -f -> fail silent
+  -s -> silent mode
+</pre>
+
+# Ver todos os pods em todos os namespaces
+
+```bash
+kubectl get all --all-namespaces
+```
+
+# Executar o nginx com 10 réplicas
+
+```bash
+kubectl run nginx --image nginx --replicas 10
+```
+
+# Fazer port-forward 
+
+```bash
+kubectl port-forward  pod/nginx 8083:80
+```
+
+# Fazendo export para acessar o nginx em algum node do cluster
+
+```bash
+kubectl run nginx2 --image=nginx --port 80
+kubectl expose pod nginx2 --type NodePort
+kubectl describe pod nginx2
+kubectl get nodes -o wide
+curl 172.19.0.2:30059
+curl 172.19.0.3:30059
+```
+
+
+
+
 
 
 
