@@ -196,8 +196,11 @@ curl 172.19.0.3:30059
 ```
 
 
-
-
+# Usando o debian como ferramenta de teste de rede
+```bash
+kubectl run -it --image debian network-id-test
+apt update && apt install dnsutils curl iputils-ping -y
+```
 
 
 
