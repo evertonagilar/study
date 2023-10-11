@@ -202,11 +202,30 @@ kubectl run -it --image debian network-id-test
 apt update && apt install dnsutils curl iputils-ping -y
 ```
 
+# Consultar em formato yaml um pv
 
+```bash
+kubectl get pv pvc-03ffce84-6b4c-45ca-b96d-675a3b7ce183 -o yaml
+```
 
+# Mudar (patch) a política de reclain do pv de Delete para Retain
 
+```bash
+kubectl patch -p '{ "spec" : { "persistentVolumeReclaimPolicy": "Retain" }}' pv/pvc-03ffce84-6b4c-45ca-b96d-675a3b7ce183
+persistentvolume/pvc-03ffce84-6b4c-45ca-b96d-675a3b7ce183 patched
+```
 
+# Exclui todos pvc (Muito cuidado!)
 
+```bash
+kubectl delete pvc --all
+```
 
+# Monitorar a criação dos pods
+
+```bash
+kubectl get pods -w
+kubectl get pods --watch
+```
 
 
